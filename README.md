@@ -24,3 +24,11 @@ docker run -d --name ctf-web-arena-local -p 127.0.0.1:18763:80 -p 127.0.0.1:1809
 ## 源码与许可证
 
 源码从现有部署镜像恢复，包含运行中的题目代码修正，但不包括历史运行数据库或用户会话。项目代码按 MIT 许可证发布；内含的 Twig 按其 MIT 许可，Smarty 按 LGPL 3.0 或更高版本许可，分别参见对应目录许可证。二进制及题目资源可能包含独立许可，使用时请查阅各自声明。
+
+## Windows WSL 版（无需 Docker Desktop）
+
+下载 Release 中的 `CTF-Web-Arena-WSL.zip` 并解压，双击 `CTF-Web-Arena-WSL.exe`。首次运行需要 Windows 的 WSL 2 已启用，安装运行环境可能需要几分钟；随后程序启动靶场并自动打开 http://127.0.0.1:18763/。发行包约 200 MB，安装后占用额外磁盘空间。
+
+停止服务可运行 `wsl --terminate CTFWebArena`；运行环境存放在当前用户的 AppData 目录。卸载该发行版会删除其中的练习进度。WSL 与主机仍有网络连接，不应视作安全隔离的虚拟机；仅在可信任环境中使用，切勿对外暴露。
+
+从源码生成 WSL 文件系统时，先运行 `docker build -t ctf-web-arena:opensource .`，再运行 `docker build -f Dockerfile.wsl -t ctf-web-arena:wsl .`。Windows 启动器源代码位于 `wsl-launcher/`。
