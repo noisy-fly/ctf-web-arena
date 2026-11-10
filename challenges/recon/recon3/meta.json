@@ -1,0 +1,44 @@
+{
+  "id": "recon3",
+  "path": "/recon3",
+  "type": "static",
+  "public": true,
+  "artifacts": [
+    "/recon3/.git/"
+  ],
+  "note": ".git 泄露（构建期真实 git init 两次提交）",
+  "category": "recon",
+  "title": "时光机的痕迹 · .git 泄露",
+  "difficulty": "medium",
+  "url_path": "/recon3",
+  "flag": "flag{recon3_1b7e94ca}",
+  "knowledge": [
+    {
+      "name": "GitHack — .git 泄露利用工具",
+      "url": "https://github.com/lijiejie/GitHack"
+    },
+    {
+      "name": "git-dumper",
+      "url": "https://github.com/arthaud/git-dumper"
+    },
+    {
+      "name": "Pro Git 书（中文版）— 恢复对象与历史",
+      "url": "https://git-scm.com/book/zh/v2"
+    }
+  ],
+  "hints": [
+    "验证泄露：<code>curl http://TARGET/recon3/.git/HEAD</code>，能读到内容就实锤。",
+    "用 GitHack：<code>python GitHack.py http://TARGET/recon3/.git/</code>，还原出仓库副本。",
+    "在还原出的仓库里 <code>git log --all</code> 看历史：有一次提交的 message 提到删除了敏感文件。",
+    "<code>git show &lt;该提交的父提交&gt;</code> 或 <code>git checkout &lt;hash&gt; -- flag.txt</code> 把删掉的文件从历史里捞回来。"
+  ],
+  "description_html": "新站上线，但开发者直接把整个代码目录（包括 <code>.git</code> 版本库）拷到了服务器上。通过泄露的 .git 可以还原<b>全部提交历史</b>——哪怕文件已经“删除”，历史对象里依然完好无损。工具有 GitHack / git-dumper，也可以手工按对象哈希逐个下载。",
+  "entry": "index.html",
+  "runtime": "static",
+  "writeup": "writeup.md",
+  "prev": "recon2",
+  "next": "recon4",
+  "leak": [
+    ".git"
+  ]
+}
