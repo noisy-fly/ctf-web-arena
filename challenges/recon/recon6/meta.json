@@ -1,0 +1,24 @@
+{
+  "id": "recon6",
+  "category": "recon",
+  "title": "vim 交换文件泄露",
+  "difficulty": "easy",
+  "url_path": "/recon6",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{recon6_407506c5}",
+  "knowledge": [
+    "vim .swp 交换文件",
+    "异常退出残留",
+    "strings 提取 / vim -r 恢复",
+    "编辑器中间产物"
+  ],
+  "hints": [
+    "首页说开发者用 vim 在服务器上改代码时 SSH 断线。vim 编辑 index.php 时的交换文件名是固定的：.index.php.swp —— 试试直接下载它。",
+    "swp 是二进制，但内容区是明文。strings .index.php.swp 就能看到编辑中的源码草稿（还有 vim 版本、原文件路径、用户名、主机名）。",
+    "curl http://TARGET/recon6/.index.php.swp -o d.swp\nstrings d.swp | grep flag\n草稿里的 TODO 注释写着『删掉下面的调试 flag 再发布』——他还没来得及删。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "recon5",
+  "next": "recon7"
+}

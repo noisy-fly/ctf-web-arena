@@ -1,0 +1,23 @@
+{
+  "id": "logic3",
+  "category": "logic",
+  "title": "运维值班系统 - 验证码复用爆破",
+  "difficulty": "medium",
+  "url_path": "/logic3",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{logic3_f8a30809}",
+  "knowledge": [
+    "验证码一次性原则(校验后必须销毁)",
+    "验证码复用导致防爆破失效",
+    "登录接口缺少限速/锁定"
+  ],
+  "hints": [
+    "先手工登录一次试试:随便输个密码、验证码照着填。失败后页面上的验证码变了吗?用同一个验证码再提交一次还能用吗?",
+    "写个脚本:同一 Cookie + 同一验证码,把 1900~1999 逐个当密码提交,观察哪次返回不一样。",
+    "captain 的密码就在 1900~1999 之间,成功页有 flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "logic2",
+  "next": "logic4"
+}

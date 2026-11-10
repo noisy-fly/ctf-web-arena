@@ -1,0 +1,24 @@
+{
+  "id": "upload6",
+  "category": "upload",
+  "title": "条件竞争",
+  "difficulty": "hard",
+  "url_path": "/upload6",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{upload6_8fc43956}",
+  "knowledge": [
+    "条件竞争",
+    "TOCTOU 时间窗",
+    "多线程并发上传+访问",
+    "file_put_contents 留后门"
+  ],
+  "hints": [
+    "上传一个含 system 的 shell.php 试试 —— 云查杀会在 0.1 秒后删掉它。但注意页面提示：文件在被删除前【真实存在】过。存在的这段时间够不够发一个 GET？",
+    "单线程来回传/访问永远赶不上。用多线程：一组线程不停 POST 上传 shell.php，另一组线程不停 GET 访问 uploads/shell.php，同时开跑。",
+    "更稳的 payload（命中一次就永久赢）：shell.php 内容写 file_put_contents('pwn.txt', file_get_contents('../flag.php')) —— 竞争命中瞬间 flag 被写到不会被删除的 pwn.txt，之后访问 /upload6/uploads/pwn.txt 即可。参考脚本见 writeup。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "upload5",
+  "next": null
+}

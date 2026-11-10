@@ -1,0 +1,23 @@
+{
+  "id": "sql7",
+  "category": "sql",
+  "title": "二次注入",
+  "difficulty": "hard",
+  "url_path": "/sql7",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{sql7_37ba4d81}",
+  "knowledge": [
+    "二次注入",
+    "参数化只防一阶",
+    "数据二次使用时的信任问题"
+  ],
+  "hints": [
+    "注册/登录都是参数化查询，直接注入没有出路。想想：还有什么地方会用到『你注册的用户名』？改密码时后端会用 session 里的 username 拼 UPDATE —— 注册一个带引号的用户名试试。",
+    "SQL 里的注释符：MySQL 里 # 和 -- 都行，SQLite 只认 -- （还有 /* */）。你想让 UPDATE 的 WHERE 变成 username='admin'，那么注册用户名应该是：admin'-- （引号闭合 + 注释吃掉尾巴）。",
+    "完整流程：\n1. 注册用户名 admin'-- ，密码 123456\n2. 用 admin'-- / 123456 登录\n3. 修改密码为 hacked888 —— 此时 UPDATE ... WHERE username='admin'--' 把 admin 的密码改成了 hacked888\n4. 用 admin / hacked888 登录，个人主页的『内部备忘』就是 flag"
+  ],
+  "writeup": "writeup.md",
+  "prev": "sql6",
+  "next": "sql8"
+}

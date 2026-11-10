@@ -1,0 +1,40 @@
+{
+  "id": "recon1",
+  "path": "/recon1",
+  "type": "static",
+  "public": true,
+  "artifacts": [
+    "/robots.txt",
+    "/recon1/secret/"
+  ],
+  "note": "robots.txt 泄露",
+  "category": "recon",
+  "title": "机器人不看的角落 · robots.txt",
+  "difficulty": "easy",
+  "url_path": "/recon1",
+  "flag": "flag{recon1_6d92c4e7}",
+  "knowledge": [
+    {
+      "name": "Google — robots.txt 规范",
+      "url": "https://developers.google.com/search/docs/crawlers-indexing/robots/intro"
+    },
+    {
+      "name": "维基百科 — robots.txt",
+      "url": "https://zh.wikipedia.org/wiki/Robots.txt"
+    }
+  ],
+  "hints": [
+    "robots.txt 位于站点根路径：<code>/robots.txt</code>。",
+    "被 Disallow 的目录对浏览器并没有任何访问限制——直接访问它。",
+    "进去之后是一张简单的页面，flag 就写在里面。"
+  ],
+  "description_html": "信息收集从“爬虫看什么、不看什么”开始。<code>robots.txt</code> 是站点告诉搜索引擎“别收录这些路径”的约定——但对攻击者来说，这等于一张藏宝图。找到被 <code>Disallow</code> 的目录，进去看看。",
+  "entry": "index.html",
+  "runtime": "static",
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "recon2",
+  "leak": [
+    "secret/index.html"
+  ]
+}

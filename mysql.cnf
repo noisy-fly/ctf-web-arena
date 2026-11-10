@@ -1,0 +1,17 @@
+# MariaDB 内存调优（1.6G 宿主机上的教学配置，RSS ≈ 200M）
+[mysqld]
+performance_schema = OFF
+skip_name_resolve
+bind_address = 127.0.0.1
+max_connections = 30
+innodb_buffer_pool_size = 32M
+innodb_log_file_size = 32M
+innodb_flush_method = O_DIRECT
+table_open_cache = 64
+tmp_table_size = 16M
+max_heap_table_size = 16M
+key_buffer_size = 8M
+aria_pagecache_buffer_size = 8M
+
+[client]
+default-character-set = utf8mb4

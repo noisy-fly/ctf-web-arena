@@ -1,0 +1,23 @@
+{
+  "id": "jwt4",
+  "category": "jwt",
+  "title": "会员站4 - JWT 过期/未验签绕过",
+  "difficulty": "medium",
+  "url_path": "/jwt4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{jwt4_1b6c1dc6}",
+  "knowledge": [
+    "exp 过期声明同样位于可篡改的 payload",
+    "未校验签名时 payload 完全可控",
+    "先验签后做业务校验(exp/iss/aud)的顺序原则"
+  ],
+  "hints": [
+    "把页面上\"泄露的管理员 token\"解码:role=admin 但 exp 是 2024 年,直接用会提示已过期。",
+    "谁在执行过期检查?服务端。它检查的 exp 字段真的防篡改吗——签名被校验了吗?",
+    "把泄露 token 的 payload 中 exp 改成 9999999999,重新 Base64URL 编码替换该段(header 与签名字段原样不动),访问 admin.php。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "jwt3",
+  "next": null
+}

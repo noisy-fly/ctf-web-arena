@@ -1,0 +1,24 @@
+{
+  "id": "xxe1",
+  "category": "xxe",
+  "title": "星际 HR · XXE 有回显读文件",
+  "difficulty": "medium",
+  "url_path": "/xxe1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{xxe1_1c988126}",
+  "knowledge": [
+    "XML DTD 与实体（内部/外部 SYSTEM 实体）",
+    "DOMDocument + LIBXML_NOENT/LIBXML_DTDLOAD 的组合",
+    "file:// 协议读任意文件；php:// 流封装在 libxml 中不可用的原因"
+  ],
+  "hints": [
+    "DTD 里 <!ENTITY 名字 SYSTEM \"URL\"> 声明外部实体，正文 &名字; 的位置会被替换成 URL 资源内容——URL 可以是 file:// 本地文件。",
+    "页面上直接给了机密档案的绝对路径；Windows 路径 C:\\x\\y 写成 file:///C:/x/y，Linux 路径写成 file:///flag_xxe1.txt。",
+    "payload：<!DOCTYPE resume [<!ENTITY xxe SYSTEM \"file:///<档案路径>\">]><resume><name>&xxe;</name></resume>，导入后回显的 name 位置即档案内容。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "xxe2",
+  "notes": "flag 文件 deploy/flag_xxe1.txt 部署时复制到容器根 /flag_xxe1.txt（并删除/屏蔽 deploy 目录），与 B 组 lfi/ssrf 系列同惯例"
+}

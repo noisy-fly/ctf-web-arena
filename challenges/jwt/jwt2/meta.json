@@ -1,0 +1,23 @@
+{
+  "id": "jwt2",
+  "category": "jwt",
+  "title": "会员站2 - JWT 弱密钥爆破(HS256)",
+  "difficulty": "medium",
+  "url_path": "/jwt2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{jwt2_233df5e2}",
+  "knowledge": [
+    "HS256 对称签名与密钥强度",
+    "离线字典爆破 HMAC(hashcat -m 16500 / jwt-tool)",
+    "自签任意 payload"
+  ],
+  "hints": [
+    "token 拿到后,对字典里每个词计算 HMAC-SHA256(header.payload, word) 与签名比对——全程离线、无速率限制。",
+    "本题附带 wordlist.txt(常用口令字典),服务端密钥就在其中;也可用 hashcat -m 16500 或 jwt-tool。",
+    "爆破出密钥后自签 {\"user\":\"admin\",\"role\":\"admin\"} 的 HS256 token 替换 Cookie 访问 admin.php。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "jwt1",
+  "next": "jwt3"
+}

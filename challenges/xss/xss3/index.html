@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- ============================================================
+  教学靶场 · xss3 DOM 型 XSS
+  漏洞点（纯客户端，服务端不碰你的输入）：
+    source: new URLSearchParams(location.search).get('name')
+    filter: 只删 <script ...> 开标签
+    sink:   el.innerHTML = '你好, ' + name + '!'
+  （Victim Bot 会按同样规则做镜像模拟，见 /api/bot.py）
+============================================================ -->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xss3 · DOM 型 XSS</title>
+<script src="/assets/boot.js"></script>
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/challenge.css">
+<script src="/assets/challenge.js" data-chal="xss3" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo"><span class="badge">🎭</span> 个性化问候</div>
+  <div class="spacer"></div>
+  <a class="tag" href="/">关卡地图</a>
+</header>
+<div class="chal-wrap">
+  <div class="chal-env">
+    <h1>👋 个性化问候生成器</h1>
+    <p class="env-sub">在 URL 上带上 <code>?name=你的名字</code>，页面会在浏览器里为你生成问候。右键"查看网页源代码"——你会发现服务端根本不知道你叫什么。</p>
+
+    <div class="env-card">
+      <form method="get" action="/xss3">
+        <div class="env-row">
+          <label style="flex:0 0 auto">你的名字</label>
+          <input type="text" name="name" placeholder="alice">
+          <button class="btn" type="submit">生成问候</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="env-result">
+      <h3>问候</h3>
+      <div class="env-card" id="greet" style="font-size:1.15rem">你好, 游客!</div>
+    </div>
+
+    <script>
+      var n = new URLSearchParams(location.search).get('name') || '游客';
+      n = n.replace(/<script[\s\S]*?>/gi, '');           // ★ 过滤：删掉 <script ...> 开标签
+      document.getElementById('greet').innerHTML = '你好, ' + n + '!';   // ★ 危险 sink
+    </script>
+
+    <details class="src-details" style="margin-top:16px">
+      <summary style="cursor:pointer;color:var(--fg-soft)">🔍 查看本题关键源码（页面 JS）</summary>
+      <pre>var n = new URLSearchParams(location.search).get('name') || '游客';
+n = n.replace(/&lt;script[\s\S]*?&gt;/gi, '');                    // 过滤：只删 &lt;script ...&gt; 开标签
+document.getElementById('greet').innerHTML = '你好, ' + n + '!'; // sink：innerHTML</pre>
+    </details>
+
+    <p style="color:var(--fg-soft);font-size:.8rem;margin-top:14px">⚠️ 教学靶场：Victim Bot 按相同过滤规则做镜像模拟判定。</p>
+  </div>
+</div>
+</body>
+</html>

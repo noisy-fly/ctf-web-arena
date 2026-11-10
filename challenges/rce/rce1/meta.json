@@ -1,0 +1,23 @@
+{
+  "id": "rce1",
+  "category": "rce",
+  "title": "Ping 诊断工具 · 无过滤命令注入",
+  "difficulty": "easy",
+  "url_path": "/rce1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{rce1_29ef51b3}",
+  "knowledge": [
+    "命令注入(OS Command Injection)",
+    "shell 连接符 ; && || |",
+    "system() 拼接用户输入"
+  ],
+  "hints": [
+    "页面给出了源码：用户输入被原样拼进 system('ping -c 2 '.$ip)，想想能否在 IP 后面再拼一条命令",
+    "用 ?ip=127.0.0.1;id 先证明第二条命令能执行（输出多出 uid=... 即成功）",
+    "flag 在当前目录 flag.php 的 PHP 注释里：?ip=127.0.0.1;cat flag.php（&& 需编码为 %26%26）"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "rce2"
+}

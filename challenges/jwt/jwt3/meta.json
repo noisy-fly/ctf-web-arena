@@ -1,0 +1,26 @@
+{
+  "id": "jwt3",
+  "category": "jwt",
+  "title": "会员站3 - JWT RS256->HS256 算法混淆",
+  "difficulty": "hard",
+  "url_path": "/jwt3",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{jwt3_3996c814}",
+  "php_extensions": [
+    "openssl"
+  ],
+  "knowledge": [
+    "RS256/HS256 算法差异(非对称 vs 对称)",
+    "算法混淆:用公钥作为 HMAC 密钥伪造",
+    "服务端必须锁定唯一算法与密钥"
+  ],
+  "hints": [
+    "常规手段都失效:none 不行,HS256 弱密钥爆破也不行(私钥是 2048 位随机生成的)。",
+    "下载 pubkey.php。服务端验签逻辑:alg=RS256 用 RSA 公钥验,alg=HS256 用同一个\"密钥\"做 HMAC——公钥本身当 HMAC 密钥会怎样?",
+    "构造 header={\"alg\":\"HS256\"} payload={\"user\":\"admin\",\"role\":\"admin\"},用公钥 PEM 全文作 HMAC-SHA256 的 key 签名,替换 Cookie 访问 admin.php。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "jwt2",
+  "next": "jwt4"
+}

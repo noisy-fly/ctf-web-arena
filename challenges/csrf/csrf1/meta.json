@@ -1,0 +1,24 @@
+{
+  "id": "csrf1",
+  "category": "csrf",
+  "title": "星云周刊订阅站 - 基础 CSRF(GET 状态变更,无 token)",
+  "difficulty": "easy",
+  "url_path": "/csrf1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{csrf1_40854ad6}",
+  "knowledge": [
+    "CSRF 原理:Cookie 自动携带但不代表用户知情",
+    "GET 请求做状态变更的危害",
+    "CSRF token / SameSite / Origin 校验修复",
+    "内置模拟受害者浏览器,单人可复现完整攻击"
+  ],
+  "hints": [
+    "先自己订阅一次试试(GET api.php?do=subscribe&email=xxx)——注意\"你订阅了不算数\",目标是 cathy。",
+    "攻击页只需要一行:一个 img 标签,src 指向订阅接口,email 参数随便填。保存后运行模拟受害者。",
+    "<img src=\"api.php?do=subscribe&email=pwn@evil.example\"> —— 保存 → 运行模拟受害者 → cathy 订阅 → flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "csrf2"
+}

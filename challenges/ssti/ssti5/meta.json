@@ -1,0 +1,28 @@
+{
+  "id": "ssti5",
+  "category": "ssti",
+  "title": "FreeMarker 模板注入 · 文档化替代（离线模拟器）",
+  "difficulty": "medium",
+  "difficulty_level": 3,
+  "url_path": "/ssti5",
+  "runtime": "static",
+  "entry": "index.html",
+  "flag": "flag{ssti5_8a3c366a}",
+  "replaced": true,
+  "replacement_note": "Java 系按 SPEC 一律文档替代（容器装不下 JVM）。交付静态教学页 + 前端离线 payload 模拟器：输入语法正确的经典 ?new/Execute payload 时模拟器输出 flag；无任何服务端组件。",
+  "knowledge": [
+    "FreeMarker 语法（${} 插值与 <#assign> 指令）",
+    "?new 内建实例化任意类",
+    "Execute 工具类 RCE",
+    "2.3.30 SAFER_RESOLVER 版本演化",
+    "自建 JDK 复现指引"
+  ],
+  "hints": [
+    "FreeMarker 输出用 ${...}、指令用 <#...>；旧版本里 ?new 内建能把『类全名字符串』实例化——这是 SSTI 万能起手式。",
+    "要实例化的类：freemarker.template.utility.Execute，FreeMarker 自带的『执行系统命令』工具类。",
+    "完整 payload：<#assign ex=\"freemarker.template.utility.Execute\"?new()>${ex(\"cat /flag\")} —— 粘进页面里的离线模拟器点渲染，flag 在输出里。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "ssti4",
+  "next": "ssti6"
+}

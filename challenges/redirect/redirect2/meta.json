@@ -1,0 +1,23 @@
+{
+  "id": "redirect2",
+  "category": "redirect",
+  "title": "星桥快递 v2 · 白名单绕过",
+  "difficulty": "easy",
+  "url_path": "/redirect2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{redirect2_4a59116e}",
+  "knowledge": [
+    "URL 结构（userinfo@host/path?query#fragment）与 host 的决定作用",
+    "strpos 子串匹配白名单的绕过：@/query/fragment/前缀拼接",
+    "parse_url + host 精确白名单的正确写法"
+  ],
+  "hints": [
+    "先试 jump2.php?url=http://<host>/redirect2/catch2.php —— 被拒（不含白名单域名）。白名单检查的是“字符串里是否出现 stars-express.com”，不是“host 是否等于 stars-express.com”。",
+    "URL 里真正决定浏览器连到哪台服务器的是 host；userinfo（@ 前面）、query（? 后面）、fragment（# 后面）都只是“行李”。把白名单域名塞进行李里，检查照过、流量照走攻击者。",
+    "payload 三选一：① http://stars-express.com@<host>/redirect2/catch2.php ② http://<host>/redirect2/catch2.php?stars-express.com ③ http://<host>/redirect2/catch2.php%23stars-express.com —— 跳转后从攻击者页面拿 share_token（③的 token 在 fragment 里，页面脚本会解析）。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "redirect1",
+  "next": null
+}

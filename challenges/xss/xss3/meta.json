@@ -1,0 +1,39 @@
+{
+  "id": "xss3",
+  "path": "/xss3",
+  "type": "static",
+  "public": false,
+  "note": "DOM 型 XSS（filter+innerHTML sink）",
+  "category": "xss",
+  "title": "看不见的渲染 · DOM 型 XSS",
+  "difficulty": "medium",
+  "url_path": "/xss3",
+  "flag": "flag{xss3_a84b06d3}",
+  "knowledge": [
+    {
+      "name": "OWASP — DOM 型 XSS",
+      "url": "https://owasp.org/www-community/attacks/xss/#dom-based-xss"
+    },
+    {
+      "name": "MDN — Element.innerHTML（为何 script 不执行）",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/Element/innerHTML"
+    },
+    {
+      "name": "PortSwigger — DOM XSS",
+      "url": "https://portswigger.net/web-security/cross-site-scripting/dom-based"
+    }
+  ],
+  "hints": [
+    "先用 <code>?name=hello</code> 看看页面如何问候你，再查看页面源码，找到 JS 里的 source（location.search）和 sink（innerHTML）。",
+    "页面把 <code>&lt;script…&gt;</code> 开标签删掉了；而且即使删掉过滤，<code>innerHTML</code> 插入的 <code>&lt;script&gt;</code> 也不会执行——这条路本来就不通。",
+    "事件属性不受影响：<code>?name=&lt;img src=x onerror=alert(1)&gt;</code>。",
+    "<code>&lt;svg onload=alert(1)&gt;</code> 同样可行——把 payload 放进 URL 后点 🤖 按钮。"
+  ],
+  "description_html": "服务端这次很干净：页面源码里根本没有你的输入。数据流完全发生在<b>浏览器里</b>——JS 从 <code>location.search</code> 取 <code>name</code> 参数，过滤掉 <code>&lt;script&gt;</code> 后塞进 <code>innerHTML</code>。搞清楚两件事：<b>过滤了什么、渲染到哪个 sink</b>，然后找出能穿过过滤又在 innerHTML 里活下来的 payload。",
+  "bot": true,
+  "entry": "index.html",
+  "runtime": "static",
+  "writeup": "writeup.md",
+  "prev": "xss2",
+  "next": null
+}

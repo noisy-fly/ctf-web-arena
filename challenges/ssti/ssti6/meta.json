@@ -1,0 +1,26 @@
+{
+  "id": "ssti6",
+  "category": "ssti",
+  "title": "工单公告渲染器 · Go template 模板注入",
+  "difficulty": "hard",
+  "difficulty_level": 4,
+  "url_path": "/ssti6",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{ssti6_ce6ff430}",
+  "knowledge": [
+    "Go text/template 注入特性（无算术/无反射链）",
+    "{{.}} 枚举数据与 {{printf \"%+v\" .}}",
+    "导出方法 {{.Method args}} 可被模板调用",
+    "破坏力=暴露给模板的方法面（ReadFile 越权读文件）"
+  ],
+  "hints": [
+    "输入 {{.}} 能把数据对象按字段打印出来；{{.Banner}} 也能调用方法。但 {{7*7}} 会报「unexpected \"*\"」——Go 模板语言没有算术运算符，这不是 Jinja2，利用思路完全不同。（本关引擎是 PHP 复刻的迷你 Go template，行为按 Go 模拟）",
+    "Go 模板还能调用数据对象的导出方法。翻页面给出的源码：除了 Banner，还有一个为「包含文案片段」写的便利方法 ReadFile(path string)，没有做任何路径限制。",
+    "完整 payload：?tpl={{.ReadFile \"flag_ssti6.txt\"}} —— 方法调用用空格传参，字符串参数带引号；flag 文件就在题目目录里。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "ssti5",
+  "next": null,
+  "replacement_note": "原 Go text/template 实现（main.go/go.mod/二进制）移至 _original/ 保留。现用 PHP 复刻迷你 Go template 引擎（语法与报错指纹按 Go 模拟），漏洞等价平移：用户模板 + 无路径限制的 ReadFile 方法；flag 值与原题一致。"
+}

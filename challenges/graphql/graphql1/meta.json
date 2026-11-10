@@ -1,0 +1,24 @@
+{
+  "id": "graphql1",
+  "category": "graphql",
+  "title": "星际图书馆 · GraphQL 内省泄露",
+  "difficulty": "medium",
+  "url_path": "/graphql1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{graphql1_c07aa601}",
+  "knowledge": [
+    "GraphQL 内省（__schema/__type 元字段）自描述机制",
+    "内省暴露未写入文档的内部字段（Query.systemConfig）",
+    "生产环境关内省 vs 内部字段必须鉴权的设计原则"
+  ],
+  "hints": [
+    "控制台先跑默认的 books 查询确认 API 正常，官方文档只公开了 books 和 book(id) 两个入口。",
+    "点“🪞 填入内省查询”并运行：__schema { queryType { fields { name description } } } 会列出 Query 上的全部字段——和文档对比多出来的是谁？",
+    "查询 { systemConfig { maintenanceMode adminNote } }——adminNote 就是馆长的内部备注（flag）。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "graphql2",
+  "notes": "PHP 8.2 无依赖。gql.php 为手写迷你 GraphQL 引擎（嵌套选择集/别名/字面量参数/__schema 与 __type 内省/Did-you-mean 建议），graphql.php 是端点（POST JSON 或 GET ?query=），数据存 PHP 数组，内省开放。原 Python+graphql-core 实现保留于 _original/。"
+}

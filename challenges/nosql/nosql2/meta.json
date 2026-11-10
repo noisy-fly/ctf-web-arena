@@ -1,0 +1,27 @@
+{
+  "id": "nosql2",
+  "category": "nosql",
+  "title": "XML 里的注入 —— XPath 认证绕过",
+  "difficulty": "medium",
+  "url_path": "/nosql2",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8313,
+  "flag": "flag{nosql2_64af2cf8}",
+  "flag_source": "users.xml 中 admin 的 password（PHP 运行时可用环境变量 FLAG 覆盖）",
+  "dependencies": [],
+  "knowledge": [
+    "XPath 注入",
+    "引号闭合 + or 恒真",
+    "报错回显",
+    "参数化查询修复"
+  ],
+  "hints": [
+    "user=admin' 触发报错，回显拼接后的 query",
+    "闭合引号后注入 or '1'='1",
+    "user=admin' or '1'='1，pass 任意"
+  ],
+  "writeup": "writeup.md",
+  "prev": "nosql1",
+  "next": null
+}

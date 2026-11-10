@@ -1,0 +1,24 @@
+{
+  "id": "recon5",
+  "category": "recon",
+  "title": ".DS_Store 泄露",
+  "difficulty": "easy",
+  "url_path": "/recon5",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{recon5_29e4c1f7}",
+  "knowledge": [
+    "macOS .DS_Store",
+    "UTF-16BE 文件名提取",
+    "strings -e b",
+    "隐藏文件名发现"
+  ],
+  "hints": [
+    "首页说素材目录 assets/ 由 Mac 维护。macOS 的 Finder 会在目录里留一个 .DS_Store 二进制文件——先把它下载下来：curl http://TARGET/recon5/assets/.DS_Store -o .DS_Store",
+    ".DS_Store 是二进制，但文件名以 UTF-16BE 明文存于其中。用 strings -e b .DS_Store（或 python 解码 UTF-16BE）提取文件名清单。",
+    "提取结果里有个不属于页面上链接的文件：secret_5ec27afb2d19.txt —— 访问 http://TARGET/recon5/assets/secret_5ec27afb2d19.txt 即得 flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "recon4",
+  "next": "recon6"
+}

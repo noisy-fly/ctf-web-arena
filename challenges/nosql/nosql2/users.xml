@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+  <user>
+    <id>1</id>
+    <username>admin</username>
+    <password>flag{nosql2_64af2cf8}</password>
+    <role>admin</role>
+    <note>管理员口令即通关令牌</note>
+  </user>
+  <user>
+    <id>2</id>
+    <username>bob</username>
+    <password>bob-Passw0rd-8848</password>
+    <role>user</role>
+    <note>普通用户</note>
+  </user>
+  <user>
+    <id>3</id>
+    <username>carol</username>
+    <password>carol-Passw0rd-1123</password>
+    <role>user</role>
+    <note>普通用户</note>
+  </user>
+</users>

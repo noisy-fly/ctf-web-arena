@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CTF Web Arena · 教学式关卡靶场</title>
+<script src="/assets/boot.js"></script>
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚩</text></svg>">
+</head>
+<body>
+<header class="topbar">
+  <div class="logo"><span class="badge">🚩</span> CTF Web Arena</div>
+  <span class="tag">教学式靶场</span>
+  <div class="spacer"></div>
+  <button class="icon-btn" id="resetBtn" title="重置我的进度（清空已解记录）" style="width:auto;padding:0 12px;font-size:.85rem">↺ 重置进度</button>
+  <button class="icon-btn" id="themeBtn" title="切换明暗主题">🌙</button>
+</header>
+
+<section class="hero">
+  <h1>从零到一，通关 CTF Web 全题型</h1>
+  <p>每一类 Web 漏洞都是一条关卡线：<b>同一条线内按序解锁</b>——解出当前题，才能进入下一题。
+     每题自带渐进式提示与源码，边打题边补知识。你的进度保存在浏览器会话中。</p>
+  <div class="stats">
+    <div class="stat"><b id="statSolved">0</b><span>已解题数</span></div>
+    <div class="stat"><b id="statTotal">0</b><span>题目总数</span></div>
+    <div class="stat"><b id="statCats">0</b><span>开放关卡线</span></div>
+  </div>
+</section>
+
+<section class="hero" style="padding-top:0">
+  <h3 style="margin:0 0 10px">🧭 玩法说明</h3>
+  <p style="margin:.4rem 0">
+    <b>① 选一条关卡线开始</b>：信息收集 → SQL 注入 → XSS → 文件上传 → 文件包含 → 命令执行 → SSRF → XXE → SSTI → 反序列化 → NoSQL → 认证/CSRF/JWT/会话/CORS/重定向/CRLF/GraphQL/原型链/变量覆盖 → 业务逻辑 → 弱口令 → 代码审计 → 敏感文件读取 → Web 杂项 → 综合进阶，共 20+ 条线、近百题。
+    <b>② 线性解锁</b>：同一条线内做对上一题，下一题才开门；flag 统一在上方关卡面板提交校验。
+    <b>③ 三级渐进提示</b>：卡住时逐级展开提示，从方向到步骤再到接近答案；每题附知识卡片与完整 writeup。
+    <b>④ XSS 专享</b>：XSS 线配备模拟 Victim Bot，把带 payload 的链接喂给它即可验证利用是否成功。
+  </p>
+</section>
+
+<main class="tracks" id="tracks">
+  <div class="cat-card" style="text-align:center;color:var(--fg-soft)">关卡地图加载中…</div>
+</main>
+
+<footer>
+  仅供安全教学与自学练习 · 所有靶标均运行在隔离容器中 · 请勿对站外真实系统使用此处学到的攻击技术<br>
+  明暗主题跟随系统并可手动切换 · 进度按浏览器会话保存
+</footer>
+
+<script src="/assets/app.js" defer></script>
+</body>
+</html>

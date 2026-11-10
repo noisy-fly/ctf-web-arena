@@ -1,0 +1,27 @@
+{
+  "id": "read1",
+  "category": "read",
+  "title": "目录里散步 —— 过滤一次的 ../",
+  "difficulty": "easy",
+  "url_path": "/read1",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8309,
+  "flag": "flag{read1_4920ff2d}",
+  "flag_source": "secret_zone/flag.txt（题目文件，路径即考点）",
+  "php_required": ">=7.0（PHP 8 亦可解）",
+  "knowledge": [
+    "目录遍历",
+    "str_replace 单次过滤",
+    "双写绕过",
+    "realpath 修复"
+  ],
+  "hints": [
+    "str_replace 替换一次后不重扫结果",
+    "....// 经一次替换后变回 ../",
+    "?page=....//secret_zone/flag.txt"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "read2"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "sql8",
+  "category": "sql",
+  "title": "ORDER BY 注入",
+  "difficulty": "hard",
+  "url_path": "/sql8",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{sql8_9e497864}",
+  "knowledge": [
+    "ORDER BY 注入",
+    "排序字段白名单缺失",
+    "CASE WHEN 布尔盲注",
+    "ORDER BY 不可参数化"
+  ],
+  "hints": [
+    "注入点在 ORDER BY 后面：这里不能 UNION，但可以放【表达式】。先试试 sort=id DESC 和 sort=price，再试试 sort=(CASE WHEN 1=2 THEN id ELSE title END) —— 首行变了吗？",
+    "flag 在 flag_secret.flag。把条件换成对 flag 的提问：sort=(CASE WHEN (SELECT substr(flag,1,1) FROM flag_secret)='f' THEN id ELSE title END) —— 首行是《Web安全入门指南》说明条件为真（按 id 排），首行是《CTF从零到一》说明为假（按 title 排）。这就是 1bit 信道。",
+    "等值比较太慢，用大于号二分（7 次定一个字符）：sort=(CASE WHEN (SELECT substr(flag,6,1) FROM flag_secret)>'m' THEN id ELSE title END) 完整自动脚本见 writeup。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "sql7",
+  "next": "sql9"
+}

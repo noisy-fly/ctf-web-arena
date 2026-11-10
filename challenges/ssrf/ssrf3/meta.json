@@ -1,0 +1,24 @@
+{
+  "id": "ssrf3",
+  "category": "ssrf",
+  "title": "加了黑名单的预览工具 · IP 限制绕过",
+  "difficulty": "medium",
+  "url_path": "/ssrf3",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{ssrf3_c4650bcd}",
+  "knowledge": [
+    "IP 等价写法绕过字面量黑名单",
+    "十进制 2130706433 / 十六进制 0x7f000001 / 八进制 0177.0.0.1 / 短格式 127.1",
+    "302 跳转与 DNS rebinding 概念",
+    "黑名单 vs 解析后校验"
+  ],
+  "hints": [
+    "黑名单是对 host 字符串的 strpos 匹配：127.0.0.1 被拦，但同一个 IP 有很多种写法",
+    "127.1、2130706433、0x7f000001、0177.0.0.1 都解析为 127.0.0.1",
+    "?url=http://2130706433/ssrf3/internal.php（或 127.1 / 0x7f000001 等变体；独立容器去掉 /ssrf3）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "ssrf2",
+  "next": "ssrf4"
+}

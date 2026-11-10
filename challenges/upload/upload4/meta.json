@@ -1,0 +1,24 @@
+{
+  "id": "upload4",
+  "category": "upload",
+  "title": ".user.ini 配置文件上传 getshell",
+  "difficulty": "hard",
+  "url_path": "/upload4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{upload4_b4bf79ba}",
+  "knowledge": [
+    "user_ini 机制：PHP-FPM 目录级配置与 auto_prepend_file",
+    ".htaccess（Apache 孪生考点）：SetHandler/AddType 改解析、php_value 注入",
+    "上传目录禁解析与存储隔离（nginx deny / 对象存储 / user_ini.filename 置空）"
+  ],
+  "hints": [
+    "白名单里除了图片还有一个 .ini——PHP 会自动读每个目录下的 .user.ini，它属于\"配置文件\"而不是数据文件",
+    "auto_prepend_file 是 PHP_INI_PERDIR 指令：写进 uploads/.user.ini 后，该目录所有 PHP 请求都会先自动包含你指定的文件（上传后约 2 秒生效）",
+    "两步走：先传 .user.ini（auto_prepend_file=shell.jpg），再传 shell.jpg（内容读 ../flag.php 源码），最后访问 uploads/index.php 触发"
+  ],
+  "writeup": "writeup.md",
+  "prev": "upload3",
+  "next": "upload5",
+  "replacement_note": "原 Apache .htaccess 版保留于 _original/；nginx+php-fpm 栈上等价平移为 .user.ini"
+}

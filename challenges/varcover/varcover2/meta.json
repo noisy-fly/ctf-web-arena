@@ -1,0 +1,23 @@
+{
+  "id": "varcover2",
+  "category": "varcover",
+  "title": "星舰门禁 · parse_str + $$ 可变变量",
+  "difficulty": "hard",
+  "url_path": "/varcover2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{varcover2_52098fb7}",
+  "knowledge": [
+    "$$ 可变变量（变量名间接引用）",
+    "parse_str 解析 + $$ 导入循环 = PHP5 单参数 parse_str 的自研复刻",
+    "黑名单的字符串匹配被双重 URL 编码绕过（进阶变体）"
+  ],
+  "hints": [
+    "判定条件 $$name === 'admin' 不要求 name 是 level2——只要“名为 $name 值的那个变量”的值是 admin。任何名字都行。",
+    "导入循环会把 input 的每个键都变成真实变量：你既可控 $name 的值，也可以凭空创建一个值为 admin 的变量。",
+    "payload：?input=name=x&x=admin → 导入后 $name='x'、$x='admin'，$$name=$x='admin' 开门。黑名单更严时可用双重 URL 编码（%2561dmin）让敏感词只在 parse_str 解码后才出现。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "varcover1",
+  "next": null
+}

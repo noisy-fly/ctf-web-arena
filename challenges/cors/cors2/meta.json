@@ -1,0 +1,23 @@
+{
+  "id": "cors2",
+  "category": "cors",
+  "title": "星帆行情 · null Origin 与后缀匹配",
+  "difficulty": "hard",
+  "url_path": "/cors2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{cors2_593b25eb}",
+  "knowledge": [
+    "Origin: null 的来源（沙盒 iframe/file://等）与放行 null 的风险",
+    "host 后缀匹配无点边界：evil-stars-partner.com 骗过 stars-partner.com",
+    "沙盒 iframe + postMessage 的利用形态；精确白名单才是正解"
+  ],
+  "hints": [
+    "接口 quote.php 需要合作方密钥 ?key=STARPARTNER-2024（页面底部给了）。难点不是 key，而是从“非合作方的源”读到响应。",
+    "沙盒 iframe（<iframe sandbox=\"allow-scripts\" srcdoc=…>，无 allow-same-origin）里的文档源是 null；file:// 页面也是。服务端偏偏放行了 null。",
+    "打开 lab.html 点按钮②：沙盒 iframe 里的 null 源脚本 fetch quote.php，服务端反射 ACAO:null，脚本读到 JSON 后 postMessage 回实验台显示 flag；按钮③打修复版 fixed_quote.php 会 TypeError（对照组）。curl 层面还可演示后缀匹配：-H \"Origin: https://evil-stars-partner.com\" 会被反射放行。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "cors1",
+  "next": null
+}

@@ -1,0 +1,27 @@
+{
+  "id": "ssti2",
+  "category": "ssti",
+  "title": "欢迎语生成器 2.0 · Jinja2 过滤绕过",
+  "difficulty": "easy",
+  "difficulty_level": 2,
+  "url_path": "/ssti2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{ssti2_bbe91042}",
+  "replacement_note": "原 Python/Flask(Jinja2) 版已移至 _original/；PHP 8.2 版沿用同一黑名单（_ ' \" config self），考点平移为：URL 参数走私（引擎 2.0 把查询参数注册为模板变量 $xxx）与 chr() 拼接绕过引号过滤，flag 在 flag.php 的 PHP 注释里。",
+  "knowledge": [
+    "SSTI 黑名单绕过",
+    "URL 参数走私（引擎 2.0 把查询参数注册为模板变量 $xxx）",
+    "chr() 拼接绕过引号过滤",
+    "exec/system/passthru 命令执行",
+    "$_GET/$GLOBALS/get_defined_vars 名字带下划线被拦（对应原版 url_for 梗）"
+  ],
+  "hints": [
+    "先输入 {{7*7}}：这些字符不在黑名单里，回显 49 说明 SSTI 还在，只是拿 config 的老路被「关键词+下划线+引号」堵死。再试 {{$_GET}}：PHP 里最顺手的超全局 $_GET（还有 $GLOBALS、get_defined_vars()）名字自带下划线，直接被拦——对应原 Flask 版 url_for 被拦的梗。",
+    "引擎 2.0 的新特性是本关钥匙：URL 查询参数会被自动注册成模板变量（?cmd=xxx → {{}} 里就能用 $xxx），而查询字符串不经过 name 的黑名单。把命令这类违禁内容放进参数里走私，模板体只写变量名；再想想哪些命令执行函数（exec/system/passthru）名字里没有下划线和引号。",
+    "完整 payload：/?name={{exec($cmd)}}&cmd=cat flag.php —— name 里零违禁字符，exec 返回命令输出的最后一行，正好是 flag.php 那行注释（Windows 本地用 cmd=type flag.php）。不想走私也可以 chr() 拼接：{{exec(chr(99).chr(97).chr(116).chr(32).chr(102).chr(108).chr(97).chr(103).chr(46).chr(112).chr(104).chr(112))}}。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "ssti1",
+  "next": "ssti3"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "crlf1",
+  "category": "crlf",
+  "title": "星语小铺 · CRLF 响应头注入（Set-Cookie）",
+  "difficulty": "medium",
+  "url_path": "/crlf1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{crlf1_f6199eaa}",
+  "knowledge": [
+    "CRLF 注入原理：\\r\\n 分隔协议文本，输入可裂变出新头",
+    "Set-Cookie 注入冒充身份；手改 Cookie 无效的原因（服务端只认真正下发过的）",
+    "为何现代框架已拦、漏洞仍存在于代理/网关/拼接场景"
+  ],
+  "hints": [
+    "先访问 /crlf1/setlang.php?lang=zh-CN：页面渲染的“原始响应报文”里，Set-Cookie 的值就是你的输入（PHP 解析 $_GET 时已完成 URL 解码）。想让“一个值”变成“两个头”，需要在中间塞一个 HTTP 头分隔符。",
+    "URL 编码：%0d%0a 会被解码成 \\r\\n（回车换行），空格用 %20。注入的第二个头要伪装成什么？——题目说了管理员认 role=admin。",
+    "payload：/crlf1/setlang.php?lang=guest%0d%0aSet-Cookie:%20role=admin（模拟报文裂变出第二个头并记入“服务端下发记录”），回到 /crlf1/ 首页——管理员口令出现。对照：/crlf1/setlang.php?lang=…&real=1 是真实带防护的响应（拒绝 CRLF）。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "crlf2",
+  "notes": "PHP 8.2 无依赖。header()/setcookie() 层面阻断 CRLF，故漏洞响应由 setlang.php 以“原始 HTTP 报文逐字节渲染”方式模拟呈现（会话内记录“服务端下发过”的 Cookie，index.php 据此判定管理员）；setlang.php?real=1 提供真实防护对照（真实 302 / 真实 Set-Cookie / 400 拒绝）。原 Python 实现保留于 _original/。"
+}

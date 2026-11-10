@@ -1,0 +1,24 @@
+{
+  "id": "miscw2",
+  "category": "misc-web",
+  "title": "星云留言板 - HTTP 头注入 / CRLF(Set-Cookie 注入)",
+  "difficulty": "medium",
+  "url_path": "/miscw2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{miscw2_e688c64d}",
+  "deploy_note": "PHP 8.2;header()/setcookie() 层面阻断 CRLF,故漏洞响应以 setname.php 逐字节模拟报文呈现(会话内记录\"服务端下发过\"的 Cookie),setname.php?real=1 提供真实防护对照(真实 302/真实 Set-Cookie/400 拒绝)",
+  "knowledge": [
+    "CRLF 注入/HTTP 响应拆分(%0d%0a 折行注入任意头)",
+    "Set-Cookie 注入的现实危害(会话固定/缓存投毒)",
+    "头值白名单/编码的修复;框架拦截只是补救"
+  ],
+  "hints": [
+    "先访问 setname.php?name=Bob,看模拟报文里 name 出现在哪一行(Set-Cookie: visitor=...);再用 curl -i 对比真实响应头。",
+    "URL 编码的回车换行是 %0d%0a。在 name 后接 %0d%0aSet-Cookie:%20role=admin,再看模拟报文多出了哪一行。",
+    "注入成功后(同一会话,curl 记得 -b/-c 保存 Cookie)访问 admin.php —— 服务端记录过它下发过 role=admin,管理入口即开放。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "miscw1",
+  "next": null
+}

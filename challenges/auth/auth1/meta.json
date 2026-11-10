@@ -1,0 +1,23 @@
+{
+  "id": "auth1",
+  "category": "auth",
+  "title": "星云后台登录 - 万能密码(SQL注入) / 弱口令",
+  "difficulty": "easy",
+  "url_path": "/auth1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{auth1_030a88b8}",
+  "knowledge": [
+    "弱口令登录(易猜口令)",
+    "万能密码:SQL 拼接 + 注释符绕过密码条件",
+    "参数化查询是根治手段"
+  ],
+  "hints": [
+    "先试弱口令:admin 的密码大概是用户名加点什么?(admin123 / admin@123 / 123456…)",
+    "万能密码:用户名填 admin' -- (注意 -- 后面有个空格),密码随便填,观察下方打印的 SQL 形状。",
+    "更多姿势:用户名 ' OR 1=1 -- (返回第一行 admin);密码框 ' OR '1'='1 也可以。登录后面板有 flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "auth2"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "lfi2",
+  "category": "lfi",
+  "title": "重构后的官网 · php://filter 读源码",
+  "difficulty": "easy",
+  "url_path": "/lfi2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{lfi2_fcfe849f}",
+  "knowledge": [
+    "php://filter 流包装器",
+    "convert.base64-encode 读源码",
+    "include 是执行不是显示",
+    "resource 相对/绝对路径"
+  ],
+  "hints": [
+    "直接 ?page=pages/secret_config.php 没有任何输出：PHP 文件被 include 是被执行，源码看不到",
+    "php://filter/convert.base64-encode/resource=文件 把源码 base64 化后当文本吐出（无需 allow_url_include）",
+    "?page=php://filter/convert.base64-encode/resource=pages/secret_config.php → base64 解码得 flag"
+  ],
+  "writeup": "writeup.md",
+  "prev": "lfi1",
+  "next": "lfi3"
+}

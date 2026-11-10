@@ -1,0 +1,27 @@
+{
+  "id": "weak2",
+  "category": "weak",
+  "title": "函数遇到数组时 —— strcmp / md5 返回 NULL",
+  "difficulty": "easy",
+  "url_path": "/weak2",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8302,
+  "flag": "flag{weak2_75f665a2}",
+  "flag_source": "config.php 内 get_flag()，可用环境变量 FLAG 覆盖",
+  "php_required": "PHP 5.x-7.x 必须（PHP 8 对内部函数传数组直接抛 TypeError，本题不可解）",
+  "knowledge": [
+    "strcmp 数组绕过",
+    "md5 数组返回 NULL",
+    "NULL==0 松散比较",
+    "GET 数组参数"
+  ],
+  "hints": [
+    "GET 参数可传数组：?password[]=1",
+    "PHP7 中 strcmp/md5 收到数组返回 NULL（仅 warning）",
+    "?password[]=1 或 ?x[]=1&y[]=2 任一通过"
+  ],
+  "writeup": "writeup.md",
+  "prev": "weak1",
+  "next": "weak3"
+}

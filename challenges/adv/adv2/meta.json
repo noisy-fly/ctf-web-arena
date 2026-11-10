@@ -1,0 +1,29 @@
+{
+  "id": "adv2",
+  "category": "adv",
+  "title": "WebSocket 的门禁 —— 跨站 WebSocket 劫持（CSWSH）",
+  "difficulty": "hard",
+  "url_path": "/adv2",
+  "runtime": "static",
+  "entry": "index.html",
+  "internal_port": 8315,
+  "flag": "flag{adv2_b31c4e1b}",
+  "replaced": true,
+  "replacement_note": "PHP-FPM 无法承载 WebSocket 长连接，按 docs-static 先例（ssti5/pp1）交付静态教学页 + 前端离线模拟器：页面内事件复刻握手（Origin 校验缺失/白名单）、Cookie 自动携带与 welcome/hello/ping/get_flag 会话语义，与原 Python 服务端逐行为一致；管理员令牌每次加载随机生成。原版保留在 _original/。",
+  "flag_source": "flag 内嵌于 index.html 模拟器（原 flag.txt 移至 _original/）",
+  "dependencies": [],
+  "knowledge": [
+    "跨站 WebSocket 劫持",
+    "Origin 校验缺失",
+    "Cookie 随握手自动携带",
+    "Origin 白名单修复"
+  ],
+  "hints": [
+    "WebSocket 不受同源策略约束，Cookie 会随握手自动发送",
+    "在页面演练区点「发起 CSWSH 攻击」：模拟受害者带管理员 Cookie、以攻击者 Origin 完成握手并执行攻击脚本",
+    "脚本保持 {\"type\":\"get_flag\"} 点攻击按钮，flag 出现在 server→victim 帧；再点修复版重放看同样的攻击被 403 拒绝"
+  ],
+  "writeup": "writeup.md",
+  "prev": "adv1",
+  "next": "adv3"
+}

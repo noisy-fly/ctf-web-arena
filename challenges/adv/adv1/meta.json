@@ -1,0 +1,27 @@
+{
+  "id": "adv1",
+  "category": "adv",
+  "title": "查询语言的内省 —— GraphQL 信息泄露",
+  "difficulty": "hard",
+  "url_path": "/adv1",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8314,
+  "flag": "flag{adv1_a146e9ca}",
+  "flag_source": "flag.txt（PHP 端点运行时读取；可用环境变量 FLAG 覆盖，systemEnv(key:\"FLAG\") 返回）",
+  "dependencies": [],
+  "knowledge": [
+    "GraphQL 内省",
+    "隐藏字段发现",
+    "variables 绕过文本 WAF",
+    "unicode 转义绕过"
+  ],
+  "hints": [
+    "内省查询：{__schema{types{name fields{name}}}}",
+    "发现隐藏字段 systemEnv(key)；直接查 FLAG 被 WAF 拦",
+    "变量：query($k:String!){systemEnv(key:$k)} + {\"k\":\"FLAG\"}"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "adv2"
+}

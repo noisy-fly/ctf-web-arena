@@ -1,0 +1,24 @@
+{
+  "id": "cors1",
+  "category": "cors",
+  "title": "星语笔记 · CORS 反射 Origin",
+  "difficulty": "medium",
+  "url_path": "/cors1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{cors1_b32ab893}",
+  "knowledge": [
+    "同源策略与 CORS 的关系（SOP 管“读”，CORS 是白名单放行）",
+    "反射任意 Origin + Allow-Credentials 的灾难组合",
+    "攻击者页面 fetch(credentials:'include') 带受害者 Cookie 跨源读取"
+  ],
+  "hints": [
+    "先 ?action=claim 领取身份（种下会话 Cookie），本页“我的笔记预览”确认 API 正常返回 private_note。",
+    "攻击者页面在 attacker/attack.html，部署在另一端口即是另一源：本机 cd attacker && php -S 127.0.0.1:8309，浏览器打开 http://127.0.0.1:8309/attack.html。",
+    "点攻击者页面的“领取”按钮：fetch 带 credentials:'include'，api.php 把攻击者的 Origin 反射进 Access-Control-Allow-Origin，于是它的 JS 读到了你的 private_note（flag）。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "cors2",
+  "notes": "attacker/attack.html 必须部署在与主站不同的【端口或域】（构成不同 Origin、同 Site，SameSite=Lax 不拦截）；集成时可在 8090 等端口用静态服务提供 attacker 目录，并把 attack.html 中的 TARGET 改为主站 api.php 地址（默认 http://<主站host>/cors1/api.php，本机自测为 127.0.0.1:8308）。"
+}

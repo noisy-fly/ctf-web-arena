@@ -1,0 +1,27 @@
+{
+  "id": "code1",
+  "category": "code",
+  "title": "把函数名也交出去 —— 动态函数调用",
+  "difficulty": "easy",
+  "url_path": "/code1",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8306,
+  "flag": "flag{code1_4f66ef1a}",
+  "flag_source": "config.php 内 get_flag()，可用环境变量 FLAG 覆盖",
+  "php_required": ">=7.0（PHP 8 亦可解）",
+  "knowledge": [
+    "动态函数调用",
+    "call_user_func",
+    "黑名单绕过",
+    "file_get_contents 读源码"
+  ],
+  "hints": [
+    "黑名单只拦命令执行类函数",
+    "读文件函数：file_get_contents/readfile/show_source",
+    "?f=file_get_contents&p=config.php"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "code2"
+}

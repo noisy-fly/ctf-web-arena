@@ -1,0 +1,27 @@
+{
+  "id": "code2",
+  "category": "code",
+  "title": "create_function 的旧伤口 —— 函数体注入",
+  "difficulty": "medium",
+  "url_path": "/code2",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8307,
+  "flag": "flag{code2_2dbd21f2}",
+  "flag_source": "config.php 内 get_flag()，可用环境变量 FLAG 覆盖",
+  "php_required": "PHP 5.x-7.x（create_function 于 PHP 8 移除；assert 字符串求值同被移除）",
+  "knowledge": [
+    "create_function 注入",
+    "} 逃逸注入语句",
+    "assert 代码执行",
+    "eval 家族"
+  ],
+  "hints": [
+    "表达式被拼进函数体 return 之后",
+    "?m=calc&e=file_get_contents('config.php')",
+    "进阶：?m=calc&e=1;}print_r(file_get_contents('config.php'));//"
+  ],
+  "writeup": "writeup.md",
+  "prev": "code1",
+  "next": "code3"
+}

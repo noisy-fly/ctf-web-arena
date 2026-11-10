@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>adv3 · 缓存投毒与请求走私（离线模拟器）</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"Segoe UI","Microsoft YaHei",sans-serif; background:#0d1117; color:#e6edf3; line-height:1.65; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 24px 20px 70px; }
+  header { border-bottom:1px solid #30363d; padding-bottom:14px; margin-bottom:20px; }
+  .cat { color:#58a6ff; font-size:14px; letter-spacing:1px; }
+  h1 { font-size:26px; margin:6px 0 10px; }
+  .badges { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .badge { font-size:12px; padding:2px 10px; border-radius:10px; border:1px solid currentColor; }
+  h2 { font-size:17px; margin:30px 0 10px; color:#58a6ff; border-left:3px solid #58a6ff; padding-left:10px; }
+  .desc { color:#c9d1d9; }
+  .desc code, .lab code, .hint-body code, .note code { background:#0a0d12; border:1px solid #30363d; border-radius:4px; padding:0 5px; color:#79c0ff; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { background:#161b22; border:1px solid #30363d; border-radius:14px; padding:2px 12px; font-size:13px; color:#79c0ff; }
+  .lab { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:16px; margin-bottom:16px; }
+  .note { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:14px 16px; color:#c9d1d9; }
+  details.hint { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px 14px; margin:8px 0; }
+  details.hint summary { cursor:pointer; color:#d29922; }
+  .hint-body { color:#c9d1d9; margin-top:6px; }
+  .srcbox { background:#0a0d12; border:1px solid #30363d; border-radius:8px; padding:12px 14px; overflow:auto; }
+  .srcbox pre { margin:0; } .srcbox code { font-family:Consolas,monospace; font-size:13px; }
+  input[type=text] { background:#0d1117; color:#e6edf3; border:1px solid #30363d; border-radius:6px; padding:8px 10px; font-family:Consolas,monospace; }
+  textarea { background:#0d1117; color:#e6edf3; border:1px solid #30363d; border-radius:6px; padding:8px 10px; font-family:Consolas,monospace; width:100%; min-height:200px; }
+  button { background:#1f6feb; border:none; color:#fff; border-radius:6px; padding:8px 18px; cursor:pointer; font-size:14px; margin-top:8px; }
+  button.ghost { background:#30363d; }
+  button.green { background:#238636; }
+  pre.out { background:#0a0d12; border:1px dashed #30363d; border-radius:6px; padding:10px; overflow:auto; font-size:13px; white-space:pre-wrap; word-break:break-all; }
+  form.flagform { display:flex; gap:10px; margin-top:10px; flex-wrap:wrap; }
+  form.flagform input[type=text] { flex:1; min-width:240px; }
+  form.flagform button { background:#238636; margin-top:0; }
+  .step { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:6px 0; }
+  .stepnum { background:#1f6feb; color:#fff; border-radius:50%; width:26px; height:26px; display:flex; align-items:center; justify-content:center; font-size:14px; flex:none; }
+  .quizopt { display:block; margin:6px 0; cursor:pointer; }
+  .nav { display:flex; justify-content:space-between; margin-top:40px; border-top:1px solid #30363d; padding-top:14px; font-size:14px; }
+  .nav a { color:#58a6ff; text-decoration:none; }
+  #flagResult { color:#d29922; font-size:14px; margin-top:8px; word-break:break-all; }
+</style>
+</head><body><div class="wrap">
+<header>
+  <div class="cat">CTF Web 教学靶场 · 进阶攻击面 · adv3</div>
+  <h1>让缓存替你说谎 —— 缓存投毒 & 请求走私</h1>
+  <div class="badges">
+    <span class="badge" style="color:#f85149">难度：高阶</span>
+    <span class="badge" style="color:#79c0ff">进阶攻击面</span>
+    <span class="badge" style="color:#d29922">离线模拟器</span>
+  </div>
+</header>
+
+<h2>📖 题目描述</h2>
+<div class="desc">
+受害站点 <code>/home</code> 的统计脚本域名取自 <code>X-Forwarded-Host</code> 请求头，
+而 CDN 缓存键<b>只含路径</b>（"未入键"头 = 缓存投毒的经典温床）。
+攻击者只需带恶意头请求一次 <code>/home</code>，之后<b>所有人</b>都会拿到被污染的页面、
+执行攻击者域上的 JS。完整走通：① 投毒 → ② 受害者访问 → ③ 攻击者日志里偷到的 Cookie（含 flag）。
+第二条拿 flag 的路：在"修复挑战"里选对正确的 Nginx 配置——<b>flag 就放在正确配置里</b>。
+</div>
+
+<h2>🔌 为什么这一关是离线模拟器</h2>
+<div class="note">
+缓存投毒的"受害者"是<b>反代/CDN 缓存层</b>，请求走私的成因是<b>前后端两个解析器对同一字节流的分歧</b>——
+两者都依赖反向代理拓扑，单层 PHP-FPM 无法保真复现。本关按 docs-static 先例（ssti5 / pp1）交付
+<b>静态教学页 + 前端离线模拟器</b>：缓存键/缓存命中/投毒覆盖、CL 与 TE 两种切分视角，
+全部在页面内用 JS 按原服务端（<code>_original/app.py</code>）的语义逐行复刻。
+</div>
+
+<h2>🧪 实验一 · 缓存投毒攻击链</h2>
+<div class="lab">
+  <div class="step"><span class="stepnum">1</span>
+    <input type="text" id="evilhost" value="evil.attacker.test" style="max-width:280px">
+    <button onclick="doPoison()">污染缓存（携带 X-Forwarded-Host）</button>
+  </div>
+  <div class="step"><span class="stepnum">2</span>
+    <button class="green" onclick="doVisit()">受害者访问 /home</button>
+    <span style="color:#8b949e;font-size:13px;">（模拟已登录用户，Cookie 里有秘密）</span>
+  </div>
+  <div class="step"><span class="stepnum">3</span>
+    <button class="ghost" onclick="doLog()">查看攻击者日志</button>
+    <button class="ghost" onclick="doReset()">重置环境</button>
+    <button class="ghost" onclick="doHome()">直接看当前缓存的 /home</button>
+  </div>
+  <pre class="out" id="out1">等待操作……</pre>
+</div>
+
+<h2>🧪 实验二 · 请求走私（CL.TE / TE.CL）</h2>
+<div class="desc" style="margin-bottom:8px;">
+前后端对同一字节流按不同头（Content-Length vs Transfer-Encoding: chunked）切分，
+对"剩余字节属于下一个请求"判断不一致，即 desync——走私的请求会"插队"污染连接，
+常与缓存投毒组合：走私的响应直接写进缓存。
+</div>
+<div class="lab">
+  <button class="ghost" onclick="setSmuggle(0)">载入 CL.TE 样例</button>
+  <button class="ghost" onclick="setSmuggle(1)">载入 TE.CL 样例</button>
+  <textarea id="smug"></textarea>
+  <button onclick="doSmuggle()">解析两种视角</button>
+  <pre class="out" id="out2">解析结果会展示前端/后端各自看到的请求边界……</pre>
+</div>
+
+<h2>🛠 修复挑战（选对正确的配置也能拿 flag）</h2>
+<div class="lab" id="quizlab">
+  <label class="quizopt"><input type="radio" name="q" value="A"> A. 把缓存 TTL 从 10 分钟调到 10 秒，污染自然过期。</label>
+  <label class="quizopt"><input type="radio" name="q" value="B"> B. 应用不再直接信任 X-Forwarded-Host 拼接资源 URL，改用固定配置域名；同时缓存键 proxy_cache_key 加入 $http_x_forwarded_host/$host，未命中白名单回退默认域。</label>
+  <label class="quizopt"><input type="radio" name="q" value="C"> C. 全站升级到 HTTPS 并开启 HSTS。</label>
+  <label class="quizopt"><input type="radio" name="q" value="D"> D. 在 WAF 上屏蔽包含 X-Forwarded-Host 的请求。</label>
+  <button onclick="doQuiz()">提交选择</button>
+  <pre class="out" id="out3">flag 藏在正确配置里……</pre>
+</div>
+
+<h2>🔍 关键源码（模拟器复刻的原服务端逻辑）</h2>
+<div class="srcbox"><pre><code># /home 处理（漏洞：X-Forwarded-Host 直接反射进响应体，且未计入缓存键）
+@app.route("/home")
+def home():
+    xfh  = request.headers.get("X-Forwarded-Host")
+    body = render_home(xfh)          # &lt;script src="http://{xfh}/analytics/payload.js"&gt;
+    CACHE["/home"] = body            # 缓存键 = path（X-Forwarded-Host 未入键）
+
+# 走私解析器：前端按 Content-Length 切分 vs 后端按 Transfer-Encoding: chunked 切分
+if cl and cl.isdigit():                      # 前端视角
+    end = body_start + int(cl)
+    fe_view = {"剩余字节成为下一个请求": raw[end:]}
+if "chunked" in te:                          # 后端视角
+    ... 逐块读长度行，0 块结束 ...
+    be_view = {"剩余字节成为下一个请求": raw[j + 4:]}
+desync = fe_view["剩余"] != be_view["剩余"]   # 分歧即走私成立</code></pre></div>
+
+<h2>🎓 知识点</h2>
+<div class="chips">
+  <span class="chip">Web 缓存投毒</span><span class="chip">未入键头 X-Forwarded-Host</span>
+  <span class="chip">CL.TE / TE.CL 请求走私</span><span class="chip">proxy_cache_key 修复</span>
+</div>
+
+<h2>💡 渐进提示（按顺序展开）</h2>
+<details class="hint"><summary>💡 提示 1</summary><div class="hint-body">缓存键只有路径：同一个 /home，不同 X-Forwarded-Host 会互相覆盖。</div></details>
+<details class="hint"><summary>💡 提示 2</summary><div class="hint-body">依次点 1→2→3：投毒后受害者加载 evil 域脚本，脚本偷走 document.cookie（secret= 就在日志里）。</div></details>
+<details class="hint"><summary>💡 提示 3</summary><div class="hint-body">走私实验载入 CL.TE 样例点解析：前端按 CL 认为"剩余"是 POST…，后端按 chunked 认为是 GPOST…；修复挑战选 B 也能拿 flag。</div></details>
+
+<h2>🚩 提交 Flag</h2>
+<form class="flagform" id="flagForm" onsubmit="return false">
+  <input type="text" id="flagInput" placeholder="flag{adv3_xxxxxxxx}" required>
+  <button type="button" onclick="submitFlag()">提交 Flag</button>
+</form>
+<div id="flagResult"></div>
+
+<div class="nav"><a href="/adv2">← 上一关：WebSocket 的门禁</a><span>通关愉快 🎉</span></div>
+</div>
+
+<script>
+// ===================== 模拟器本体 =====================
+// 语义与原 Python 服务端（_original/app.py）逐行对应，纯页面内状态。
+var FLAG = "flag{adv3_aac55080}";
+var VICTIM_COOKIE = 'session=9f8e7d31c4; remember=1; secret=' + FLAG;
+var DEFAULT_ANALYTICS = 'static.analytics-cdn.test';
+
+var CACHE = null;          // '/home' -> body（缓存键只有 path —— 这正是漏洞）
+var EVIL_HOSTS = {};       // host -> true（攻击者控制的域）
+var ATTACKER_LOG = [];     // 攻击者日志
+
+var OUT1 = document.getElementById('out1');
+function show(el, obj){ el.textContent = typeof obj === 'string' ? obj : JSON.stringify(obj, null, 2); }
+
+function renderHome(host){
+  var h = host || DEFAULT_ANALYTICS;
+  return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>首页 - 受害站点</title></head>\n' +
+'<body style="font-family:sans-serif">\n' +
+'<h1>欢迎使用我们的站点</h1><p>今日天气：晴。今日特价：无。</p>\n' +
+'<!-- 运营要求支持"自定义域名"，统计脚本域名取自 X-Forwarded-Host -->\n' +
+'<script src="http://' + h + '/analytics/payload.js"><\/script>\n' +
+'</body></html>';
+}
+
+function doPoison(){
+  var host = (document.getElementById('evilhost').value || 'evil.attacker.test').trim();
+  if (!host || host.length > 100 || host.indexOf('/') >= 0) {
+    show(OUT1, {ok: false, msg: 'host 参数非法'}); return;
+  }
+  var body = renderHome(host);
+  CACHE = body;                          // 缓存键 = path：投毒响应覆盖正常响应
+  EVIL_HOSTS[host] = true;
+  ATTACKER_LOG.push({type: 'poison', detail: '缓存 /home 已被污染，script 指向 "' + host + '"'});
+  show(OUT1, {ok: true, msg: '已用 X-Forwarded-Host: ' + host + ' 请求 /home，缓存被污染',
+              poisoned_body: body});
+}
+
+function doVisit(){
+  if (CACHE === null) {
+    show(OUT1, {ok: false, msg: '缓存为空，先点「污染缓存」或先正常访问 /home'}); return;
+  }
+  var body = CACHE;                      // 受害者命中缓存（无论他是谁）
+  var logLen = ATTACKER_LOG.length;
+  var m = body.match(/src="http:\/\/([^/]+)\/analytics\/payload\.js"/);
+  var loaded = null;
+  if (m && EVIL_HOSTS[m[1]]) {
+    loaded = m[1];
+    ATTACKER_LOG.push({type: 'victim_exec', detail: '受害者加载了 http://' + loaded + '/analytics/payload.js 并执行'});
+    ATTACKER_LOG.push({type: 'stolen_cookie', detail: 'payload 执行 document.cookie → 回传：', data: VICTIM_COOKIE});
+  }
+  var out = {ok: true, victim_saw: body, script_host: m ? m[1] : null, executed_evil: loaded !== null,
+             new_log: ATTACKER_LOG.slice(logLen)};
+  show(OUT1, out);
+}
+
+function doLog(){ show(OUT1, {log: ATTACKER_LOG}); }
+function doReset(){
+  CACHE = null; EVIL_HOSTS = {}; ATTACKER_LOG = [];
+  show(OUT1, {ok: true, msg: '缓存与日志已清空'});
+}
+function doHome(){
+  show(OUT1, CACHE === null ? '（缓存为空：正常访问 /home 会回源，统计域名是 ' + DEFAULT_ANALYTICS + '）' : CACHE);
+}
+
+// ---------------- 请求走私解析器（真实切分逻辑） ----------------
+function repr(s){ return s === '' ? "''" : "'" + s + "'"; }
+
+function parseSmuggle(raw){
+  raw = raw.split('\n').join('\r\n').split('\r\r').join('\r');
+  var headEnd = raw.indexOf('\r\n\r\n');
+  if (headEnd < 0) return {ok: false, msg: '缺少空行（\\r\\n\\r\\n）分隔头与体'};
+  var head = raw.slice(0, headEnd), bodyStart = headEnd + 4;
+  var headers = {};
+  head.split('\r\n').slice(1).forEach(function(line){
+    var i = line.indexOf(':');
+    if (i >= 0) headers[line.slice(0, i).trim().toLowerCase()] = line.slice(i + 1).trim();
+  });
+  var cl = headers['content-length'];
+  var te = (headers['transfer-encoding'] || '').toLowerCase();
+
+  var feView = null, beView = null;
+  if (cl && /^\d+$/.test(cl)) {                       // 前端视角：按 Content-Length 切分
+    var end = bodyStart + parseInt(cl, 10);
+    feView = {说明: '前端按 Content-Length=' + cl + ' 切分',
+              '第一个请求(头)': head,
+              '第一个请求(体)': repr(raw.slice(bodyStart, end)),
+              '剩余字节成为下一个请求': repr(raw.slice(end))};
+  }
+  if (te.indexOf('chunked') >= 0) {                   // 后端视角：按 chunked 切分
+    var i = bodyStart, chunks = [];
+    while (true) {
+      var j = raw.indexOf('\r\n', i);
+      if (j < 0) { beView = {说明: '分块长度行不完整（流被挂起）——后端会继续等待'}; break; }
+      var sizeTxt = raw.slice(i, j).trim();
+      if (!/^[0-9a-fA-F]+$/.test(sizeTxt)) { beView = {说明: '分块长度非法：' + repr(sizeTxt)}; break; }
+      var size = parseInt(sizeTxt, 16);
+      if (size === 0) {
+        beView = {说明: '后端按 Transfer-Encoding: chunked 切分（0 块即结束）',
+                  分块: chunks,
+                  '第一个请求(体)': repr(raw.slice(bodyStart, j + 4)),
+                  '剩余字节成为下一个请求': repr(raw.slice(j + 4))};
+        break;
+      }
+      chunks.push(raw.slice(j + 2, j + 2 + size));
+      i = j + 2 + size + 2;
+    }
+  }
+  if (!feView && !beView) return {ok: false, msg: '请求里没有 Content-Length 或 Transfer-Encoding: chunked'};
+  var desync = !!(feView && beView && feView['剩余字节成为下一个请求'] !== beView['剩余字节成为下一个请求']);
+  return {ok: true, front_end: feView, back_end: beView, desync: desync,
+          结论: desync ? '前后端对剩余字节的归属不一致 → 走私成立（desync）'
+                       : '两种切分结果一致（或只解析出一种视角）'};
+}
+
+var TE_INNER = 'GPOST / HTTP/1.1\r\nHost: target.local\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 4\r\n\r\n';
+var SAMPLES = [
+  'POST / HTTP/1.1\r\nHost: target.local\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 6\r\nTransfer-Encoding: chunked\r\n\r\n0\r\n\r\nGPOST / HTTP/1.1\r\nHost: target.local\r\nContent-Length: 4\r\n\r\nx=1',
+  // TE.CL：块数据是完整的"内层请求"（108 字节 = 0x6c），其后是块尾 CRLF + 0 块终止
+  'POST / HTTP/1.1\r\nHost: target.local\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: 4\r\nTransfer-Encoding: chunked\r\n\r\n' + TE_INNER.length.toString(16) + '\r\n' + TE_INNER + '\r\n0\r\n\r\nx=1'
+];
+var ta = document.getElementById('smug');
+function setSmuggle(i){ ta.value = SAMPLES[i]; }
+setSmuggle(0);
+function doSmuggle(){
+  var j = parseSmuggle(ta.value);
+  var el = document.getElementById('out2');
+  if (!j.ok) { el.textContent = j.msg || JSON.stringify(j); return; }
+  el.textContent =
+    '【前端视角 · ' + (j.front_end ? j.front_end['说明'] : '按 Content-Length') + '】\n' +
+    JSON.stringify(j.front_end, null, 2) + '\n\n【后端视角 · ' + (j.back_end ? j.back_end['说明'] : '按 chunked') + '】\n' +
+    JSON.stringify(j.back_end, null, 2) + '\n\n' + (j.desync ? '⚠ ' : '✔ ') + j['结论'];
+}
+
+// ---------------- 修复挑战（正确配置里藏着 flag） ----------------
+var QUIZ = {
+  A: {text: '把缓存 TTL 从 10 分钟调到 10 秒，污染自然过期。',
+      why: '只是缩小窗口，投毒随时可以重放。'},
+  B: {text: '应用不再直接信任 X-Forwarded-Host 拼接资源 URL，改用固定配置域名；同时缓存键 proxy_cache_key 加入 $http_x_forwarded_host/$host，未命中白名单回退默认域。',
+      why: null, correct: true},
+  C: {text: '全站升级到 HTTPS 并开启 HSTS。',
+      why: '加密传输与 Host 头信任、缓存键设计无关。'},
+  D: {text: '在 WAF 上屏蔽包含 X-Forwarded-Host 的请求。',
+      why: '会误伤合法代理链（CDN/内网负载均衡都需要它），且黑名单可被头名变形绕过。'}
+};
+function doQuiz(){
+  var v = document.querySelector('input[name=q]:checked');
+  if (!v) { document.getElementById('out3').textContent = '先选一个选项'; return; }
+  var item = QUIZ[v.value];
+  if (!item) { document.getElementById('out3').textContent = '选项应为 A/B/C/D'; return; }
+  if (item.correct) {
+    document.getElementById('out3').textContent =
+      '✅ 正确！正确的配置如下（flag 就在这里）\n\n' +
+      '# nginx 关键修复\n' +
+      'proxy_cache_key $scheme$proxy_host$request_uri$http_x_forwarded_host;\n' +
+      '# 应用侧：X-Forwarded-Host 必须过白名单，未命中回退默认域\n' +
+      '# if ($http_x_forwarded_host !~* ^(static\\.analytics-cdn\\.test)$) {\n' +
+      '#     proxy_hide_header X-Forwarded-Host;\n' +
+      '# }\n\n# —— 答对了，拿走 flag ——\n' + FLAG;
+  } else {
+    document.getElementById('out3').textContent = '❌ 不正确：' + item.why;
+  }
+}
+
+function submitFlag(){
+  var v = document.getElementById('flagInput').value.trim();
+  var el = document.getElementById('flagResult');
+  if (!v) { el.textContent = '请输入 flag'; return; }
+  el.textContent = '提交中...';
+  fetch('/api/verify', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:'challenge_id=adv3&flag=' + encodeURIComponent(v)})
+   .then(function(r){ return r.text().then(function(tx){
+      var msg = 'HTTP ' + r.status + ': ' + tx;
+      try { var j = JSON.parse(tx);
+        if (typeof j.correct === 'boolean') msg = j.correct ? '✅ 回答正确！' : '❌ flag 不对，再试试';
+        else if (j.message !== undefined) msg = j.message;
+      } catch (e) {}
+      el.textContent = msg; }); })
+   .catch(function(e){ el.textContent = '提交失败(' + e.message + ')：请从靶场门户页提交'; });
+}
+</script>
+</body></html>

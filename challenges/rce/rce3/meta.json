@@ -1,0 +1,25 @@
+{
+  "id": "rce3",
+  "category": "rce",
+  "title": "Ping 诊断工具 v3 · 关键字黑名单",
+  "difficulty": "medium",
+  "url_path": "/rce3",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{rce3_1d37ecb8}",
+  "knowledge": [
+    "关键字黑名单绕过",
+    "引号拼接 c''at",
+    "反斜杠转义 ca\\t",
+    "变量拼接 a=c;b=at;$a$b",
+    "base64 管道执行"
+  ],
+  "hints": [
+    "黑名单正则检查的是原始字符串，shell 解析在其后：先摸清哪些词被拦（?ip=cat 会触发拦截页）",
+    "c''at、c\"a\"t、ca\\t 对 shell 都是 cat；变量拼接 a=c;b=at;$a$b 同理",
+    "flag 一词也在黑名单里：?ip=127.0.0.1;c''at fl''ag.php（反斜杠版用 %5C）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "rce2",
+  "next": "rce4"
+}

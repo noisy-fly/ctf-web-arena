@@ -1,0 +1,26 @@
+{
+  "id": "read2",
+  "category": "read",
+  "title": "下载中心 —— 任意文件下载",
+  "difficulty": "easy",
+  "url_path": "/read2",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8310,
+  "flag": "flag{read2_1545a114}",
+  "flag_source": "config.php 内 get_flag()，可用环境变量 FLAG 覆盖",
+  "php_required": ">=7.0（PHP 8 亦可解）",
+  "knowledge": [
+    "任意文件下载",
+    "下载读源码",
+    "realpath 防护"
+  ],
+  "hints": [
+    "file 参数无任何路径限制",
+    "下载 PHP 文件得到原始源码",
+    "?file=config.php"
+  ],
+  "writeup": "writeup.md",
+  "prev": "read1",
+  "next": "read3"
+}

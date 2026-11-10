@@ -1,0 +1,23 @@
+{
+  "id": "varcover1",
+  "category": "varcover",
+  "title": "星云工单系统 · extract 变量覆盖",
+  "difficulty": "medium",
+  "url_path": "/varcover1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{varcover1_17700873}",
+  "knowledge": [
+    "extract($_GET) 的 EXTR_OVERWRITE 行为",
+    "覆盖校验用变量使 $a===$b 成立",
+    "变量覆盖同族面（parse_str/$$/array_merge 配置合并）"
+  ],
+  "hints": [
+    "secret_sign 每次请求随机生成，爆破无解。但校验条件是 $admin_sign === $secret_sign——你需要“猜中”吗？还是只需要让两个变量相等？",
+    "extract($_GET) 写在 $secret_sign 生成之后、校验之前；extract 默认会覆盖一切同名变量。GET 里出现 secret_sign=... 时，服务器随机生成的那份就被覆盖了。",
+    "payload：?admin_sign=x&secret_sign=x（值随便，相等即可），页面进入管理通道拿 flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "varcover2"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "ssti4",
+  "category": "ssti",
+  "title": "公告模板预览器 · Smarty 模板注入",
+  "difficulty": "medium",
+  "difficulty_level": 3,
+  "url_path": "/ssti4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{ssti4_dd53a1dd}",
+  "knowledge": [
+    "Smarty 模板注入（单花括号语法）",
+    "string: 资源渲染用户输入",
+    "未注册函数标签 {system('cmd')} 直接调 PHP 函数",
+    "{if 表达式} 注入",
+    "Smarty 4 已删除 {php} 标签"
+  ],
+  "hints": [
+    "Smarty 的语法是单花括号标签 {...}，不是 {{...}}。输入 {7*7}，公告里出现 49 就说明输入被当成 Smarty 模板编译执行了。",
+    "Smarty 3/4 里 {函数名(参数)} 形式的「未注册函数标签」会被编译成 PHP 函数调用（首次使用打 Deprecated 警告但照常执行）；{if 条件} 的条件也是任意 PHP 表达式。",
+    "完整 payload：?tpl={system('cat flag.php')}（Windows 本地用 {system('type flag.php')}）；备选 {if system('cat flag.php')}{/if}。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "ssti3",
+  "next": "ssti5"
+}

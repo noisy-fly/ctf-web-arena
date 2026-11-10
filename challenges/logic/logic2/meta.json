@@ -1,0 +1,23 @@
+{
+  "id": "logic2",
+  "category": "logic",
+  "title": "星云办公系统(OA) - 垂直越权",
+  "difficulty": "easy",
+  "url_path": "/logic2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{logic2_e5e46f45}",
+  "knowledge": [
+    "垂直越权(权限提升)",
+    "前端隐藏入口不等于权限控制",
+    "服务端 RBAC 角色校验缺失"
+  ],
+  "hints": [
+    "登录后看看页面源代码(右键查看源代码),前端注释里常藏着\"内部入口\"。",
+    "导航栏没有\"管理后台\"按钮,但页面注释里提到了文件名 admin.php,直接在地址栏访问它。",
+    "用 player 的会话直接访问 admin.php —— 服务端只检查了\"是否登录\",没检查\"是否是管理员\"。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "logic1",
+  "next": "logic3"
+}

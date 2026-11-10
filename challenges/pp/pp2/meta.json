@@ -1,0 +1,26 @@
+{
+  "id": "pp2",
+  "category": "pp",
+  "title": "星帆周刊 · 深拷贝污染到 RCE",
+  "difficulty": "hard",
+  "url_path": "/pp2",
+  "runtime": "static",
+  "entry": "index.html",
+  "flag": "flag{pp2_dddb0dcd}",
+  "replaced": true,
+  "replacement_note": "Node 运行时按容器预算移除；原 server.js/flag_pp2.txt 移至 _original/。改为静态教学页 + 浏览器离线模拟器：deepMerge 真实污染页面 Object.prototype，render 用真实 new Function 拼 prepend；动态 import('fs') 映射到页面内置伪 fs 模块（VFS 里放着 flag 文件），RCE 链路在浏览器内真实走通。",
+  "knowledge": [
+    "merge 深拷贝污染 Object.prototype（lodash.merge 风格）",
+    "污染模板引擎选项（对应 ejs outputFunctionName）拼入 new Function 代码体",
+    "Node 22+ 无 process.mainModule 时的动态 import() 逃逸与 Promise 兼容利用"
+  ],
+  "hints": [
+    "先验证两个功能：保存 {\"site\":{\"theme\":\"light\"}} 改配置；渲染「周刊预览：{name}」正常输出。模板本身禁止反引号/插值——直接模板注入这条路被堵死。",
+    "render 的 opts 是空对象，和 pp1 的 gate 一样会继承原型上的键。知识区代码里的 prepend 会被原样拼进 new Function 的函数体首行。",
+    "payload：配置 JSON 提交 {\"__proto__\":{\"prepend\":\"return import('fs').then(m=>m.readFileSync('/srv/pp2/flag_pp2.txt','utf8'));\"}}（路径在页面绿框），然后渲染任意模板（如 x），结果区即文件内容。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "pp1",
+  "next": null,
+  "notes": "纯静态零后端（同 ssti5 的 docs-static 模板）。new Function 真实执行注入代码，import('fs') 映射到内置 VFS 伪模块——flag 只存在于 VFS 中，不会静态输出。「清理污染」按钮 + 刷新页面复位；想跑真 Node：node _original/server.js 8317。"
+}

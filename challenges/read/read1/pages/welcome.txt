@@ -1,0 +1,6 @@
+欢迎来到静态演示站（pages/welcome.txt）。
+
+这是一个极简的"静态页面加载器"示例站点。
+你可以在 ?page= 里输入页面名来加载 pages/ 目录下的 txt 文件。
+
+可用页面：welcome、about

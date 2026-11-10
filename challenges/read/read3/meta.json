@@ -1,0 +1,27 @@
+{
+  "id": "read3",
+  "category": "read",
+  "title": "flag 不在磁盘上 —— /proc/self/environ",
+  "difficulty": "medium",
+  "url_path": "/read3",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8311,
+  "flag": "flag{read3_0bd3397b}",
+  "flag_source": "环境变量 FLAG（Linux 容器内读 /proc/self/enven 获得；Windows 开发机自动降级为题目录 fakeproc/self/environ 模拟文件，内容一致）",
+  "php_required": ">=7.0（PHP 8 亦可解）",
+  "knowledge": [
+    "/proc/self/environ",
+    "环境变量泄露",
+    "绝对路径未校验",
+    "软链接逃逸"
+  ],
+  "hints": [
+    "flag 在环境变量里，不在文件里",
+    "/proc/self/ 镜像了当前进程的 environ/cmdline/fd",
+    "?file=/proc/self/environ（非 Linux 环境按页面自检给出的模拟路径）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "read2",
+  "next": null
+}

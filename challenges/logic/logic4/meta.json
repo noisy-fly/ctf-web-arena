@@ -1,0 +1,23 @@
+{
+  "id": "logic4",
+  "category": "logic",
+  "title": "星云积分商城 - 金额/数量篡改",
+  "difficulty": "medium",
+  "url_path": "/logic4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{logic4_033a28a4}",
+  "knowledge": [
+    "客户端价格篡改(服务端必须自己定价)",
+    "负数数量导致余额反向增加",
+    "金额运算的类型与边界校验"
+  ],
+  "hints": [
+    "打开浏览器开发者工具的 Network 面板,点一次购买,看看请求体里都带了什么字段。",
+    "表单里有个隐藏 input 叫 price(右键查看源代码能看到)。改小它;或者把数量 qty 改成负数看看余额会怎么变。",
+    "POST 提交 pid=1、qty=1、price=1(甚至 0.01),下单成功后订单列表里 FLAG 兑换券一栏就是 flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "logic3",
+  "next": "logic5"
+}

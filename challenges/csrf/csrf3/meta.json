@@ -1,0 +1,23 @@
+{
+  "id": "csrf3",
+  "category": "csrf",
+  "title": "星云空间 - JSON CSRF(text/plain) + CORS 反射读取",
+  "difficulty": "hard",
+  "url_path": "/csrf3",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{csrf3_0ccc88a2}",
+  "knowledge": [
+    "JSON CSRF:enctype=text/plain 表单拼接合法 JSON(不校验 Content-Type)",
+    "CORS 反射任意 Origin + Allow-Credentials 的危害",
+    "自定义头只能挡读、挡不住写;CORS 白名单正确配置"
+  ],
+  "hints": [
+    "先用 curl 探路:GET profile.php 带/不带 X-Protection 头看 403 差别;POST api.php?do=privacy 一段 JSON,注意它不校验 Content-Type。",
+    "写攻击:enctype=text/plain 表单,input 的 name 写 {\"protection\":\"low\",\"x\":\" 、value 写 1\"} ——text/plain 报文格式 name=value 恰好拼出合法 JSON。",
+    "组合拳:降防护表单 + <script src=\"profile.php\">,保存后运行模拟受害者,flag 在跨域读取结果里。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "csrf2",
+  "next": null
+}

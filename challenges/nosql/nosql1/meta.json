@@ -1,0 +1,27 @@
+{
+  "id": "nosql1",
+  "category": "nosql",
+  "title": "不是只有 SQL 才能注入 —— Mongo 操作符注入",
+  "difficulty": "medium",
+  "url_path": "/nosql1",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8312,
+  "flag": "flag{nosql1_5f77d8d2}",
+  "flag_source": "flag.txt（PHP 运行时读取；可用环境变量 FLAG 覆盖）",
+  "dependencies": [],
+  "knowledge": [
+    "Mongo 操作符注入",
+    "$ne/$nin/$regex",
+    "WAF unicode 绕过",
+    "盲注提取口令"
+  ],
+  "hints": [
+    "pass[$ne]=x 使密码条件变为 {'$ne':'x'}",
+    "WAF 只拦 $ne/$gt：用 $nin 或 JSON \\u0024ne 绕过",
+    "curl -d 'user=admin&pass[$nin]=wrongpw'"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "nosql2"
+}

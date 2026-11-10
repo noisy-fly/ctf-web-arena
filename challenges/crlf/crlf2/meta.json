@@ -1,0 +1,24 @@
+{
+  "id": "crlf2",
+  "category": "crlf",
+  "title": "星云 CDN · CRLF 进阶（memcached 注入）",
+  "difficulty": "hard",
+  "url_path": "/crlf2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{crlf2_ec647c45}",
+  "knowledge": [
+    "文本协议（memcached/Redis/SMTP）按 \\r\\n 分隔命令，输入拼接即注入",
+    "get 裂变为 get+set：污染缓存里的 role 提权",
+    "与 SSRF gopher 打 Redis 的关系；key 白名单/二进制协议防御"
+  ],
+  "hints": [
+    "先用 /crlf2/view.php?key=announcement 和 /crlf2/view.php?key=role 玩一下查询台，看应用发给 memcached 的原文和回复格式（\\r\\n 逐字节可见）。",
+    "应用没有写缓存的接口，但 memcached 有 set。一条“get <key>\\r\\n”里如果能混进第二条命令 set role 0 0 5 + 数据块 admin，role 就被污染了。",
+    "payload：/crlf2/view.php?key=x%0d%0aset%20role%200%200%205%0d%0aadmin%0d%0a ——回显出现 STORED 后访问 /crlf2/admin.php 拿 flag。/crlf2/fixed.php 同 payload 会被 key 白名单拒绝（对照）。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "crlf1",
+  "next": null,
+  "notes": "PHP 8.2 无依赖。memcached 由 memcached.php 的 MiniMemcached 模拟：文本协议引擎（\\r\\n 分隔，get/set/delete/flush_all，set 含定长数据块）+ JSON 文件持久化（data/cache.json，运行时自建，php-fpm 可写）。缓存为全体访客共享的服务端全局状态；reset.php 可重置 role=guest 重复练习。原 Python 双端口实现保留于 _original/。"
+}

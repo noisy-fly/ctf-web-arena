@@ -1,0 +1,25 @@
+{
+  "id": "unser2",
+  "category": "unser",
+  "title": "门禁日志系统 · PHP POP 链",
+  "difficulty": "medium",
+  "difficulty_level": 3,
+  "url_path": "/unser2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{unser2_4934a774}",
+  "knowledge": [
+    "POP 链（面向属性编程）",
+    "__destruct→__toString→__call 链式触发",
+    "魔术方法触发条件速查",
+    "从 sink 倒推入口的链构造方法"
+  ],
+  "hints": [
+    "从能读文件的 sink（Engine::__call）倒着推：谁会调 Engine 上不存在的 render()？Badge::__toString 里。谁会把 Badge 当字符串？DoorLog::__destruct 里的字符串拼接。",
+    "构造三个对象连起来：Engine{allow:['render'=>1], cmd:'flag.php']} → Badge{template:Engine} → DoorLog{name:Badge}。手写序列化串长度容易错（unser1 的教训），用题目目录的 gen_payload.php 生成：php gen_payload.php 直接输出 urlencode 好的 payload。",
+    "payload 形状：O:7:\"DoorLog\":1:{s:4:\"name\";O:5:\"Badge\":1:{s:8:\"template\";O:6:\"Engine\":2:{s:5:\"allow\";a:1:{s:6:\"render\";i:1;}s:3:\"cmd\";s:8:\"flag.php\";}}} —— 完整 URL 编码版跑 php gen_payload.php 即得。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "unser1",
+  "next": "unser3"
+}

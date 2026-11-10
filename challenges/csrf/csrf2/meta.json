@@ -1,0 +1,23 @@
+{
+  "id": "csrf2",
+  "category": "csrf",
+  "title": "星云俱乐部 VIP 转让 - CSRF Referer 包含校验绕过",
+  "difficulty": "medium",
+  "url_path": "/csrf2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{csrf2_3bb80cfd}",
+  "knowledge": [
+    "Referer '包含即信任'校验的绕过(URL 可控部分携带可信子串)",
+    "CSRF token 缺失,Referer 只是辅助防线",
+    "host 精确匹配 + 缺失拒绝的正确写法"
+  ],
+  "hints": [
+    "先直接 POST 试试(不带 Referer 或带别的):会被拒,错误信息把校验逻辑说得很清楚。",
+    "攻击页保存后有 URL view.php?name=你起的名字,受害者访问时的 Referer 就是这个 URL——名字里能做文章。",
+    "把攻击页命名为包含 csrf2.lab 的字符串(如 a.csrf2.lab),页面放 POST 表单 action=api.php?do=transfer_vip 隐藏域 to=hacker,运行模拟受害者。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "csrf1",
+  "next": "csrf3"
+}

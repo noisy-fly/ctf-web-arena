@@ -1,0 +1,24 @@
+{
+  "id": "sess2",
+  "category": "sess",
+  "title": "星门 SSO · 弱签名 Cookie 伪造",
+  "difficulty": "hard",
+  "url_path": "/sess2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{sess2_63671a77}",
+  "knowledge": [
+    "签名 Cookie 的结构与信任模型（客户端 payload + 服务端签名）",
+    "密钥/算法泄露（config.php.bak 明文可下）→ 离线伪造凭证",
+    "裸 md5 拼接 vs hash_hmac；凭证应放服务端会话或标准 JWT+强密钥"
+  ],
+  "hints": [
+    "先用 player / Player@123 登录，看凭证 payload 的结构（user/role/exp 三字段，base64 后点号接签名）。",
+    "页面上就是签名算法：md5(user|role|exp|SSO_SECRET)。SSO_SECRET 藏在“清理过应该没事了”的备份里：/sess2/config.php.bak（PHP 不执行 .bak，等于明文）。",
+    "构造 payload {\"user\":\"admin\",\"role\":\"admin\",\"exp\":4102444800}，base64url 编码 + \".\" + md5(\"admin|admin|4102444800|\"+SECRET)，替换 Cookie stargate_auth 打开 vault.php。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "sess1",
+  "next": null,
+  "notes": "config.php.bak 是题目泄露点（部署时必须保留且可直访，勿在 nginx 里误配为解析 .bak）。实验账号 player/Player@123 页面已展示。"
+}

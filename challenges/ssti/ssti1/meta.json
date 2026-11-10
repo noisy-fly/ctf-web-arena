@@ -1,0 +1,26 @@
+{
+  "id": "ssti1",
+  "category": "ssti",
+  "title": "会员欢迎语生成器 · Jinja2 模板注入基础",
+  "difficulty": "easy",
+  "difficulty_level": 1,
+  "url_path": "/ssti1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{ssti1_4a3c9c99}",
+  "replacement_note": "原 Python/Flask(Jinja2) 版已移至 _original/；PHP 8.2 版以自制迷你模板引擎（{{ }} 表达式直接 eval）平移同一 SSTI 教学点，flag 仍在应用配置（模板上下文变量 config 的 FLAG 字段，见 flag.php）。",
+  "knowledge": [
+    "SSTI 服务端模板注入",
+    "自制模板引擎 {{}} 表达式求值（eval 实现）",
+    "用户输入拼进模板源码（等价 render_template_string 拼接）",
+    "{{7*7}} 探测与 {{config}} 读配置（PHP 数组下标取 FLAG）"
+  ],
+  "hints": [
+    "输入框的内容被直接拼进了模板引擎的模板源码。先输入 {{7*7}} 提交：如果显示 49 而不是 {{7*7}} 本身，说明表达式被服务端计算了——SSTI 实锤。",
+    "引擎把应用配置以模板变量 config（PHP 数组）注入了渲染上下文，{{}} 里能直接访问。试着把整个配置数组打印出来（print_r 样式的输出）。",
+    "flag 存在配置数组的 FLAG 字段：?name={{config}} 在输出里搜 FLAG；精确取值用 ?name={{config['FLAG']}}（PHP 下标语法；点号写法 config.FLAG 会被当常量报错——正好体会与 Jinja2 的语法差异）。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "ssti2"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "ssrf1",
+  "category": "ssrf",
+  "title": "链接预览小工具 · 基础 SSRF",
+  "difficulty": "easy",
+  "url_path": "/ssrf1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{ssrf1_72fc9cc2}",
+  "knowledge": [
+    "SSRF 原理（服务器代为发请求）",
+    "回环 127.0.0.1 访问内部接口",
+    "robots.txt 信息泄露",
+    "file_get_contents 触发点"
+  ],
+  "hints": [
+    "预览工具是服务器替你发请求——服务器访问 127.0.0.1 时，对方的\"客户端 IP\"就是服务器自己",
+    "robots.txt 提到 internal.php；直接访问会被\"仅本机\"拦截",
+    "?url=http://127.0.0.1/ssrf1/internal.php（独立容器挂载则为 http://127.0.0.1/internal.php）"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "ssrf2"
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>cors2 · 沙盒 iframe 实验台</title>
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--ink:#e2e8f0;--dim:#94a3b8;--acc:#38bdf8;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171}
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75}
+.wrap{max-width:940px;margin:0 auto;padding:24px 16px 60px}
+.badge{display:inline-block;background:#818cf8;color:#111827;font-weight:700;font-size:12px;padding:2px 10px;border-radius:999px;letter-spacing:1px}
+h1{font-size:24px;margin:10px 0 4px}.meta{color:var(--dim);font-size:13px;margin-bottom:6px}
+.card{background:var(--card);border:1px solid #334155;border-radius:12px;padding:18px 20px;margin:16px 0}
+.card h2{margin:0 0 10px;font-size:17px;color:var(--acc);border-left:3px solid var(--acc);padding-left:8px}
+pre,code{font-family:Consolas,Menlo,"Courier New",monospace}
+pre{background:#0b1220;border:1px solid #27364d;border-radius:8px;padding:12px;overflow:auto;font-size:13px}
+code{background:#0b1220;border-radius:4px;padding:1px 6px;font-size:13px}
+textarea{width:100%;min-height:170px;padding:10px;border-radius:8px;border:1px solid #475569;background:#0b1220;color:var(--ink);font-family:Consolas,Menlo,monospace;font-size:12px}
+button{padding:8px 18px;border-radius:8px;border:0;background:var(--acc);color:#04121f;font-weight:700;cursor:pointer;margin:4px 6px 4px 0}
+button:hover{filter:brightness(1.15)}
+button.danger{background:var(--bad);color:#2a0606}
+.result{background:#0b1220;border:1px solid #27364d;border-radius:8px;margin-top:10px;padding:12px 14px;font-size:14px;white-space:pre-wrap;word-break:break-all}
+.ok{color:var(--ok)}.badc{color:var(--bad)}.dimc{color:var(--dim)}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<span class="badge">CORS · 第 2 关 · 实验台</span>
+<h1>沙盒 iframe（Origin: null）实验台</h1>
+<div class="meta">沙盒 iframe 里的脚本源是 <code>null</code>——它能不能"读"合作方接口，取决于服务端反射了什么。回到 <a href="index.php">index</a></div>
+</header>
+
+<section class="card">
+<h2>三组对照实验</h2>
+<p>① 同源直连（对照组：你自己就是本站源，当然读得到）</p>
+<button onclick="direct()">① 同源 fetch quote.php</button>
+<p>② 沙盒 iframe 里跑脚本（null 源）打 <b>漏洞版</b> quote.php —— 利用点</p>
+<button class="danger" onclick="sandbox('quote.php')">② 沙盒 iframe → quote.php（漏洞版）</button>
+<p>③ 同样的沙盒脚本打 <b>已修复</b> 的 fixed_quote.php（精确白名单、拒绝 null）—— 应当读不到</p>
+<button onclick="sandbox('fixed_quote.php')">③ 沙盒 iframe → fixed_quote.php（已修复）</button>
+<div id="out" class="result dimc">（结果将显示在这里；② 返回的内容里有 flag）</div>
+</section>
+
+<section class="card">
+<h2>沙盒 iframe 里的代码（可编辑后点"运行"）</h2>
+<textarea id="code">&lt;!-- 这个 iframe 会被注入 sandbox="allow-scripts"，其文档源为 null --&gt;
+&lt;script&gt;
+fetch('quote.php?key=STARPARTNER-2024')     // srcdoc 继承父页面基址，但源是 null
+  .then(r =&gt; r.json())
+  .then(j =&gt; parent.postMessage('[null源读到了] ' + JSON.stringify(j), '*'))
+  .catch(e =&gt; parent.postMessage('[null源被拦] ' + e, '*'));
+&lt;/script&gt;</textarea><br>
+<button onclick="runCustom()">▶ 用我的代码运行（同样注入沙盒）</button>
+</section>
+
+<section class="card">
+<h2>说明</h2>
+<p>② 成功的链条：沙盒 iframe（无 allow-same-origin）→ 源=null → fetch 是跨源请求 → quote.php 反射 <code>Access-Control-Allow-Origin: null</code> → 浏览器放行"读" → 脚本拿到 JSON，postMessage 交给本页显示。</p>
+<p>③ 失败的链条同理：fixed_quote.php 对 null 不发任何 CORS 头 → fetch 的响应是 opaque 的 → <code>TypeError: Failed to fetch</code>。这就是 SOP 正常工作的样子，也是"拒绝 null"的意义。</p>
+</section>
+
+<footer>CTF Web 教学式靶场 · F 组 · 仅用于安全学习</footer>
+</div>
+<script>
+var out = document.getElementById('out');
+function mark(cls, text){ out.className = 'result ' + cls; out.textContent = text; }
+
+// ① 同源对照
+function direct(){
+  mark('dimc', '请求中…');
+  fetch('quote.php?key=STARPARTNER-2024')
+    .then(r => r.json())
+    .then(j => mark('ok', '① [同源读到了] ' + JSON.stringify(j)))
+    .catch(e => mark('badc', '① [同源失败] ' + e));
+}
+
+// ②③ 沙盒 iframe：注入 srcdoc，监听 message
+window.addEventListener('message', function(ev){
+  if (typeof ev.data === 'string' && ev.data.indexOf('[') === 0) {
+    mark(ev.data.indexOf('被拦') >= 0 ? 'badc' : 'ok', ev.data);
+  }
+});
+function makeIframe(code, sandboxAttr){
+  var old = document.getElementById('sbx');
+  if (old) old.remove();
+  var f = document.createElement('iframe');
+  f.id = 'sbx'; f.style.display = 'none';
+  f.setAttribute('sandbox', sandboxAttr);   // 关键：没有 allow-same-origin → 源为 null
+  f.srcdoc = code;
+  document.body.appendChild(f);
+}
+function sandbox(target){
+  mark('dimc', '沙盒 iframe 请求中…');
+  var code = "<script>fetch('" + target + "?key=STARPARTNER-2024')" +
+    ".then(r => r.json())" +
+    ".then(j => parent.postMessage('[" + (target === 'quote.php' ? '漏洞版' : '修复版') + " null源读到了] ' + JSON.stringify(j), '*'))" +
+    ".catch(e => parent.postMessage('[" + (target === 'quote.php' ? '漏洞版' : '修复版') + " null源被拦] ' + e, '*'));<\/script>";
+  makeIframe(code, 'allow-scripts');
+}
+function runCustom(){
+  mark('dimc', '自定义沙盒运行中…');
+  makeIframe(document.getElementById('code').value, 'allow-scripts');
+}
+</script>
+</body>
+</html>

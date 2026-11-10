@@ -1,0 +1,24 @@
+{
+  "id": "lfi1",
+  "category": "lfi",
+  "title": "企业官网 · 本地文件包含（目录穿越）",
+  "difficulty": "easy",
+  "url_path": "/lfi1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{lfi1_dc62b6a6}",
+  "knowledge": [
+    "本地文件包含 LFI",
+    "目录穿越 ../ traversal",
+    "include 参数可控",
+    "/etc/passwd 验证"
+  ],
+  "hints": [
+    "导航 ?page=about.php 对应后端 include('pages/'.$page)，page 里可以带 ../",
+    "多叠几层 ../ 跳到文件系统根目录（跳过头也安全，路径会在 / 封顶）",
+    "?page=../../../../../flag_lfi1.txt（从 pages/ 起跳 5 层到根，多跳无害；部署：deploy/flag_lfi1.txt 复制到容器 / 才生效）"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "lfi2"
+}

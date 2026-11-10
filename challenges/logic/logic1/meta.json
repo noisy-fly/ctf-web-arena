@@ -1,0 +1,23 @@
+{
+  "id": "logic1",
+  "category": "logic",
+  "title": "天天快递查询系统 - 水平越权(IDOR)",
+  "difficulty": "easy",
+  "url_path": "/logic1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{logic1_75890e75}",
+  "knowledge": [
+    "水平越权 / IDOR(不安全的直接对象引用)",
+    "连续可枚举的对象标识",
+    "资源归属校验缺失的修复方法"
+  ],
+  "hints": [
+    "登录后你只能看到\"我的订单\"列表,但点进某条订单时,仔细看浏览器地址栏。",
+    "订单详情页是 order.php?id=1001,把这个数字改成相邻的订单号会怎样?",
+    "用 alice 的身份访问 order.php?id=1002,那是另一个会员的订单,备注里有代收暗号。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "logic2"
+}

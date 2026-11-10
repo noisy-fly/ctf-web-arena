@@ -1,0 +1,24 @@
+{
+  "id": "logic5",
+  "category": "logic",
+  "title": "星云钱包 - 条件竞争(并发提现)",
+  "difficulty": "hard",
+  "url_path": "/logic5",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{logic5_0fe0c9fe}",
+  "deploy_note": "PHP-FPM 多 worker 天然并发(pm.max_children>=4 稳定复现);sqlite WAL+busy_timeout=5000,检查与扣款之间 1.2 秒窗口;reset.php 重置环境",
+  "knowledge": [
+    "条件竞争(check-then-act 竞态)",
+    "并发窗口与原子性问题",
+    "数据库条件更新/事务/幂等修复"
+  ],
+  "hints": [
+    "单次点击提现,第二次会提示\"余额不足\"——顺序请求是安全的,问题出在\"同时\"。",
+    "用 curl 并行发起 10~20 个 POST(do=withdraw&amount=50):shell 里 for 循环加 & 最后 wait(或 xargs -P 16),或用 Burp Intruder。",
+    "只要有两个请求落在同一个 1.2 秒风控窗口内,累计提现就会 ≥100 > 50,flag 出现。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "logic4",
+  "next": null
+}

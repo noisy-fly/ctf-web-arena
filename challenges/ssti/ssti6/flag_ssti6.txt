@@ -1,0 +1,1 @@
+flag{ssti6_ce6ff430}

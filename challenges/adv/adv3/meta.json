@@ -1,0 +1,29 @@
+{
+  "id": "adv3",
+  "category": "adv",
+  "title": "让缓存替你说谎 —— 缓存投毒 & 请求走私",
+  "difficulty": "hard",
+  "url_path": "/adv3",
+  "runtime": "static",
+  "entry": "index.html",
+  "internal_port": 8316,
+  "flag": "flag{adv3_aac55080}",
+  "replaced": true,
+  "replacement_note": "缓存投毒与请求走私均依赖反向代理层（缓存键 / 双解析器分歧），PHP 单层无法保真；按 docs-static 先例（ssti5/pp1）交付静态教学页 + 前端离线模拟器：缓存键覆盖、受害者命中、CL/TE 双视角切分解析器与修复挑战 quiz 均按原 Python 服务端语义逐行复刻。原版保留在 _original/。",
+  "flag_source": "flag 内嵌于 index.html 模拟器（受害者 Cookie secret 字段 + quiz 正确配置；原 flag.txt 移至 _original/）",
+  "dependencies": [],
+  "knowledge": [
+    "Web 缓存投毒",
+    "未入键头 X-Forwarded-Host",
+    "CL.TE/TE.CL 请求走私",
+    "proxy_cache_key 修复"
+  ],
+  "hints": [
+    "缓存键只有路径：不同 X-Forwarded-Host 的响应互相覆盖",
+    "依次点 ①投毒 → ②受害者访问 → ③日志：偷到的 Cookie 里 secret= 就是 flag",
+    "走私实验载入 CL.TE 样例点解析看两种切分的分歧；或修复挑战选 B（正确配置里也有 flag）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "adv2",
+  "next": null
+}

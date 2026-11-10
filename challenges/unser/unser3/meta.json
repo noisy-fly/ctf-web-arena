@@ -1,0 +1,26 @@
+{
+  "id": "unser3",
+  "category": "unser",
+  "title": "游戏存档加载器 · Python pickle 反序列化",
+  "difficulty": "medium",
+  "difficulty_level": 3,
+  "url_path": "/unser3",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{unser3_374943d4}",
+  "replacement_note": "原 Python/pickle 版已移至 _original/；PHP 8.2 版平移为 unserialize() 反序列化漏洞：GameSave::__wakeup 对可控属性 patch 做 eval（等价 pickle 的 __reduce__/REDUCE），print_r 回显重建对象带出 flag_unser3.txt 的内容，教学点保持“用户可控序列化数据 → POP 利用链”。",
+  "knowledge": [
+    "PHP 序列化格式与 unserialize 的对象重建语义",
+    "__wakeup/__destruct 生命周期（POP 入口）",
+    "回显型 payload：__wakeup eval 补丁表达式读 flag 被 print_r 回显",
+    "allowed_classes 白名单 / HMAC 签名 / JSON 防御（对照 pickle 的 RestrictedUnpickler）"
+  ],
+  "hints": [
+    "PHP 的 unserialize() 不是“纯解码”：它按串里的类名重建对象、把每个属性的控制权交给你的存档字符串，并在重建时自动调用 __wakeup、销毁时调用 __destruct。看看页面给出的 GameSave 源码——__wakeup 对非空的 patch 属性做了什么？",
+    "构造恶意存档：patch = file_get_contents('flag_unser3.txt')。手写 O:8:\"GameSave\":3:{...} 长度容易错（unser1 的教训），用题目目录的 gen_payload.php：php gen_payload.php 直接输出 base64 payload（加目标 URL 参数可生成+提交+回显一条龙）。",
+    "服务端把 unserialize() 重建出的对象 print_r 回显——__wakeup 已把 flag 读进了 patch 属性，所以“对象内容”里就有它：php gen_payload.php http://127.0.0.1:5003/unser3/ 即出 flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "unser2",
+  "next": "unser4"
+}

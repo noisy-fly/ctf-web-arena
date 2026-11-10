@@ -1,0 +1,27 @@
+{
+  "id": "weak3",
+  "category": "weak",
+  "title": "白名单的裂缝 —— switch / in_array 松散比较",
+  "difficulty": "easy",
+  "url_path": "/weak3",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8303,
+  "flag": "flag{weak3_f6f901e5}",
+  "flag_source": "config.php 内 get_flag()，可用环境变量 FLAG 覆盖",
+  "php_required": "PHP 5.x-7.x 必须（PHP 8 下 \"abc\"==0 已为 false，本题不可解）",
+  "knowledge": [
+    "switch 松散匹配",
+    "in_array 无第三参数",
+    "非数字字符串==0",
+    "严格比较修复"
+  ],
+  "hints": [
+    "GET 参数是字符串；与整数 0 松散比较时非数字串转成 0",
+    "\"abc\" == 0 在 PHP<8 成立",
+    "?code=abc 或 ?id=abc（任意非数字串）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "weak2",
+  "next": "weak4"
+}

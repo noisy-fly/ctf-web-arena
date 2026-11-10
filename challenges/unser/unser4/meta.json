@@ -1,0 +1,26 @@
+{
+  "id": "unser4",
+  "category": "unser",
+  "title": "主题工坊 · phar 反序列化",
+  "difficulty": "hard",
+  "difficulty_level": 4,
+  "url_path": "/unser4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{unser4_41d27f13}",
+  "knowledge": [
+    "phar 文件结构（stub/manifest/metadata）",
+    "PHP8 实测：流函数触发反序列化已失效（元数据改惰性）",
+    "现代可行面：Phar::loadPhar+getMetadata 显式读取用户可控 phar",
+    "GIF89a 伪装与后缀无关性",
+    "__destruct→__toString→__get 链"
+  ],
+  "hints": [
+    "页面源码里没有 unserialize，但「导入预览」调用了 getMetadata()——phar 的 metadata 本身就是序列化数据，读取即反序列化。你要上传一个 metadata 里埋着 Notice 链对象的 .skin 皮肤包。",
+    "题目目录的 gen_phar.php 是生成器：php -d phar.readonly=0 gen_phar.php 产出 evil.skin（GIF89a 伪装头 + x.txt 条目 + metadata=Notice 链）。生成 phar 才需要 readonly=0，使用不需要。上传它。",
+    "上传后点 uploads/ 列表里的文件名预览（?action=preview&name=u_xxxx_evil.skin）。页面显示\"对象 Notice\"后，页面源码末尾会多出 [Notice] <?php /* flag... */ ?>——链在请求结束时析构，把 flag.php 打了出来。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "unser3",
+  "next": null
+}

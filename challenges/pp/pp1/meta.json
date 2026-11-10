@@ -1,0 +1,26 @@
+{
+  "id": "pp1",
+  "category": "pp",
+  "title": "星云博客 · 原型链污染基础",
+  "difficulty": "medium",
+  "url_path": "/pp1",
+  "runtime": "static",
+  "entry": "index.html",
+  "flag": "flag{pp1_db9c6678}",
+  "replaced": true,
+  "replacement_note": "Node 运行时按容器预算移除；原 server.js 移至 _original/。改为静态教学页 + 浏览器离线模拟器：页面内嵌与服务端逐字一致的 merge 代码真实运行，提交 JSON 真实污染当前页面的 Object.prototype，命中 gate 检查后吐出 flag。",
+  "knowledge": [
+    "JS 原型链与 __proto__ getter 的查找语义",
+    "朴素递归 merge 如何把键写进 Object.prototype",
+    "污染的影响面：一切 {} 新对象的属性继承（权限开关、模板选项等）"
+  ],
+  "hints": [
+    "先提交普通 JSON（如 {\"nickname\":\"pwn\"}）点「保存资料」，再点「查看当前资料」确认 merge 生效；点「访问开关」看未污染时的提示。",
+    "merge 对嵌套对象会递归。键名写成 __proto__ 时：JSON.parse 把它变成自有属性（src 读到的是你给的对象），而资料对象读 dst[\"__proto__\"] 走 getter 取到的是原型——递归下去写的就不是普通属性了。",
+    "payload：资料 JSON 提交 {\"__proto__\":{\"admin\":true}} 点「保存资料」，再点「访问开关」拿 flag；做完点「清理污染」按钮恢复。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "pp2",
+  "notes": "纯静态零后端（同 ssti5 的 docs-static 模板）。污染发生在浏览器页面真实的 Object.prototype 上，教学直观；页面提供「清理污染」按钮，刷新页面即完全复位。原 Node 版保留在 _original/server.js。"
+}

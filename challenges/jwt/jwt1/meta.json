@@ -1,0 +1,23 @@
+{
+  "id": "jwt1",
+  "category": "jwt",
+  "title": "会员站 - JWT none 算法伪造",
+  "difficulty": "easy",
+  "url_path": "/jwt1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{jwt1_29c9a437}",
+  "knowledge": [
+    "JWT 结构(header.payload.signature)",
+    "alg=none 算法攻击(CVE-2015-9235)",
+    "服务端必须硬编码期望算法"
+  ],
+  "hints": [
+    "把 Cookie 里的 token 复制出来,分别 Base64 解码前两段,看看 header 和 payload 长什么样。",
+    "注意 header 里的 alg 字段——如果服务端按 token 自己声明的算法来校验,把它改成 none 会发生什么?",
+    "构造 header={\"alg\":\"none\",\"typ\":\"JWT\"}, payload={\"user\":\"admin\",\"role\":\"admin\"}, 签名留空,拼成 header.payload. 替换 Cookie 访问 admin.php。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "jwt2"
+}

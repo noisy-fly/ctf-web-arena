@@ -1,0 +1,659 @@
+{
+ "adv1": {
+  "dir": "adv/adv1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.txt"
+  ]
+ },
+ "adv2": {
+  "dir": "adv/adv2",
+  "entry": "index.html",
+  "runtime": "static",
+  "deny": []
+ },
+ "adv3": {
+  "dir": "adv/adv3",
+  "entry": "index.html",
+  "runtime": "static",
+  "deny": []
+ },
+ "auth1": {
+  "dir": "auth/auth1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "auth2": {
+  "dir": "auth/auth2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "code1": {
+  "dir": "code/code1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "code2": {
+  "dir": "code/code2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "code3": {
+  "dir": "code/code3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "cors1": {
+  "dir": "cors/cors1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "cors2": {
+  "dir": "cors/cors2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "crlf1": {
+  "dir": "crlf/crlf1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "crlf2": {
+  "dir": "crlf/crlf2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "csrf1": {
+  "dir": "csrf/csrf1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "csrf2": {
+  "dir": "csrf/csrf2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "csrf3": {
+  "dir": "csrf/csrf3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "graphql1": {
+  "dir": "graphql/graphql1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "graphql2": {
+  "dir": "graphql/graphql2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "jwt1": {
+  "dir": "jwt/jwt1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "jwt2": {
+  "dir": "jwt/jwt2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "jwt3": {
+  "dir": "jwt/jwt3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "jwt4": {
+  "dir": "jwt/jwt4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "lfi1": {
+  "dir": "lfi/lfi1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "lfi2": {
+  "dir": "lfi/lfi2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "lfi3": {
+  "dir": "lfi/lfi3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "lfi4": {
+  "dir": "lfi/lfi4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "lfi5": {
+  "dir": "lfi/lfi5",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "logic1": {
+  "dir": "logic/logic1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "logic2": {
+  "dir": "logic/logic2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "logic3": {
+  "dir": "logic/logic3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "logic4": {
+  "dir": "logic/logic4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "logic5": {
+  "dir": "logic/logic5",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "miscw1": {
+  "dir": "misc-web/miscw1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "miscw2": {
+  "dir": "misc-web/miscw2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "nosql1": {
+  "dir": "nosql/nosql1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.txt"
+  ]
+ },
+ "nosql2": {
+  "dir": "nosql/nosql2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "users.xml"
+  ]
+ },
+ "pp1": {
+  "dir": "pp/pp1",
+  "entry": "index.html",
+  "runtime": "static",
+  "deny": []
+ },
+ "pp2": {
+  "dir": "pp/pp2",
+  "entry": "index.html",
+  "runtime": "static",
+  "deny": []
+ },
+ "rce1": {
+  "dir": "rce/rce1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "rce2": {
+  "dir": "rce/rce2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "rce3": {
+  "dir": "rce/rce3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "rce4": {
+  "dir": "rce/rce4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "rce5": {
+  "dir": "rce/rce5",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "rce6": {
+  "dir": "rce/rce6",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "read1": {
+  "dir": "read/read1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "read2": {
+  "dir": "read/read2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "read3": {
+  "dir": "read/read3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "recon1": {
+  "dir": "recon/recon1",
+  "entry": "index.html",
+  "runtime": "static",
+  "deny": [],
+  "leak": [
+   "secret/index.html"
+  ]
+ },
+ "recon2": {
+  "dir": "recon/recon2",
+  "entry": "index.html",
+  "runtime": "static",
+  "deny": []
+ },
+ "recon3": {
+  "dir": "recon/recon3",
+  "entry": "index.html",
+  "runtime": "static",
+  "deny": [
+   "flag.txt"
+  ],
+  "leak": [
+   ".git"
+  ]
+ },
+ "recon4": {
+  "dir": "recon/recon4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "recon5": {
+  "dir": "recon/recon5",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "recon6": {
+  "dir": "recon/recon6",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "recon7": {
+  "dir": "recon/recon7",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "redirect1": {
+  "dir": "redirect/redirect1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "redirect2": {
+  "dir": "redirect/redirect2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "sess1": {
+  "dir": "sess/sess1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "sess2": {
+  "dir": "sess/sess2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "sql1": {
+  "dir": "sql/sql1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "sql2": {
+  "dir": "sql/sql2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "sql3": {
+  "dir": "sql/sql3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "sql4": {
+  "dir": "sql/sql4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "data.sqlite3"
+  ]
+ },
+ "sql5": {
+  "dir": "sql/sql5",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "data.sqlite3"
+  ]
+ },
+ "sql6": {
+  "dir": "sql/sql6",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "sql7": {
+  "dir": "sql/sql7",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "data.sqlite3"
+  ]
+ },
+ "sql8": {
+  "dir": "sql/sql8",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "data.sqlite3"
+  ]
+ },
+ "sql9": {
+  "dir": "sql/sql9",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "data.sqlite3"
+  ]
+ },
+ "ssrf1": {
+  "dir": "ssrf/ssrf1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "ssrf2": {
+  "dir": "ssrf/ssrf2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "ssrf3": {
+  "dir": "ssrf/ssrf3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "ssrf4": {
+  "dir": "ssrf/ssrf4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "ssti1": {
+  "dir": "ssti/ssti1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php",
+   "README.md"
+  ]
+ },
+ "ssti2": {
+  "dir": "ssti/ssti2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php",
+   "README.md"
+  ]
+ },
+ "ssti3": {
+  "dir": "ssti/ssti3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "ssti4": {
+  "dir": "ssti/ssti4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "ssti5": {
+  "dir": "ssti/ssti5",
+  "entry": "index.html",
+  "runtime": "static",
+  "deny": []
+ },
+ "ssti6": {
+  "dir": "ssti/ssti6",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag_ssti6.txt"
+  ]
+ },
+ "unser1": {
+  "dir": "unser/unser1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "unser2": {
+  "dir": "unser/unser2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "unser3": {
+  "dir": "unser/unser3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag_unser3.txt",
+   "README.md"
+  ]
+ },
+ "unser4": {
+  "dir": "unser/unser4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "upload1": {
+  "dir": "upload/upload1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "upload2": {
+  "dir": "upload/upload2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "upload3": {
+  "dir": "upload/upload3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "upload4": {
+  "dir": "upload/upload4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "upload5": {
+  "dir": "upload/upload5",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "upload6": {
+  "dir": "upload/upload6",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": [
+   "flag.php"
+  ]
+ },
+ "varcover1": {
+  "dir": "varcover/varcover1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "varcover2": {
+  "dir": "varcover/varcover2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "weak1": {
+  "dir": "weak/weak1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "weak2": {
+  "dir": "weak/weak2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "weak3": {
+  "dir": "weak/weak3",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "weak4": {
+  "dir": "weak/weak4",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "weak5": {
+  "dir": "weak/weak5",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "xss1": {
+  "dir": "xss/xss1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "xss2": {
+  "dir": "xss/xss2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "xss3": {
+  "dir": "xss/xss3",
+  "entry": "index.html",
+  "runtime": "static",
+  "deny": []
+ },
+ "xxe1": {
+  "dir": "xxe/xxe1",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ },
+ "xxe2": {
+  "dir": "xxe/xxe2",
+  "entry": "index.php",
+  "runtime": "php",
+  "deny": []
+ }
+}

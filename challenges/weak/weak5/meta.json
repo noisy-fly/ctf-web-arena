@@ -1,0 +1,27 @@
+{
+  "id": "weak5",
+  "category": "weak",
+  "title": "$$ 双重美元 —— 可变变量覆盖",
+  "difficulty": "medium",
+  "url_path": "/weak5",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8305,
+  "flag": "flag{weak5_f2993dd2}",
+  "flag_source": "config.php 内 get_flag()，可用环境变量 FLAG 覆盖",
+  "php_required": ">=7.0（PHP 8 亦可解）",
+  "knowledge": [
+    "可变变量 $$",
+    "foreach $_GET 注入",
+    "覆盖比较两侧",
+    "白名单修复"
+  ],
+  "hints": [
+    "$$k：GET 参数名即变量名",
+    "GET 键可用大写：?SECRET_TOKEN=pwn",
+    "POST /weak5/?auth=pwn&SECRET_TOKEN=pwn（token 任意）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "weak4",
+  "next": null
+}

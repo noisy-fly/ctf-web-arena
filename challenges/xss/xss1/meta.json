@@ -1,0 +1,39 @@
+{
+  "id": "xss1",
+  "path": "/xss1",
+  "type": "php",
+  "public": false,
+  "note": "反射型 XSS，Victim Bot 判定",
+  "category": "xss",
+  "title": "镜子里的回声 · 反射型 XSS",
+  "difficulty": "easy",
+  "url_path": "/xss1",
+  "flag": "flag{xss1_3e9d74a0}",
+  "knowledge": [
+    {
+      "name": "PortSwigger — XSS 专题",
+      "url": "https://portswigger.net/web-security/cross-site-scripting"
+    },
+    {
+      "name": "OWASP — XSS 类型与防御",
+      "url": "https://owasp.org/www-community/attacks/xss/"
+    },
+    {
+      "name": "PortSwigger — XSS Payload 速查表",
+      "url": "https://portswigger.net/web-security/cross-site-scripting/cheat-sheet"
+    }
+  ],
+  "hints": [
+    "最朴素的验证：<code>?q=&lt;script&gt;alert(1)&lt;/script&gt;</code>，看看关键词回显处发生了什么。",
+    "事件处理器同样算执行：<code>?q=&lt;img src=x onerror=alert(1)&gt;</code>。",
+    "<code>&lt;a href=\"javascript:alert(1)\"&gt;点我&lt;/a&gt;</code> 这类伪协议链接也是有效向量。",
+    "构造好后点面板里的 🤖 按钮，让虚拟 Victim 替你“踩”这个链接。"
+  ],
+  "description_html": "搜索页把你输入的关键词原样“反射”回页面。让一段 <b>&lt;script&gt;</b> 或事件处理器在页面里执行起来——右侧面板的 <b>Victim Bot</b> 会访问你的链接，若脚本执行成功就把它 Cookie 里的 flag 交给你（真实世界里这就是 Cookie 窃取）。",
+  "bot": true,
+  "entry": "index.php",
+  "runtime": "php",
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "xss2"
+}

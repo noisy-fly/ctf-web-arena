@@ -1,0 +1,27 @@
+{
+  "id": "weak4",
+  "category": "weak",
+  "title": "变量从天而降 —— extract 变量覆盖",
+  "difficulty": "medium",
+  "url_path": "/weak4",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8304,
+  "flag": "flag{weak4_6dd64b25}",
+  "flag_source": "config.php 内 get_flag()，可用环境变量 FLAG 覆盖",
+  "php_required": ">=7.0（PHP 8 亦可解）",
+  "knowledge": [
+    "extract 变量覆盖",
+    "EXTR_OVERWRITE",
+    "parse_str 风险",
+    "白名单取参"
+  ],
+  "hints": [
+    "extract($_GET) 覆盖同名变量",
+    "?is_login=1 即 $is_login=1",
+    "?is_login=1&username=admin"
+  ],
+  "writeup": "writeup.md",
+  "prev": "weak3",
+  "next": "weak5"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "redirect1",
+  "category": "redirect",
+  "title": "星桥快递 · 快捷跳转（开放重定向基础）",
+  "difficulty": "easy",
+  "url_path": "/redirect1",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{redirect1_f555b687}",
+  "knowledge": [
+    "开放重定向原理（Location 头用户可控）",
+    "302 跳转与 curl -i 观察",
+    "重定向导致的 token/凭证泄露与钓鱼利用"
+  ],
+  "hints": [
+    "用 curl -i 请求 jump.php?url=https://example.com/，观察 302 的 Location 响应头——除了你给的目标，后面还跟了一个 share_token 参数。",
+    "题目里说系统会把你的专属 share_token 拼在“目标 URL”后面。这个目标可以是任何网站——token 就会被送到任何网站。",
+    "把目标指向模拟攻击者服务器 catch.php：jump.php?url=http://<host>/redirect1/catch.php，浏览器走一遍或 curl -i -L 跟随跳转，攻击者日志里的 share_token 就是 flag。"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "redirect2"
+}

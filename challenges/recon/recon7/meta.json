@@ -1,0 +1,24 @@
+{
+  "id": "recon7",
+  "category": "recon",
+  "title": "目录扫描与备份泄露",
+  "difficulty": "medium",
+  "url_path": "/recon7",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{recon7_12a5ae5b}",
+  "knowledge": [
+    "目录扫描",
+    "robots.txt 情报",
+    "源码备份压缩包",
+    "dirsearch/gobuster"
+  ],
+  "hints": [
+    "先用浏览器看看 /recon7/robots.txt —— 爬虫协议经常『好心』地把后台路径写出来。再想想：运维打包源码时最常用什么文件名？（www.zip？backup+日期.zip？）",
+    "上目录扫描器：dirsearch -u http://TARGET/recon7/ -e php,zip,txt （或 gobuster）。你会扫出两个 zip 备份和后台目录 /manage_2024/，后台页面源码注释里还有一条『备份勿放 web 根目录』的运维备忘。",
+    "curl http://TARGET/recon7/www.zip -o www.zip && unzip www.zip\ncat inc/config.php\nflag 在备份配置文件的运维备注注释里。（backup_20240601.zip 同样命中）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "recon6",
+  "next": null
+}

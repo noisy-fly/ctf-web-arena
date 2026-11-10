@@ -1,0 +1,37 @@
+{
+  "id": "recon2",
+  "path": "/recon2",
+  "type": "static",
+  "public": true,
+  "artifacts": [
+    "/backup.zip"
+  ],
+  "src_dir": "recon2-src",
+  "note": "备份文件泄露（构建期由 gen_backup.py 打包）",
+  "category": "recon",
+  "title": "打包的过去 · 备份文件",
+  "difficulty": "easy",
+  "url_path": "/recon2",
+  "flag": "flag{recon2_f05a38b1}",
+  "knowledge": [
+    {
+      "name": "dirsearch 目录扫描工具",
+      "url": "https://github.com/maurosoria/dirsearch"
+    },
+    {
+      "name": "SecLists 字典合集",
+      "url": "https://github.com/danielmiessler/SecLists"
+    }
+  ],
+  "hints": [
+    "先访问 <code>/recon2/</code> 看看页面本身与 HTML 注释，确认“打包备份”的传言。",
+    "常见名字挨个试：<code>/www.zip</code>、<code>/backup.zip</code>、<code>/web.zip</code>… 也可以用 dirsearch + SecLists 字典。",
+    "下载后解压，重点看配置文件（如 config.php）——里面通常有不该留下的秘密。"
+  ],
+  "description_html": "运维小哥上线前把整站打了个包放在 Web 根目录“临时存一下”，然后就忘了。备份文件名往往逃不开那几个：<code>www.zip / backup.zip / site.tar.gz / web.rar …</code>——用目录扫描工具（或浏览器手猜）把它找出来，解压看看里面躺着什么。",
+  "entry": "index.html",
+  "runtime": "static",
+  "writeup": "writeup.md",
+  "prev": "recon1",
+  "next": "recon3"
+}

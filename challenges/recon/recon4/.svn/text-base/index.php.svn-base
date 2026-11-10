@@ -1,0 +1,6 @@
+<?php
+// index.php —— SVN 工作副本缓存（r6, 2014-03-18 by zhangwei）
+declare(strict_types=1);
+require __DIR__ . '/inc/config.php';
+// 首页渲染逻辑（缓存版本与线上相同，无敏感信息）
+echo "极客书店官网 " . APP_VER;

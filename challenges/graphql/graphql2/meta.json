@@ -1,0 +1,24 @@
+{
+  "id": "graphql2",
+  "category": "graphql",
+  "title": "星际图书馆 v2 · 越权取他人数据",
+  "difficulty": "hard",
+  "url_path": "/graphql2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{graphql2_2e06bee4}",
+  "knowledge": [
+    "GraphQL 版 IDOR：authentication 有、authorization 无",
+    "关闭内省后的 schema 侦察（报错建议 Did you mean / 命名直觉）",
+    "resolver 级资源授权与敏感字段治理；批量别名拉取的放大面"
+  ],
+  "hints": [
+    "用 bob/bob123 登录后跑默认查询 { me { username secretNote } }——你自己的备注只有“记得还书”。内省被关了，但报错很友好。",
+    "试试查拼错的字段 { mmber(id:\"1\") { id } }，报错会带 “Did you mean 'member' or 'me'?”——关内省挡不住报错提示和命名直觉。",
+    "payload：{ member(id: \"1\") { username email secretNote } }——admin 的 secretNote 就是 flag。用 id:\"3\" 还能看到 carol 的备注（验证越权面）。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "graphql1",
+  "next": null,
+  "notes": "PHP 8.2 无依赖。与 graphql1 同款手写迷你 GraphQL 引擎（gql.php，内省关闭模式），端点 graphql.php 带会话上下文；登录 login.php（实验账号 bob/bob123，会话用 PHP session），退出 logout.php；数据存 members.php 的 PHP 数组。原 Python+graphql-core 实现保留于 _original/。"
+}

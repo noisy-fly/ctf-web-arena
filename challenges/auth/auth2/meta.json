@@ -1,0 +1,23 @@
+{
+  "id": "auth2",
+  "category": "auth",
+  "title": "星云内网门户 - 会话固定 / Cookie 伪造(可预测 session)",
+  "difficulty": "medium",
+  "url_path": "/auth2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{auth2_576d21a9}",
+  "knowledge": [
+    "会话固定:登录成功必须重新生成会话 ID",
+    "可预测会话 token(md5(用户名)无秘密成分)",
+    "CSPRNG 随机 token + 登录换发 + Cookie 属性加固"
+  ],
+  "hints": [
+    "先用 guest 登录看 Cookie:sess 的值像不像某种哈希?对谁做的哈希?",
+    "administrator 用户名是公开的。算 md5(\"administrator\") 直接替换 sess 访问 panel.php。",
+    "会话固定路线:index.php?fix=<md5(administrator)> 预设 Cookie → guest 正常登录(服务端沿用旧 ID) → panel.php。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "auth1",
+  "next": null
+}

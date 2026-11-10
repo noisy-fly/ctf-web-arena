@@ -1,0 +1,35 @@
+{
+  "id": "sql3",
+  "path": "/sql3",
+  "type": "php",
+  "public": false,
+  "backend": "mysql:sqlilab3",
+  "note": "布尔盲注",
+  "category": "sql",
+  "title": "无声的审判 · 布尔盲注",
+  "difficulty": "medium",
+  "url_path": "/sql3",
+  "flag": "flag{sql3_b2c689f1}",
+  "knowledge": [
+    {
+      "name": "PortSwigger — 盲注",
+      "url": "https://portswigger.net/web-security/sql-injection/blind"
+    },
+    {
+      "name": "PortSwigger — 条件响应盲注实验",
+      "url": "https://portswigger.net/web-security/sql-injection/blind/lab-conditional-responses"
+    }
+  ],
+  "hints": [
+    "注入点仍是数字 id：<code>?id=1 and 1=1</code> 成功、<code>?id=1 and 1=2</code> 失败，说明表达式真假会反映在页面状态上。",
+    "猜长度：<code>?id=1 and (select length(flag) from fl4g limit 1)>20</code>，二分到准确值。",
+    "猜字符：<code>?id=1 and ascii(substr((select flag from fl4g limit 1),1,1))>110</code>，对每位做二分（ASCII 可打印范围 32~126）。",
+    "已知 flag 前缀是 <code>flag{sql_3_</code>，可以少猜 9 个字符；writeup 里有完整 Python 脚本。"
+  ],
+  "description_html": "页面只剩两种状态：“查询成功/查询失败”。没有回显、没有报错——把每个判断变成一次 <b>是/否提问</b>，用 <code>ascii()+substr()</code> 二分逐字符猜出 flag。这题建议写脚本（writeup 里有参考实现）。",
+  "entry": "index.php",
+  "runtime": "php",
+  "writeup": "writeup.md",
+  "prev": "sql2",
+  "next": "sql4"
+}

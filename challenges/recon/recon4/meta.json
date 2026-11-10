@@ -1,0 +1,24 @@
+{
+  "id": "recon4",
+  "category": "recon",
+  "title": ".svn 泄露",
+  "difficulty": "easy",
+  "url_path": "/recon4",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{recon4_e05acfca}",
+  "knowledge": [
+    "SVN 工作副本机制",
+    ".svn/entries 与 text-base 缓存",
+    "版本控制目录泄露",
+    "dvcs-ripper"
+  ],
+  "hints": [
+    "首页和 README 都提到用 svn checkout 部署。SVN 1.6 的工作副本会在每个目录下留下 .svn/ 元数据目录，先访问 /.svn/entries 看看。",
+    "entries 是工作副本清单：文件名、内网仓库地址、提交人都列在里面。真正的大奖是 .svn/text-base/ 下每个受控文件的 .svn-base 原始版本缓存。",
+    "直接访问：\ncurl http://TARGET/recon4/.svn/entries\ncurl http://TARGET/recon4/.svn/text-base/config.php.svn-base\nflag 在缓存下来的旧版配置注释里（当年的『运维交接备注』）。"
+  ],
+  "writeup": "writeup.md",
+  "prev": "recon3",
+  "next": "recon5"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "ssrf2",
+  "category": "ssrf",
+  "title": "调试版预览工具 · file:// 读文件",
+  "difficulty": "easy",
+  "url_path": "/ssrf2",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{ssrf2_f0229966}",
+  "knowledge": [
+    "file:// 流包装器",
+    "file:/// 绝对路径格式",
+    "SSRF→任意文件读取",
+    "协议白名单放宽的危害"
+  ],
+  "hints": [
+    "提交 ftp://x 看报错，能得知白名单里多了 file",
+    "file:///etc/passwd 先验证任意读（注意是三个斜杠）",
+    "?url=file:///flag_ssrf2.txt（部署：deploy/flag_ssrf2.txt 复制到容器 /）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "ssrf1",
+  "next": "ssrf3"
+}

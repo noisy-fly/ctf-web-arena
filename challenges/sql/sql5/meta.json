@@ -1,0 +1,24 @@
+{
+  "id": "sql5",
+  "category": "sql",
+  "title": "时间盲注",
+  "difficulty": "medium",
+  "url_path": "/sql5",
+  "runtime": "php",
+  "entry": "index.php",
+  "flag": "flag{sql5_159dae0d}",
+  "knowledge": [
+    "时间盲注",
+    "randomblob 延时",
+    "CASE 惰性求值",
+    "二分逐字符提取"
+  ],
+  "hints": [
+    "页面对任何输入都返回同一句话 —— 但服务器处理不同输入的『耗时』可能不一样。用 curl -w '%{time_total}' 或者浏览器开发者工具的 Network 面板对比一下：card=1 和 card=1 and 1=1 谁慢？",
+    "SQLite 没有 sleep()，但 randomblob(N) 需要生成 N 个随机字节，N 很大时非常耗时。把它塞进 CASE WHEN 的『真』分支：card=1 AND CASE WHEN (SELECT substr(flag,1,1) FROM flag_secret)='f' THEN randomblob(300000000) IS NOT NULL ELSE 0 END —— 条件为真时响应会慢约 1 秒。这就是你的『1bit』信号。",
+    "逐个字符问太慢（每个字符最多试几十次），用二分：把 ='f' 换成 >'h'（SQLite 字符串按字节序比较），7 次就能定出一个字符。完整脚本见 writeup，判断位：card=1 AND CASE WHEN (SELECT substr(flag,2,1) FROM flag_secret)>'a' THEN randomblob(300000000) IS NOT NULL ELSE 0 END"
+  ],
+  "writeup": "writeup.md",
+  "prev": "sql4",
+  "next": "sql6"
+}

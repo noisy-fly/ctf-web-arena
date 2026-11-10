@@ -1,0 +1,80 @@
+/* ===== 题目页：环境区 + 侧边"题目面板"抽屉 ===== */
+.chal-wrap { max-width: 920px; margin: 26px auto 90px; padding: 0 20px; }
+.chal-env {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 26px 30px; min-height: 300px;
+}
+.chal-env h1 { margin: 0 0 4px; font-size: 1.25rem; }
+.chal-env .env-sub { color: var(--fg-soft); font-size: .85rem; margin-bottom: 20px; }
+.env-card {
+  background: var(--bg-soft); border: 1px dashed var(--line);
+  border-radius: 10px; padding: 18px 20px; margin: 14px 0;
+}
+.env-card label { font-size: .86rem; color: var(--fg-soft); display: block; margin-bottom: 6px; }
+.env-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.env-row input[type=text], .env-row input[type=search], .env-row textarea {
+  flex: 1 1 240px; padding: 10px 12px; border-radius: 9px;
+  border: 1px solid var(--line); background: var(--card); color: var(--fg);
+  font-family: var(--mono); font-size: .92rem;
+}
+.env-result { margin-top: 18px; }
+.env-result table { border-collapse: collapse; width: 100%; margin: 8px 0; font-family: var(--mono); font-size: .88rem; }
+.env-result th, .env-result td { border: 1px solid var(--line); padding: 7px 12px; text-align: left; }
+.env-result th { background: var(--bg-soft); }
+.sql-echo {
+  font-family: var(--mono); font-size: .82rem; color: var(--fg-soft);
+  background: var(--code-bg); border-radius: 8px; padding: 8px 12px; margin-top: 14px;
+  word-break: break-all;
+}
+.env-error { color: var(--danger); font-family: var(--mono); font-size: .88rem; word-break: break-all; }
+.msg-list { display: grid; gap: 10px; }
+.msg-item { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; word-break: break-all; }
+.msg-item .meta { color: var(--fg-soft); font-size: .76rem; font-family: var(--mono); margin-bottom: 4px; }
+
+/* ===== 侧边面板抽屉 ===== */
+.panel {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 90;
+  width: min(380px, 92vw);
+  background: var(--card); border-left: 1px solid var(--line);
+  box-shadow: -8px 0 30px rgba(0,0,0,.18);
+  transform: translateX(100%); transition: transform .25s ease;
+  display: flex; flex-direction: column;
+}
+.panel.open { transform: translateX(0); }
+.panel-toggle {
+  position: absolute; left: -46px; top: 16px;
+  width: 44px; height: 44px; border-radius: 12px 0 0 12px;
+  background: var(--accent); color: #fff; border: none; cursor: pointer;
+  font-size: 1.2rem; box-shadow: -4px 4px 14px rgba(0,0,0,.2);
+}
+.panel-head { padding: 16px 18px 10px; border-bottom: 1px solid var(--line); }
+.panel-head .cat-line { font-size: .78rem; color: var(--fg-soft); }
+.panel-head h2 { margin: 2px 0 4px; font-size: 1.05rem; }
+.panel-head .diff { color: var(--star); letter-spacing: 2px; font-size: .85rem; }
+.panel-body { overflow-y: auto; padding: 14px 18px 26px; flex: 1; }
+.panel-body h4 { margin: 18px 0 6px; font-size: .9rem; color: var(--fg-soft); }
+.panel-body .desc { font-size: .92rem; }
+.panel-body details {
+  border: 1px solid var(--line); border-radius: 9px;
+  padding: 8px 12px; margin: 7px 0; background: var(--bg-soft);
+}
+.panel-body details summary { cursor: pointer; font-size: .87rem; color: var(--fg-soft); }
+.panel-body details .hint-body { font-size: .88rem; margin-top: 6px; }
+.panel-body details .hint-body code { word-break: break-all; }
+.knowledge-list { margin: 4px 0; padding-left: 18px; font-size: .88rem; }
+.submit-row { display: flex; gap: 8px; margin: 8px 0 4px; }
+.submit-row input {
+  flex: 1; padding: 9px 12px; border-radius: 9px; border: 1px solid var(--line);
+  background: var(--bg-soft); color: var(--fg); font-family: var(--mono); font-size: .9rem;
+}
+.banner { border-radius: 9px; padding: 10px 13px; font-size: .88rem; margin-top: 10px; display: none; }
+.banner.ok { display: block; background: color-mix(in srgb, var(--accent-2) 16%, var(--card)); border: 1px solid var(--accent-2); }
+.banner.bad { display: block; background: color-mix(in srgb, var(--danger) 14%, var(--card)); border: 1px solid var(--danger); }
+.banner code { word-break: break-all; }
+.bot-box { border: 1px dashed var(--accent); border-radius: 10px; padding: 12px; margin-top: 8px; }
+.bot-box .bot-out { font-size: .85rem; margin-top: 8px; font-family: var(--mono); word-break: break-all; white-space: pre-wrap; }
+.solved-flag { color: var(--accent-2); font-weight: 700; }
+
+/* 源码折叠块 */
+.src-details pre { font-size: .8rem; }

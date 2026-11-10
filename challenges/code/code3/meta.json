@@ -1,0 +1,27 @@
+{
+  "id": "code3",
+  "category": "code",
+  "title": "登录口的类型缺陷 —— md5($pass) == md5($salt)",
+  "difficulty": "medium",
+  "url_path": "/code3",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8308,
+  "flag": "flag{code3_c73b8c98}",
+  "flag_source": "config.php 内 get_flag()，可用环境变量 FLAG 覆盖",
+  "php_required": ">=7.0（PHP 8 亦可解：0e 数字字符串仍按数值比较）",
+  "knowledge": [
+    "认证弱比较",
+    "魔术哈希通杀",
+    "hash_equals",
+    "盐救不了 =="
+  ],
+  "hints": [
+    "两边 md5 都会被 == 数值化",
+    "md5($SALT) 恰为 0e373143265133075354348401919903",
+    "POST user=admin&pass=QNKCDZO（任一魔术哈希明文）"
+  ],
+  "writeup": "writeup.md",
+  "prev": "code2",
+  "next": null
+}

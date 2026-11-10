@@ -1,0 +1,27 @@
+{
+  "id": "weak1",
+  "category": "weak",
+  "title": "同一把锁的两把钥匙 —— == 弱比较",
+  "difficulty": "easy",
+  "url_path": "/weak1",
+  "runtime": "php",
+  "entry": "index.php",
+  "internal_port": 8301,
+  "flag": "flag{weak1_1fc2f9ec}",
+  "flag_source": "config.php 内 get_flag()，可用环境变量 FLAG 覆盖",
+  "php_required": ">=7.0（本题在 PHP 8 下同样可解）",
+  "knowledge": [
+    "PHP 松散比较 ==",
+    "数字字符串科学计数法",
+    "0e 魔术哈希",
+    "hash_equals 修复"
+  ],
+  "hints": [
+    "== 两边都是数字字符串时会先转数字再比较",
+    "0e+纯数字 的字符串按科学计数法转成 0",
+    "提交 ?a=QNKCDZO&b=240610708（两者 md5 均为 0e+纯数字）"
+  ],
+  "writeup": "writeup.md",
+  "prev": null,
+  "next": "weak2"
+}
